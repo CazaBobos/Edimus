@@ -1,0 +1,17 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  .dialog {
+    z-index: 1;
+    position: fixed;
+    width: fit-content;
+    height: fit-content; 
+  }
+}

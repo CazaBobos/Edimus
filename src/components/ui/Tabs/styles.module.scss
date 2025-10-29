@@ -1,0 +1,23 @@
+.tabs {
+  margin: 0 8px;
+  display: flex;
+  gap: 4px;
+  .tab {
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: fit-content;
+    height: fit-content;
+    padding: 8px;
+    border-width: 1px 1px 0 1px;
+    border-style: solid;
+    border-color: #f2f2f2;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    &[data-selected="true"] {
+      background-color: #f2f2f2;
+      color: #383838;
+    }
+  }
+}

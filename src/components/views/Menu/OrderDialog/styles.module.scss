@@ -1,0 +1,35 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 8px;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px;
+    padding-top: 16px;
+  }
+}
+
+.card {
+  border-radius: 8px;
+  padding: 8px;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  b {
+    color: #bbb;
+  }
+  &[data-owned="true"] {
+    b {
+      color: #f2f2f2;
+    }
+  }
+}

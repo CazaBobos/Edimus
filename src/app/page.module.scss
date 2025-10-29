@@ -1,0 +1,40 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  height: 100vh;
+  width: 100vw;
+  gap: 8px;
+  font-family: var(--font-geist-sans);
+
+  .header {
+    width: 100%;
+    padding: 8px;
+    border-bottom: 1px solid #f2f2f2;
+    .title {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+  }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .footer {
+    background-color: #383838;
+    padding: 8px;
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+    width: 100%;
+    border-top: 1px solid #f2f2f2;
+    position: sticky;
+    bottom: 0;
+  }
+}

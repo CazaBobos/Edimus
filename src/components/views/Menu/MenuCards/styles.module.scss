@@ -1,0 +1,22 @@
+.card {
+  border: 1px solid #f2f2f2;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  .title {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .list {
+    padding: 0 24px;
+    li {
+      padding-bottom: 8px;
+    }
+  }
+  p {
+    font-size: 12px;
+  }
+}
