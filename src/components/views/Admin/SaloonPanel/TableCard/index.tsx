@@ -3,6 +3,7 @@ import { BiArrowBack, BiMove, BiPlus, BiQr, BiSolidCircle, BiTrash, BiX } from "
 import { HiDocumentText } from "react-icons/hi";
 import { HiDocumentCurrencyDollar } from "react-icons/hi2";
 
+import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 
 import styles from "./styles.module.scss";
@@ -33,25 +34,16 @@ export const TableCard = () => {
           Mesa: 1 <BiSolidCircle size={32} fill="red" />
         </h2>
         <div>
-          <button>
-            <BiQr size={28} />
-          </button>
-          <button>
-            <BiMove size={28} />
-          </button>
-          <button>
-            <BiTrash size={28} />
-          </button>
+          <Button icon={<BiQr size={28} />} />
+          <Button icon={<BiMove size={28} />} />
+          <Button icon={<BiTrash size={28} />} />
         </div>
       </div>
       <div className={styles.content}>
         <div className={styles.order}>
           <div className={styles.row}>
             <h3>Pedidos:&nbsp;</h3>
-            <button className={styles.actionButton}>
-              Añadir
-              <BiPlus size={24} />
-            </button>
+            <Button label="Añadir" icon={<BiPlus size={24} />} />
           </div>
           <ul>
             {order.map((o) => (
@@ -66,13 +58,8 @@ export const TableCard = () => {
           </ul>
         </div>
         <b>Total de la Mesa: ${order.reduce((acum, curr) => acum + curr.price, 0)}</b>
-
-        <button className={styles.actionButton}>
-          Emitir Control de Pedido <HiDocumentText size={24} />
-        </button>
-        <button className={styles.actionButton}>
-          Emitir Comprobante <HiDocumentCurrencyDollar size={24} />
-        </button>
+        <Button label="Emitir Control de Pedido" icon={<HiDocumentText size={24} />} />
+        <Button label="Emitir Comprobante" icon={<HiDocumentCurrencyDollar size={24} />} />
       </div>
     </Card>
   );

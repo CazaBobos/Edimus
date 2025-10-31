@@ -1,6 +1,7 @@
 export * from "./categories/category.request";
 export * from "./categories/category.type";
 export * from "./companies/company.type";
+export * from "./ingredients/ingredient.request";
 export * from "./ingredients/ingredient.type";
 export * from "./products/product.request";
 export * from "./products/product.type";

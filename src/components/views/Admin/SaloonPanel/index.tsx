@@ -1,4 +1,9 @@
 import { useAdminStore } from "@/stores";
+import { BiMove, BiPlus, BiTrash } from "react-icons/bi";
+
+import { Accordion } from "@/components/ui/Accordion";
+import { Button } from "@/components/ui/Button";
+import { Select } from "@/components/ui/Select";
 
 import { SaloonGrid } from "./SaloonGrid";
 import styles from "./styles.module.scss";
@@ -13,24 +18,29 @@ export const SaloonPanel = () => {
     <>
       <SaloonGrid />
       <div className={styles.panel}>
-        <div>
-          <span>Plano actual: </span>
-          <select name="" id="" style={{ height: "32px" }}>
-            {planeOptions.map((o) => (
-              <option key={o} value={o}>
-                {o}
-              </option>
-            ))}
-          </select>
-        </div>
         {tableDialogOpenState !== 0 ? (
           <TableCard />
         ) : (
-          <div className={styles.panel}>
-            <button className={styles.actionButton}>Añadir o quitar planos</button>
-            <button className={styles.actionButton}>Editor de mesas</button>
-            <button className={styles.actionButton}>Editar sectores</button>
-          </div>
+          <>
+            <Accordion title="Planos">
+              <div>
+                <Button icon={<BiPlus size={28} />} />
+                <Button icon={<BiTrash size={28} />} />
+                <Button icon={<BiMove size={28} />} />
+                <Select title="Plano actual:" options={planeOptions} />
+              </div>
+            </Accordion>
+            <Accordion title="Mesas">
+              <Button icon={<BiPlus size={28} />} />
+              <Button icon={<BiTrash size={28} />} />
+              <Button icon={<BiMove size={28} />} />
+            </Accordion>
+            <Accordion title="Sectores">
+              <Button icon={<BiPlus size={28} />} />
+              <Button icon={<BiTrash size={28} />} />
+              <Button icon={<BiMove size={28} />} />
+            </Accordion>
+          </>
         )}
       </div>
     </>

@@ -2,6 +2,8 @@ import { useCategoriesQuery } from "@/hooks/queries/useCategoriesQuery";
 import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
 import { useState } from "react";
 
+import { Select, SelectOption } from "@/components/ui/Select";
+
 import styles from "./styles.module.scss";
 
 export const MenuCards = () => {
@@ -10,15 +12,14 @@ export const MenuCards = () => {
 
   const [selectedCategory, setSelectedCategory] = useState<number>();
 
+  const categoryOptions: SelectOption[] = categories.map((c) => ({
+    label: c.name,
+    value: c.id,
+  }));
+
   return (
     <>
-      <select onChange={(e) => setSelectedCategory(Number(e.target.value))}>
-        {categories.map((c) => (
-          <option key={c.id} value={c.id}>
-            {c.name}
-          </option>
-        ))}
-      </select>
+      <Select options={categoryOptions} onChange={({ value }) => setSelectedCategory(Number(value))}></Select>
       {products
         .filter((p) => p.categoryId === (selectedCategory ?? 1))
         .map((p) => (

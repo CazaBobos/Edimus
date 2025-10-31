@@ -1,6 +1,10 @@
-import { Ingredient } from "@/types";
+import { Ingredient, IngredientRequest } from "@/types";
 
 export const ingredientsApi = {
+  create: (request: Required<IngredientRequest>) => {
+    return 1;
+  },
+  update: (id: number, request: IngredientRequest) => {},
   findMany: (): Ingredient[] => {
     return [
       {

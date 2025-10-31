@@ -1,42 +1,33 @@
-import { Ingredient } from "@/types";
+import { ingredientsApi } from "@/services";
+import { Ingredient, IngredientRequest } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useSaloonMutations = () => {
+export const useIngredientMutations = () => {
   const queryClient = useQueryClient();
 
   const createIngredientMutation = useMutation({
-    mutationFn: async (request: unknown) => await Promise.resolve(1),
+    mutationFn: async (request: Required<IngredientRequest>) => await ingredientsApi.create(request),
     onSuccess: (id, request) =>
       queryClient.setQueriesData<Ingredient[]>({ queryKey: ["ingredients"] }, (query) => {
         if (!query) return;
 
-        return query;
+        return [...query, { id, ...request, enabled: true }];
       }),
   });
 
   const updateIngredientMutation = useMutation({
-    mutationFn: async (variables: { id: number; request: unknown }) => await Promise.resolve(),
+    mutationFn: async ({ id, request }: { id: number; request: IngredientRequest }) =>
+      await ingredientsApi.update(id, request),
     onSuccess: (_, variables) =>
       queryClient.setQueriesData<Ingredient[]>({ queryKey: ["ingredients"] }, (query) => {
         if (!query) return;
 
-        return query;
-      }),
-  });
-
-  const removeIngredientMutation = useMutation({
-    mutationFn: async (id: number) => await Promise.resolve(),
-    onSuccess: (_, id) =>
-      queryClient.setQueriesData<Ingredient[]>({ queryKey: ["ingredients"] }, (query) => {
-        if (!query) return;
-
-        return query.filter((i) => i.id !== id);
+        return query.map((i) => (i.id === variables.id ? { ...i, ...variables.request } : i));
       }),
   });
 
   return {
     createIngredientMutation,
     updateIngredientMutation,
-    removeIngredientMutation,
   };
 };

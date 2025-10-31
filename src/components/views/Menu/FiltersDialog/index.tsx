@@ -1,6 +1,7 @@
 import { useMenuStore } from "@/stores";
 import { BiX } from "react-icons/bi";
 
+import { Button } from "@/components/ui/Button";
 import { Dialog } from "@/components/ui/Dialog";
 
 import styles from "./styles.module.scss";
@@ -25,7 +26,7 @@ export const FiltersDialog = () => {
             <label htmlFor={t}>{t}</label>
           </div>
         ))}
-        <button className={styles.apply}>Aplicar</button>
+        <Button label="Aplicar" />
       </div>
     </Dialog>
   );

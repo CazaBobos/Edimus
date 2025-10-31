@@ -3,6 +3,8 @@ import { Ingredient } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { BiPencil, BiSolidCircle, BiTrash, BiUpload } from "react-icons/bi";
 
+import { Button } from "@/components/ui/Button";
+
 export const useIngredientsColumnDefs = (): ColumnDef<Ingredient>[] => {
   const { setIngredientDialogOpenState } = useAdminStore();
 
@@ -50,9 +52,7 @@ export const useIngredientsColumnDefs = (): ColumnDef<Ingredient>[] => {
       header: " ",
       accessorKey: "id",
       cell: (props) => (
-        <button onClick={() => setIngredientDialogOpenState(props.getValue<number>())}>
-          <BiPencil size={24} />
-        </button>
+        <Button icon={<BiPencil size={24} />} onClick={() => setIngredientDialogOpenState(props.getValue<number>())} />
       ),
     },
     {

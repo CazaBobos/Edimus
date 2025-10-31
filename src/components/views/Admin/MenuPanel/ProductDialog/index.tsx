@@ -3,6 +3,7 @@ import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
 import { useAdminStore } from "@/stores";
 import { BiArrowBack, BiHistory, BiPlus, BiSave, BiTrash, BiX } from "react-icons/bi";
 
+import { Button } from "@/components/ui/Button";
 import { Dialog } from "@/components/ui/Dialog";
 
 import styles from "./styles.module.scss";
@@ -27,12 +28,8 @@ export const ProductDialog = () => {
               Producto #{product.id}
             </h2>
             <div>
-              <button>
-                <BiHistory size={28} />
-              </button>
-              <button>
-                <BiTrash size={28} />
-              </button>
+              <Button icon={<BiHistory size={28} />} />
+              <Button icon={<BiTrash size={28} />} />
             </div>
           </>
         ) : (
@@ -88,10 +85,7 @@ export const ProductDialog = () => {
         </div>
         <div className={styles.row}>
           <span>Variantes</span>
-          <button className={styles.actionButton}>
-            Añadir
-            <BiPlus size={24} />
-          </button>
+          <Button label="Añadir" icon={<BiPlus size={24} />} />
         </div>
         <ul>
           {product?.variants?.map((v) => (
@@ -111,9 +105,7 @@ export const ProductDialog = () => {
           <span style={{ marginBottom: "16px" }}>Imagen: </span>
           <input type="file" name="" id="" />
         </div>
-        <button className={styles.actionButton}>
-          Guardar <BiSave size={24} />
-        </button>
+        <Button label="Guardar" icon={<BiSave size={24} />} />
       </div>
     </Dialog>
   );
