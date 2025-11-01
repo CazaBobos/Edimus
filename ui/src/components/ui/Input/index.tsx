@@ -1,6 +1,7 @@
 import { ChangeEvent } from "react";
 
 import { ControlState } from "../common";
+import styles from "./styles.module.scss";
 
 type InputProps = {
   name?: string;
@@ -20,9 +21,16 @@ export const Input = (props: InputProps) => {
   };
 
   return (
-    <div>
+    <div className={styles.input}>
       {title && <span>{title}</span>}
-      <input type="text" name={name} value={value} defaultValue={defaultValue} onChange={handleChange} />
+      <input
+        type="text"
+        style={{ height: "32px" }}
+        name={name}
+        value={value}
+        defaultValue={defaultValue}
+        onChange={handleChange}
+      />
     </div>
   );
 };

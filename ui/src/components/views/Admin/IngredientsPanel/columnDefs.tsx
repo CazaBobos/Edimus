@@ -1,3 +1,4 @@
+import { useIngredientMutations } from "@/hooks/mutations/useIngredientMutations";
 import { useAdminStore } from "@/stores";
 import { Ingredient } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
@@ -7,6 +8,14 @@ import { Button } from "@/components/ui/Button";
 
 export const useIngredientsColumnDefs = (): ColumnDef<Ingredient>[] => {
   const { setIngredientDialogOpenState } = useAdminStore();
+
+  const { updateIngredientMutation } = useIngredientMutations();
+
+  const handleUpdate = (ingredient: Ingredient) => {
+    const { id, enabled } = ingredient;
+
+    updateIngredientMutation.mutate({ id, request: { enabled: !enabled } });
+  };
 
   return [
     {
@@ -19,18 +28,7 @@ export const useIngredientsColumnDefs = (): ColumnDef<Ingredient>[] => {
     },
     {
       header: "Cantidad",
-      accessorFn: (row) => row,
-      cell: (props) => {
-        const ing = props.cell.getValue<Ingredient>();
-
-        return ing.stock < ing.alert ? (
-          <>
-            {ing.stock} - <span style={{ color: "red" }}>Stock bajo!</span>
-          </>
-        ) : (
-          ing.stock
-        );
-      },
+      accessorKey: "stock",
     },
     {
       header: "Unidad",
@@ -39,6 +37,15 @@ export const useIngredientsColumnDefs = (): ColumnDef<Ingredient>[] => {
     {
       header: "Alerta",
       accessorKey: "alert",
+    },
+    {
+      header: "Observaciones",
+      accessorFn: (row) => row,
+      cell: (props) => {
+        const ing = props.getValue<Ingredient>();
+
+        return <span style={{ color: "red" }}>{ing.stock < ing.alert ? "Stock bajo!" : ""}</span>;
+      },
     },
     {
       header: " ",
@@ -57,11 +64,16 @@ export const useIngredientsColumnDefs = (): ColumnDef<Ingredient>[] => {
     },
     {
       header: " ",
-      accessorKey: "enabled",
+      accessorFn: (row) => row,
       cell: (props) => {
-        const enabled = props.getValue<boolean>();
+        const ing = props.getValue<Ingredient>();
 
-        return enabled ? <BiTrash size={24} /> : <BiUpload size={24} />;
+        return (
+          <Button
+            icon={ing.enabled ? <BiTrash size={24} /> : <BiUpload size={24} />}
+            onClick={() => handleUpdate(ing)}
+          />
+        );
       },
     },
   ];

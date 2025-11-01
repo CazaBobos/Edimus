@@ -16,8 +16,10 @@ import styles from "./styles.module.scss";
 export const IngredientDialog = () => {
   const { ingredientDialogOpenState, setIngredientDialogOpenState } = useAdminStore();
 
-  const handleClose = () => setIngredientDialogOpenState(undefined);
-
+  const handleClose = () => {
+    setRequest({});
+    setIngredientDialogOpenState(undefined);
+  };
   const { data: ingredients } = useIngredientsQuery();
 
   const ingredient = ingredients.find((p) => p.id === ingredientDialogOpenState);
@@ -37,7 +39,7 @@ export const IngredientDialog = () => {
   const handleSave = () => {
     if (!!ingredient) {
       updateIngredientMutation.mutate({ id: ingredient.id, request });
-    } else {
+    } else if (isRequestValid()) {
       createIngredientMutation.mutate(request as Required<IngredientRequest>);
     }
   };
@@ -49,20 +51,20 @@ export const IngredientDialog = () => {
         <BiX size={28} onClick={handleClose} />
       </h2>
       <div className={styles.content}>
-        <Input title="Nombre" name="name" value={ingredient?.name} />
-        <Select
-          title="Unidad de medida"
-          name="unit"
-          onChange={handleSetRequest}
-          value={ingredient?.unit}
-          options={["unidad", "kg", "g", "bolsas"]}
-        />
+        <Input title="Nombre" name="name" defaultValue={ingredient?.name} />
         <div className={styles.row}>
-          <Input title="Cantidad Stock" name="stock" value={ingredient?.stock} />
-          <Input title="Cantidad Alerta" name="alert" value={ingredient?.alert} />
+          <Select
+            title="Unidad"
+            name="unit"
+            onChange={handleSetRequest}
+            defaultValue={ingredient?.unit}
+            options={["unidad", "kg", "g", "bolsas"]}
+          />
+          <Input title="Cant. Stock" name="stock" defaultValue={ingredient?.stock} />
+          <Input title="Cant. Alerta" name="alert" defaultValue={ingredient?.alert} />
         </div>
         <div className={styles.row}>
-          <Button label="Cancelar" />
+          <Button label="Cancelar" onClick={handleClose} />
           <Button label="Guardar" disabled={!ingredient && !isRequestValid()} onClick={handleSave} />
         </div>
       </div>

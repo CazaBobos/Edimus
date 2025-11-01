@@ -1,6 +1,7 @@
 import { ChangeEvent } from "react";
 
 import { ControlState } from "../common";
+import styles from "./styles.module.scss";
 
 export type SelectOption = {
   label: string;
@@ -26,12 +27,11 @@ export const Select = (props: SelectProps) => {
   };
 
   return (
-    <div>
+    <div className={styles.select}>
       {title && <span>{title}</span>}
       <select
         name={name}
-        id=""
-        style={{ height: "32px" }}
+        style={{ height: "32px", width: "100%" }}
         value={value}
         defaultValue={defaultValue}
         onChange={handleChange}
