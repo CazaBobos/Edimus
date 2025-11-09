@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+  postgres:
+    container_name: postgresql-db
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=ABCabc123
+      - POSTGRES_DB=edimus_db

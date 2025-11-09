@@ -1,0 +1,17 @@
+Copyright (C) - Santiago Galfré
+
+Permission is hereby granted, to any person (hereinafter called "holder") obtaining a copy of this software and associated 
+documentation files (the "Software"), to deal in the Software, subject to the following conditions:
+
+- Rights of private and/or commercial usage are given under a paid subscription or express
+  permission from the author. 
+- Rights to copy, modify, merge, publish, distribute sublicense, and/or sell copies of the Software 
+  is prohibited to the "holder" of the "Software" without explicit authorization from the owner.
+- Freedom to study how the program and its source code runs is given.
+- Any user of the "Software" has the right to suggest changes and report any type of error 
+  to the owner, in order to be fixed.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
