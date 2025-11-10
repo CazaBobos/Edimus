@@ -7,5 +7,5 @@ public interface IUserRecord
     int Id { get; }
     string Username { get; }
     UserRole Role { get; }
-    List<int> CompanyIds { get; }
+    List<int>? CompanyIds { get; }
 }

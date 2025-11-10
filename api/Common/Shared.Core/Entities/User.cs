@@ -12,7 +12,7 @@ public class User : Entity<int>, IUserRecord
     public string Email { get; protected set; } = string.Empty;
     public string Password { get; protected set; } = string.Empty;
     public UserRole Role { get; protected set; }
-    public List<int> CompanyIds { get; protected set; } = new();
+    public List<int>? CompanyIds { get; protected set; }
 
     protected User() { }
 

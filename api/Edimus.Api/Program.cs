@@ -6,6 +6,7 @@ using NextjsStaticHosting.AspNetCore;
 using Shared.Infrastructure.Extensions;
 using Categories.Extensions;
 using Companies.Extensions;
+using Ingredients.Extensions;
 using Products.Extensions;
 using Tables.Extensions;
 using Users.Extensions;
@@ -41,6 +42,7 @@ builder.Services.AddMailService();
 
 builder.Services.AddCategories();
 builder.Services.AddCompanies();
+builder.Services.AddIngredients();
 builder.Services.AddProducts();
 builder.Services.AddTables();
 builder.Services.AddUsers();

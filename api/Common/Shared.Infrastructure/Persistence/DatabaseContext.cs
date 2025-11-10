@@ -12,6 +12,7 @@ public class DatabaseContext : DbContext
     #region Tables
     public DbSet<Category> Categories { get; set; } = null!;
     public DbSet<Company> Companies{ get; set; } = null!;
+    public DbSet<Consumption> Consumptions { get; set; } = null!;
     public DbSet<Establishment> Establishments { get; set; } = null!;
     public DbSet<Image> Images { get; set; } = null!;
     public DbSet<Ingredient> Ingredients { get; set; } = null!;

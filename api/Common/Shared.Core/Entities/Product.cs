@@ -14,6 +14,7 @@ public class Product : AggregateRoot<int>
     public int? ImageId { get; protected set; }
     public virtual Image? Image { get; protected set; }
     public virtual List<Tag>? Tags{ get; protected set; }
+    public virtual List<Consumption>? Consumptions { get; protected set; }
 
     protected Product() { }
     public Product(int? parentId, int? categoryId, decimal price, string name, string description = "")

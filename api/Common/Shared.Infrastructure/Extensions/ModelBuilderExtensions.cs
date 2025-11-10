@@ -1,6 +1,5 @@
 ﻿using Dawn;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 using Shared.Core.Entities;
 using Shared.Infrastructure.EntityConfiguration;
 
@@ -11,6 +10,7 @@ public static class ModelBuilderExtensions
     {
         modelBuilder.ApplyConfiguration(new CategoryConfiguration());
         modelBuilder.ApplyConfiguration(new CompanyConfiguration());
+        modelBuilder.ApplyConfiguration(new ConsumptionConfiguration());
         modelBuilder.ApplyConfiguration(new EstablishmentConfiguration());
         modelBuilder.ApplyConfiguration(new ImageConfiguration());
         modelBuilder.ApplyConfiguration(new IngredientConfiguration());
