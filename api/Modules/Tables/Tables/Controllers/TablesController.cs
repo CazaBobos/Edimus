@@ -35,7 +35,8 @@ public class TablesController : ControllerBase
         {
             Limit = input.Limit,
             Page = input.Page,
-            CompanyId = input.CompanyId,
+            LayoutId = input.LayoutId,
+            Status = input.Status,
             Enabled = input.Enabled,
             User = User.GetUser(),
         }, cancellationToken);

@@ -22,6 +22,8 @@ public class GetTablesRequestHandler : IRequestHandler<GetTablesRequest, GetTabl
     public async Task<GetTablesResponse> Handle(GetTablesRequest request, CancellationToken cancellationToken)
     {
         var query = _tablesRepository.AsQueryable()
+            .WhereLayout(request.LayoutId)
+            .WhereStatus(request.Status)
             .WhereEnabled(request.Enabled);
 
         var tables = await query

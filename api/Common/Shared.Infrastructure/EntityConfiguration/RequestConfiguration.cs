@@ -5,24 +5,17 @@ using Shared.Core.Entities;
 namespace Shared.Infrastructure.EntityConfiguration;
 public class RequestConfiguration : IEntityTypeConfiguration<Request>
 {
-
     public void Configure(EntityTypeBuilder<Request> entity)
     {
-        entity.HasKey(e => e.Id);
-        entity.Property(e => e.Id)
-            .HasColumnName("RequestId")
-            .ValueGeneratedOnAdd();
-
+        entity.HasKey(e => new {e.TableId, e.ProductId});
+        
         entity.Property(e => e.ProductId)
             .IsRequired();
 
         entity.Property(e => e.TableId)
             .IsRequired();
 
-        entity.Property(e => e.Quantity)
-            .IsRequired();
-
-        entity.Property(e => e.Enabled)
+        entity.Property(e => e.Amount)
             .IsRequired();
     }
 }

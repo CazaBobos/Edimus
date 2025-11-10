@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Shared.Core.Entities;
-using Shared.Core.Entities;
 
 namespace Shared.Infrastructure.EntityConfiguration;
 public class IngredientConfiguration : IEntityTypeConfiguration<Ingredient>
