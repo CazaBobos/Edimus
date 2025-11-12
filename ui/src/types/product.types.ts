@@ -1,4 +1,14 @@
-import { Product } from "./product.type";
+export type Product = {
+  id: number;
+  parentId?: number;
+  categoryId: number;
+  name: string;
+  description?: string;
+  price?: number;
+  tags?: string[];
+  image?: Buffer | null;
+  enabled: boolean;
+};
 
 export type GetProductsParams = {
   limit?: number;
@@ -14,12 +24,12 @@ export type GetProductsParams = {
 };
 
 export type ProductRequest = {
+  parentId?: number;
+  categoryId?: number;
   name?: string;
   description?: string;
-  categoryId?: number;
   price?: number;
   tags?: string[];
-  variants?: Pick<Product, "name" | "description" | "price">[];
 };
 
 export type CreateProductRequest = {

@@ -11,10 +11,11 @@ public static class ModelBuilderExtensions
         modelBuilder.ApplyConfiguration(new CategoryConfiguration());
         modelBuilder.ApplyConfiguration(new CompanyConfiguration());
         modelBuilder.ApplyConfiguration(new ConsumptionConfiguration());
-        modelBuilder.ApplyConfiguration(new EstablishmentConfiguration());
+        modelBuilder.ApplyConfiguration(new PremiseConfiguration());
         modelBuilder.ApplyConfiguration(new ImageConfiguration());
         modelBuilder.ApplyConfiguration(new IngredientConfiguration());
         modelBuilder.ApplyConfiguration(new LayoutConfiguration());
+        modelBuilder.ApplyConfiguration(new LayoutCoordConfiguration());
         modelBuilder.ApplyConfiguration(new ProductConfiguration());
         modelBuilder.ApplyConfiguration(new RequestConfiguration());
         modelBuilder.ApplyConfiguration(new SectorConfiguration());
@@ -45,8 +46,8 @@ public static class ModelBuilderExtensions
             new Company(name: "Maria Antonieta", "Universo Deli", "MA").WithId(1)
         );
 
-        modelBuilder.Entity<Establishment>().HasData(
-            new Establishment(1, "Barrio Jardin").WithId(1)
+        modelBuilder.Entity<Premise>().HasData(
+            new Premise(1, "Barrio Jardin").WithId(1)
         );
 
         modelBuilder.Entity<Layout>().HasData(
@@ -349,32 +350,65 @@ public static class ModelBuilderExtensions
             new SectorCoord(15, 3, sectorId: 5)
         );
 
-        modelBuilder.Entity<Wall>().HasData(
-            new Wall(
-                layoutId: 1,
-                type: WallType.Solid,
-                surface: new() {
-                    (3, 0),(3, 2),(0, 3),(1, 3),(2, 3),(3, 3),(4, 3),(5, 3),(6, 3),
-                    (7, 3),(8, 3),(9, 3),(10, 3),(11, 3),(12, 3),(13, 3),(14, 3),
-                    (15, 3),(11, 4),(11, 5),(11, 6),(0, 7),(1, 7),(2, 7),(3, 7),
-                    (4, 7),(5, 7),(11, 7),(5, 8),(11, 8),(5, 9),(11, 9),(5, 10),
-                    (11, 10),(5, 11),(11, 11),(5, 12),(11, 12),(5, 13),(11, 13),
-                    (5, 14),(11, 14),(0, 15),(1, 15),(2, 15),(3, 15),(4, 15),
-                    (5, 15),(6, 15),(7, 15),(8, 15),(9, 15),(10, 15),(11, 15),
-                    (12, 15),(13, 15),(14, 15),(15, 15)
-                }
-            ).WithId(1),
-        new Wall(
-            layoutId: 1,
-            type: WallType.Doorway,
-            surface: new() {
-                (5, 3),
-                (6, 3),
-                (5, 9),
-                (11, 5),
-                (7, 15),
-                (3, 15)
-            }).WithId(2)
+        modelBuilder.Entity<LayoutCoord>().HasData(
+                new LayoutCoord(x: 3, y: 0, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 3, y: 2, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 0, y: 3, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 1, y: 3, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 2, y: 3, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 3, y: 3, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 4, y: 3, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 7, y: 3, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 8, y: 3, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 9, y: 3, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 10, y: 3, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 11, y: 3, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 12, y: 3, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 13, y: 3, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 14, y: 3, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 15, y: 3, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 11, y: 4, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 11, y: 6, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 0, y: 7, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 1, y: 7, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 2, y: 7, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 3, y: 7, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 4, y: 7, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 5, y: 7, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 11, y: 7, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 5, y: 8, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 11, y: 8, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 11, y: 9, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 5, y: 10, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 11, y: 10, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 5, y: 11, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 11, y: 11, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 5, y: 12, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 11, y: 12, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 5, y: 13, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 11, y: 13, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 5, y: 14, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 11, y: 14, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 0, y: 15, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 1, y: 15, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 2, y: 15, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 4, y: 15, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 5, y: 15, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 6, y: 15, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 8, y: 15, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 9, y: 15, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 10, y: 15, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 11, y: 15, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 12, y: 15, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 13, y: 15, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 14, y: 15, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 15, y: 15, layoutId: 1, type: LayoutCoordType.Wall),
+                new LayoutCoord(x: 5, y: 3, layoutId: 1, type: LayoutCoordType.Doorway),
+                new LayoutCoord(x: 6, y: 3, layoutId: 1, type: LayoutCoordType.Doorway),
+                new LayoutCoord(x: 5, y: 9, layoutId: 1, type: LayoutCoordType.Doorway),
+                new LayoutCoord(x: 11, y: 5, layoutId: 1, type: LayoutCoordType.Doorway),
+                new LayoutCoord(x: 7, y: 15, layoutId: 1, type: LayoutCoordType.Doorway),
+                new LayoutCoord(x: 3, y: 15, layoutId: 1, type: LayoutCoordType.Doorway)
         );
 
         modelBuilder.Entity<Category>().HasData(

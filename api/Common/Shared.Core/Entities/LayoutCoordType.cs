@@ -1,7 +1,7 @@
 ﻿namespace Shared.Core.Entities;
 
-public enum WallType
+public enum LayoutCoordType
 {
-    Solid,
+    Wall,
     Doorway,
 }

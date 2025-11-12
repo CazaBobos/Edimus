@@ -8,4 +8,5 @@ public class IngredientModel
     public int Stock { get; set; }
     public int Alert { get; set; }
     public MeasurementUnit Unit { get; set; }
+    public bool Enabled { get; set; }
 }

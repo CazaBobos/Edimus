@@ -1,6 +1,7 @@
 import { useCategoriesQuery } from "@/hooks/queries/useCategoriesQuery";
 import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
-import { useState } from "react";
+import { Product } from "@/types";
+import { useMemo, useState } from "react";
 
 import { Select, SelectOption } from "@/components/ui/Select";
 
@@ -17,6 +18,17 @@ export const MenuCards = () => {
     value: c.id,
   }));
 
+  const variantsMap = useMemo(() => {
+    const map: Record<number, Product[]> = {};
+
+    products.forEach((p) => {
+      if (map[p.id]) map[p.id] = [];
+      if (p.parentId) map[p.id] = [...map[p.id], p];
+    });
+
+    return map;
+  }, [products]);
+
   return (
     <>
       <Select options={categoryOptions} onChange={({ value }) => setSelectedCategory(Number(value))}></Select>
@@ -30,7 +42,7 @@ export const MenuCards = () => {
             </div>
             <p>{p.description}</p>
             <ul className={styles.list}>
-              {p.variants?.map((v) => (
+              {variantsMap[p.id]?.map((v) => (
                 <li key={v.name}>
                   <div className={styles.title}>
                     <h5>{v.name}</h5>

@@ -24,12 +24,14 @@ export const MenuPanel = () => {
   return (
     <>
       <Card className={styles.products}>
-        {products.map((p) => (
-          <Card key={p.id} className={styles.card} onClick={() => setProductDialogOpenState(p.id)}>
-            <span>{categoryMap[p.categoryId]}</span>
-            <span>{p.name}</span>
-          </Card>
-        ))}
+        {products
+          .filter((p) => !p.parentId)
+          .map((p) => (
+            <Card key={p.id} className={styles.card} onClick={() => setProductDialogOpenState(p.id)}>
+              <span>{categoryMap[p.categoryId]}</span>
+              <span>{p.name}</span>
+            </Card>
+          ))}
       </Card>
       <ProductDialog />
     </>

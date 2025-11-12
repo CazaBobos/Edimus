@@ -17,6 +17,7 @@ export const ProductDialog = () => {
   const { data: categories } = useCategoriesQuery();
 
   const product = products.find((p) => p.id === productDialogOpenState);
+  const variants = products.filter((p) => p.parentId === productDialogOpenState);
 
   return (
     <Dialog open={productDialogOpenState !== undefined} onClose={handleClose}>
@@ -88,7 +89,7 @@ export const ProductDialog = () => {
           <Button label="Añadir" icon={<BiPlus size={24} />} />
         </div>
         <ul>
-          {product?.variants?.map((v) => (
+          {variants?.map((v) => (
             <li key={v.name}>
               <div className={styles.row}>
                 <input type="text" value={v.name} />

@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Shared.Core.Entities;
 
 namespace Shared.Infrastructure.EntityConfiguration;
-public class EstablishmentConfiguration : IEntityTypeConfiguration<Establishment>
+public class PremiseConfiguration : IEntityTypeConfiguration<Premise>
 {
-    public void Configure(EntityTypeBuilder<Establishment> entity)
+    public void Configure(EntityTypeBuilder<Premise> entity)
     {
         entity.HasKey(e => e.Id);
         entity.Property(e => e.Id)
-            .HasColumnName("EstablishmentId")
+            .HasColumnName("PremiseId")
             .ValueGeneratedOnAdd();
 
         entity.Property(e => e.Name)
@@ -19,12 +19,12 @@ public class EstablishmentConfiguration : IEntityTypeConfiguration<Establishment
         entity.Property(e => e.CompanyId)
             .IsRequired();
         entity.HasOne(e => e.Company)
-            .WithMany(e => e.Establishments)
+            .WithMany(e => e.Premises)
             .HasForeignKey(e => e.CompanyId);
 
         entity.HasMany(e => e.Layouts)
-            .WithOne(e => e.Establishment)
-            .HasForeignKey(e => e.EstablishmentId);
+            .WithOne(e => e.Premise)
+            .HasForeignKey(e => e.PremiseId);
     }
 }
 

@@ -7,16 +7,16 @@ public class Layout : Entity<int>
 {
     public override int Id { get; protected set; }
     public string Name { get; protected set; } = string.Empty;
-    public int EstablishmentId { get; protected set; }
-    public virtual Establishment? Establishment { get; protected set; }
+    public int PremiseId { get; protected set; }
+    public virtual Premise? Premise { get; protected set; }
     public virtual List<Table>? Tables { get; protected set; }
-    public virtual List<Wall>? Walls { get; protected set; }
     public virtual List<Sector>? Sectors { get; protected set; }
+    public virtual List<LayoutCoord>? Boundaries { get; protected set; }
 
     protected Layout() { }
-    public Layout(int establishmentId, string name)
+    public Layout(int premiseId, string name)
     {
-        EstablishmentId = Guard.Argument(() => establishmentId).Positive();
+        PremiseId = Guard.Argument(() => premiseId).Positive();
         Name = Guard.Argument(() => name).NotNull().NotEmpty();
         Enabled = true;
     }

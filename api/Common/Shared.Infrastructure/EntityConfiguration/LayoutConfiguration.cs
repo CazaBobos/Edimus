@@ -16,11 +16,11 @@ public class LayoutConfiguration : IEntityTypeConfiguration<Layout>
             .IsRequired()
             .HasMaxLength(16);
 
-        entity.Property(e => e.EstablishmentId)
+        entity.Property(e => e.PremiseId)
             .IsRequired();
-        entity.HasOne(e => e.Establishment)
+        entity.HasOne(e => e.Premise)
             .WithMany(e => e.Layouts)
-            .HasForeignKey(e => e.EstablishmentId);
+            .HasForeignKey(e => e.PremiseId);
 
         entity.HasMany(e => e.Tables)
             .WithOne(e => e.Layout)
@@ -30,7 +30,7 @@ public class LayoutConfiguration : IEntityTypeConfiguration<Layout>
             .WithOne(e => e.Layout)
             .HasForeignKey(e => e.LayoutId);
 
-        entity.HasMany(e => e.Walls)
+        entity.HasMany(e => e.Boundaries)
             .WithOne(e => e.Layout)
             .HasForeignKey(e => e.LayoutId);
 

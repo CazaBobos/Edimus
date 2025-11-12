@@ -9,5 +9,8 @@ public class CompanyProfile : Profile
     public CompanyProfile()
     {
         CreateMap<Company, CompanyModel>().ReverseMap();
+        CreateMap<Premise, PremiseModel>().ReverseMap();
+        CreateMap<Layout, LayoutModel>().ReverseMap();
+        CreateMap<LayoutCoord, LayoutCoordModel>().ReverseMap();
     }
 }

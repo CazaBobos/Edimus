@@ -22,7 +22,7 @@ public class CompanyConfiguration : IEntityTypeConfiguration<Company>
             .IsRequired()
             .HasMaxLength(8);
 
-        entity.HasMany(e => e.Establishments)
+        entity.HasMany(e => e.Premises)
             .WithOne(e => e.Company)
             .HasForeignKey(e => e.CompanyId);
 

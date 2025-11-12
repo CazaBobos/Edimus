@@ -13,16 +13,17 @@ public class DatabaseContext : DbContext
     public DbSet<Category> Categories { get; set; } = null!;
     public DbSet<Company> Companies { get; set; } = null!;
     public DbSet<Consumption> Consumptions { get; set; } = null!;
-    public DbSet<Establishment> Establishments { get; set; } = null!;
+    public DbSet<Premise> Premises { get; set; } = null!;
     public DbSet<Image> Images { get; set; } = null!;
     public DbSet<Ingredient> Ingredients { get; set; } = null!;
     public DbSet<Layout> Layouts { get; set; } = null!;
+    public DbSet<LayoutCoord> LayoutCoords { get; set; } = null!;
     public DbSet<Product> Products { get; set; } = null!;
     public DbSet<Request> Requests { get; set; } = null!;
     public DbSet<Sector> Sectors { get; set; } = null!;
-    public DbSet<SectorCoord> SectorSurfaces { get; set; } = null!;
+    public DbSet<SectorCoord> SectorCoords { get; set; } = null!;
     public DbSet<Table> Tables { get; set; } = null!;
-    public DbSet<TableCoord> TableSurfaces { get; set; } = null!;
+    public DbSet<TableCoord> TableCoords { get; set; } = null!;
     public DbSet<Tag> Tags { get; set; } = null!;
     public DbSet<User> Users { get; set; } = null!;
     #endregion

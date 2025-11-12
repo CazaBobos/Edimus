@@ -9,7 +9,7 @@ public class Company : AggregateRoot<int>
     public string Name { get; protected set; } = string.Empty;
     public string Slogan { get; protected set; } = string.Empty;
     public string Acronym { get; protected set; } = string.Empty;
-    public virtual List<Establishment>? Establishments { get; protected set; }
+    public virtual List<Premise>? Premises { get; protected set; }
     public virtual List<Category>? Categories { get; protected set; }
 
     protected Company() { }

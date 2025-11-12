@@ -1,15 +1,15 @@
+import { useCompanyQuery } from "@/hooks/queries/useCompanyQuery";
 import { useSectorsQuery } from "@/hooks/queries/useSectorsQuery";
 import { useTablesQuery } from "@/hooks/queries/useTablesQuery";
-import { useWallsQuery } from "@/hooks/queries/useWallsQuery";
 import { useAdminStore } from "@/stores";
-import { TableStatus, WallType } from "@/types";
+import { TableStatus, BoundaryType } from "@/types";
 
 import { SectorTag } from "./SectorTag";
 import { Square } from "./Square";
 import styles from "./styles.module.scss";
 
 export const SaloonGrid = () => {
-  const { data: walls } = useWallsQuery();
+  const { data: company } = useCompanyQuery(1);
   const { data: tables } = useTablesQuery();
   const { data: sectors } = useSectorsQuery();
   const { setTableDialogOpenState } = useAdminStore();
@@ -73,21 +73,19 @@ export const SaloonGrid = () => {
           height: "fit-content",
         }}
       >
-        {walls.map((e) =>
-          e.surface.map((s) => (
-            <Square
-              key={[s[0], s[1]].join(",")}
-              position={{ x: s[0], y: s[1] }}
-              color={
-                {
-                  [WallType.Solid]: "grey",
-                  [WallType.Doorway]: "blue",
-                }[e.type]
-              }
-              filled
-            />
-          )),
-        )}
+        {company?.premises[0].layouts[0].boundaries.map((b) => (
+          <Square
+            key={[b.x, b.y].join(",")}
+            position={b}
+            filled
+            color={
+              {
+                [BoundaryType.Wall]: "grey",
+                [BoundaryType.Doorway]: "blue",
+              }[b.type]
+            }
+          />
+        ))}
       </div>
     </div>
   );
