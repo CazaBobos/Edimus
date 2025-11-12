@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Products.Core.Features.CreateProduct;
 using Products.Core.Features.GetProducts;
-using Products.Core.Model;
+using Products.Core.Features.RemoveProduct;
+using Products.Core.Features.RestoreProduct;
 using Products.Input;
 using Shared.Core.Abstractions;
 using Shared.Infrastructure.Extensions;
@@ -66,10 +67,10 @@ public class ProductsController : ControllerBase
     }
 
     /// <summary>
-    /// Updates an existing
+    /// Updates an existing product
     /// </summary>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Create(int id, UpdateProductInput input, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update(int id, UpdateProductInput input, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new UpdateProductRequest
         {
@@ -79,6 +80,36 @@ public class ProductsController : ControllerBase
             Name = input.Name,
             Description = input.Description,
             Price = input.Price,
+            User = User.GetUser(),
+        }, cancellationToken);
+
+        return Ok(response);
+    }
+
+    /// <summary>
+    /// Removes a product
+    /// </summary>
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Remove(int id, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new RemoveProductRequest
+        {
+            Id = id,
+            User = User.GetUser(),
+        }, cancellationToken);
+
+        return Ok(response);
+    }
+
+    /// <summary>
+    /// Restores a product
+    /// </summary>
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> Restore(int id, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new RestoreProductRequest
+        {
+            Id = id,
             User = User.GetUser(),
         }, cancellationToken);
 

@@ -1,10 +1,6 @@
 ﻿using Dawn;
 using QRCoder;
 using Shared.Core.Domain;
-using System.Text;
-using System.Text.Json;
-using System.Xml.Linq;
-
 namespace Shared.Core.Entities;
 
 public class Table : AggregateRoot<int>
@@ -16,21 +12,24 @@ public class Table : AggregateRoot<int>
     public string QR { get; protected set; } = string.Empty;
     public int PositionX { get; protected set; }
     public int PositionY { get; protected set; }
-    public string Surface { get; protected set; } = string.Empty;
+    public virtual List<TableCoord>? Surface { get; protected set; }
     public virtual List<Request>? Requests { get; protected set; }
 
     protected Table() { }
-    public Table(int layoutId, int positionX, int positionY, List<(int, int)> surface, TableStatus status = TableStatus.Free)
+    public Table(int layoutId, int positionX, int positionY, List<(int, int)>? surface = null, TableStatus status = TableStatus.Free)
     {
         LayoutId = Guard.Argument(() => layoutId).Positive();
         PositionX = Guard.Argument(() => positionX).NotNegative();
         PositionY = Guard.Argument(() => positionY).NotNegative();
         QR = GenerateQRCode(Id);
 
-        Guard.Argument(() => surface).MinCount(1);
-        Surface = JsonSerializer.Serialize(surface);
+        if(surface is not null)
+        {
+            Guard.Argument(() => surface).MinCount(1);
+            Surface = surface!.Select(s => new TableCoord(s.Item1, s.Item2, Id)).ToList();
+        }
+        
         Status = status;
-        //AddHistory(user, AuditOperation.Created, null);
         Enabled = true;
     }
 
@@ -55,7 +54,7 @@ public class Table : AggregateRoot<int>
         }
         if (surface is not null)
         {
-            Surface = JsonSerializer.Serialize(surface);
+            Surface = surface.Select(s => new TableCoord(s.Item1, s.Item2, Id)).ToList();
             affectedMembers.Add(nameof(Surface));
         }
         //if (affectedMembers.Count != 0) AddHistory(user, AuditOperation.Updated, affectedMembers);

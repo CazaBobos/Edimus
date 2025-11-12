@@ -28,7 +28,7 @@ public static class ClaimsPrincipalExtensions
 
     private static List<int> GetUserCompanies(this ClaimsPrincipal user)
     {
-        var value = user.GetClaimValue(UserClaims.Companies) ?? string.Empty;
+        var value = user.GetClaimValue(UserClaims.Companies);
 
         return JsonSerializer.Deserialize<List<int>>(value) ?? new();
     }
@@ -36,6 +36,7 @@ public static class ClaimsPrincipalExtensions
     private static UserRole GetUserRole(this ClaimsPrincipal user)
     {
         var value = GetClaimValue(user, UserClaims.Role);
+
         return value is null ? UserRole.None : (UserRole)(Convert.ToInt32(value));
     }
 

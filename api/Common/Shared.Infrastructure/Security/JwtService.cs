@@ -9,16 +9,16 @@ using System.Text;
 namespace Shared.Infrastructure.Security;
 public class JwtService : IJwtService
 {
-    public IJwtSettings _jwtConfiguration { get; set; }
+    public IJwtSettings _jwtSettings { get; set; }
 
-    public JwtService(IJwtSettings jwtConfiguration)
+    public JwtService(IJwtSettings jwtSettings)
     {
-        _jwtConfiguration = jwtConfiguration;
+        _jwtSettings = jwtSettings;
     }
 
     public string GenerateToken(IUserRecord user)
     {
-        var expires = DateTime.UtcNow.AddMinutes(_jwtConfiguration.ExpirationInMinutes);
+        var expires = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpirationInMinutes);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(GetClaims(user)),
@@ -35,13 +35,13 @@ public class JwtService : IJwtService
     {
         yield return new Claim(UserClaims.Id, user.Id.ToString());
         yield return new Claim(UserClaims.Username, user.Username.ToString());
-        yield return new Claim(UserClaims.Role, user.Role.ToString());
-        yield return new Claim(UserClaims.Companies, user.CompanyIds.ToString() ?? "");
+        yield return new Claim(UserClaims.Role, ((int)user.Role).ToString());
+        yield return new Claim(UserClaims.Companies, user.CompanyIds?.ToString() ?? "[]");
     }
 
     private SigningCredentials GetSigningCredentials()
     {
-        var key = Encoding.ASCII.GetBytes(_jwtConfiguration.Secret);
+        var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
         return new SigningCredentials(
                 new SymmetricSecurityKey(key),
                 SecurityAlgorithms.HmacSha256

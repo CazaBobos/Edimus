@@ -1,20 +1,28 @@
 ﻿using AutoMapper;
+using Identity.Core.Abstractions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared.Core.Abstractions;
-using Identity.Core.Abstractions;
+using Shared.Core.Entities;
 using Shared.Core.Services;
+using Shared.Core.Settings;
 
 namespace Identity.Core.Features.Login;
 public class LoginRequestHandler : IRequestHandler<LoginRequest, LoginResponse>
 {
     private readonly IUsersRepository _usersRepository;
-    private readonly IJwtService _jwtService;
     private readonly IMapper _mapper;
-    public LoginRequestHandler(IUsersRepository usersRepository, IMapper mapper,IJwtService jwtService)
+    private readonly IJwtSettings _jwtSettings;
+    private readonly IJwtService _jwtService;
+    public LoginRequestHandler(
+        IUsersRepository usersRepository, 
+        IMapper mapper,
+        IJwtSettings jwtSettings,
+        IJwtService jwtService)
     {
         _usersRepository = usersRepository;
-        _jwtService= jwtService;
+        _jwtSettings = jwtSettings;
+        _jwtService = jwtService;
         _mapper = mapper;
     }
     public async Task<LoginResponse> Handle(LoginRequest request, CancellationToken cancellationToken)
@@ -33,7 +41,10 @@ public class LoginRequestHandler : IRequestHandler<LoginRequest, LoginResponse>
             Username = user.Username,
             Email = user.Email,
             CompanyIds = user.CompanyIds,
+            Role = user.Role,
+            ExpiresIn = _jwtSettings.ExpirationInMinutes,
             Token = _jwtService.GenerateToken(userRecord),
+            RefreshToken = "",
         };
     }
 }

@@ -8,6 +8,7 @@ using Categories.Extensions;
 using Companies.Extensions;
 using Ingredients.Extensions;
 using Products.Extensions;
+using Sectors.Extensions;
 using Tables.Extensions;
 using Users.Extensions;
 using Identity.Extensions;
@@ -44,6 +45,7 @@ builder.Services.AddCategories();
 builder.Services.AddCompanies();
 builder.Services.AddIngredients();
 builder.Services.AddProducts();
+builder.Services.AddSectors();
 builder.Services.AddTables();
 builder.Services.AddUsers();
 builder.Services.AddIdentity();
@@ -52,7 +54,7 @@ builder.Services.AddNextjsStaticHosting(options => options.RootPath = "StaticFil
 
 var app = builder.Build();
 
-app.MapNextjsStaticHtmls(); //<= Serves Static HTMLs
+app.MapNextjsStaticHtmls(); // <= Serves Static HTMLs
 app.UseNextjsStaticHosting(); // <= For other required files (i.e. css and js files)
 
 app.UseSwagger();

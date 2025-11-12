@@ -19,7 +19,10 @@ public class DatabaseContext : DbContext
     public DbSet<Layout> Layouts { get; set; } = null!;
     public DbSet<Product> Products { get; set; } = null!;
     public DbSet<Request> Requests { get; set; } = null!;
+    public DbSet<Sector> Sectors { get; set; } = null!;
+    public DbSet<SectorCoord> SectorSurfaces { get; set; } = null!;
     public DbSet<Table> Tables { get; set; } = null!;
+    public DbSet<TableCoord> TableSurfaces { get; set; } = null!;
     public DbSet<Tag> Tags { get; set; } = null!;
     public DbSet<User> Users { get; set; } = null!;
     #endregion

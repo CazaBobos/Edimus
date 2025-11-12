@@ -26,6 +26,10 @@ public class LayoutConfiguration : IEntityTypeConfiguration<Layout>
             .WithOne(e => e.Layout)
             .HasForeignKey(e => e.LayoutId);
 
+        entity.HasMany(e => e.Sectors)
+            .WithOne(e => e.Layout)
+            .HasForeignKey(e => e.LayoutId);
+
         entity.HasMany(e => e.Walls)
             .WithOne(e => e.Layout)
             .HasForeignKey(e => e.LayoutId);

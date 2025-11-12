@@ -12,6 +12,7 @@ public class Layout : Entity<int>
     public virtual Establishment? Establishment{ get; protected set; }
     public virtual List<Table>? Tables{ get; protected set; }
     public virtual List<Wall>? Walls{ get; protected set; }
+    public virtual List<Sector>? Sectors{ get; protected set; }
 
     protected Layout() { }
     public Layout(int establishmentId, string name)

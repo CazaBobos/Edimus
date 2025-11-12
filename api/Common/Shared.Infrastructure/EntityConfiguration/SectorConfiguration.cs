@@ -3,24 +3,22 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Shared.Core.Entities;
 
 namespace Shared.Infrastructure.EntityConfiguration;
-public class TableConfiguration : IEntityTypeConfiguration<Table>
+public class SectorConfiguration : IEntityTypeConfiguration<Sector>
 {
-    public void Configure(EntityTypeBuilder<Table> entity)
+    public void Configure(EntityTypeBuilder<Sector> entity)
     {
         entity.HasKey(e => e.Id);
         entity.Property(e => e.Id)
-            .HasColumnName("TableId")
+            .HasColumnName("SectorId")
             .ValueGeneratedOnAdd();
 
         entity.Property(e => e.LayoutId)
             .IsRequired();
         entity.HasOne(e => e.Layout)
-            .WithMany(e => e.Tables)
+            .WithMany(e => e.Sectors)
             .HasForeignKey(e => e.LayoutId);
 
-        entity.Property(e => e.Status)
-            .IsRequired();
-        entity.Property(e => e.QR)
+        entity.Property(e => e.Name)
             .IsRequired();
         entity.Property(e => e.PositionX)
             .IsRequired();
@@ -28,12 +26,8 @@ public class TableConfiguration : IEntityTypeConfiguration<Table>
             .IsRequired();
 
         entity.HasMany(e => e.Surface)
-            .WithOne(e => e.Table)
-            .HasForeignKey(e => e.TableId);
-
-        entity.HasMany(e => e.Requests)
-            .WithOne(e => e.Table)
-            .HasForeignKey(e => e.TableId);
+            .WithOne(e => e.Sector)
+            .HasForeignKey(e => e.SectorId);
 
         entity.Property(e => e.Enabled)
             .IsRequired();

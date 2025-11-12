@@ -29,6 +29,7 @@
     <ProjectReference Include="..\Modules\Identity\Identity\Identity.csproj" />
     <ProjectReference Include="..\Modules\Ingredients\Ingredients\Ingredients.csproj" />
     <ProjectReference Include="..\Modules\Products\Products\Products.csproj" />
+    <ProjectReference Include="..\Modules\Sectors\Sectors\Sectors.csproj" />
     <ProjectReference Include="..\Modules\Tables\Tables\Tables.csproj" />
     <ProjectReference Include="..\Modules\Users\Users\Users.csproj" />
   </ItemGroup>
