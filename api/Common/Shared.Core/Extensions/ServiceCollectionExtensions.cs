@@ -5,7 +5,8 @@ namespace Shared.Core.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    private static string GetLicenseKey(this IServiceCollection services, string licenseKey) {
+    private static string GetLicenseKey(this IServiceCollection services, string licenseKey)
+    {
         var licenseKeysSection = services
             .BuildServiceProvider()
             .GetRequiredService<IConfiguration>()
@@ -18,7 +19,8 @@ public static class ServiceCollectionExtensions
     {
         string licenseKey = services.GetLicenseKey("MediatR");
 
-        services.AddMediatR(config => {
+        services.AddMediatR(config =>
+        {
             config.LicenseKey = licenseKey;
             config.RegisterServicesFromAssembly(typeof(T).Assembly);
         });
@@ -30,8 +32,8 @@ public static class ServiceCollectionExtensions
     {
         string licenseKey = services.GetLicenseKey("MediatR");
 
-        services.AddAutoMapper(config => config.LicenseKey = licenseKey , typeof(T).Assembly);
-        
+        services.AddAutoMapper(config => config.LicenseKey = licenseKey, typeof(T).Assembly);
+
         return services;
     }
 

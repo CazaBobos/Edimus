@@ -7,7 +7,7 @@ public class SectorCoord
     public int X { get; protected set; }
     public int Y { get; protected set; }
     public int SectorId { get; protected set; }
-    public virtual Sector? Sector{ get; protected set; }
+    public virtual Sector? Sector { get; protected set; }
 
     protected SectorCoord() { }
     public SectorCoord(int x, int y, int sectorId)

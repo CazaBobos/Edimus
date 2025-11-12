@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
-using Shared.Core.Entities;
 using Shared.Core.Exceptions;
-using System.Data;
 using Users.Core.Abstractions;
 using Users.Core.Model;
-using static QRCoder.PayloadGenerator;
 
 namespace Users.Core.Features.UpdateUser;
 public class UpdateUserRequestHandler : IRequestHandler<UpdateUserRequest, UpdateUserResponse>

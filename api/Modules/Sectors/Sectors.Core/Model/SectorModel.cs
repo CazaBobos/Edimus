@@ -1,6 +1,4 @@
-﻿using Shared.Core.Entities;
-
-namespace Sectors.Core.Model;
+﻿namespace Sectors.Core.Model;
 public class SectorModel
 {
     public int Id { get; set; }

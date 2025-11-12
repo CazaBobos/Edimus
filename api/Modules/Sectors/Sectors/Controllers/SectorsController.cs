@@ -1,15 +1,13 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Core.Abstractions;
-using Shared.Core.Entities;
-using Shared.Infrastructure.Extensions;
 using Sectors.Core.Features.CreateSector;
 using Sectors.Core.Features.GetManySectors;
 using Sectors.Core.Features.RemoveSector;
 using Sectors.Core.Features.UpdateSector;
-using Sectors.Core.Model;
 using Sectors.Input;
+using Shared.Core.Abstractions;
+using Shared.Infrastructure.Extensions;
 
 namespace Sectors.Controllers;
 

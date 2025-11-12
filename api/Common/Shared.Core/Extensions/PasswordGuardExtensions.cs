@@ -22,7 +22,7 @@ public static class PasswordGuardExtensions
         if (argument.HasValue() && !regex.IsMatch(argument))
         {
             throw Guard.Fail(new ArgumentException(
-                $"{ argument.Name} is not a valid password format.",
+                $"{argument.Name} is not a valid password format.",
                 argument.Name));
         }
         return ref argument;

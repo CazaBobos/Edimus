@@ -57,7 +57,7 @@ public static class ModelBuilderExtensions
             new Table(layoutId: 1, positionX: 0, positionY: 0, status: TableStatus.Occupied).WithId(1),
             new Table(layoutId: 1, positionX: 2, positionY: 2, status: TableStatus.Free).WithId(2),
             new Table(layoutId: 1, positionX: 7, positionY: 0, status: TableStatus.Free).WithId(3),
-            new Table(layoutId: 1, positionX: 9,positionY: 0, status: TableStatus.Occupied).WithId(4),
+            new Table(layoutId: 1, positionX: 9, positionY: 0, status: TableStatus.Occupied).WithId(4),
             new Table(layoutId: 1, positionX: 11, positionY: 0, status: TableStatus.Calling).WithId(5),
             new Table(layoutId: 1, positionX: 13, positionY: 0, status: TableStatus.Occupied).WithId(6),
             new Table(layoutId: 1, positionX: 15, positionY: 1, status: TableStatus.Calling).WithId(7)
@@ -83,7 +83,7 @@ public static class ModelBuilderExtensions
             new Sector(layoutId: 1, positionX: 16, positionY: 6, name: "Garden", color: "cyan").WithId(4),
             new Sector(layoutId: 1, positionX: 4, positionY: 18, name: "Patio Externo", color: "lime").WithId(5)
         );
-       
+
         modelBuilder.Entity<SectorCoord>().HasData(
             new SectorCoord(0, 0, sectorId: 1),
             new SectorCoord(1, 0, sectorId: 1),
@@ -365,8 +365,8 @@ public static class ModelBuilderExtensions
                 }
             ).WithId(1),
         new Wall(
-            layoutId: 1, 
-            type: WallType.Doorway, 
+            layoutId: 1,
+            type: WallType.Doorway,
             surface: new() {
                 (5, 3),
                 (6, 3),
@@ -417,10 +417,10 @@ public static class ModelBuilderExtensions
             new Product(parentId: 1, categoryId: null, price: 1000, name: "Vanilla latte").WithId(33),
             new Product(parentId: 1, categoryId: null, price: 1000, name: "Avellana latte").WithId(34),
             new Product(parentId: 1, categoryId: null, price: 1000, name: "Nutella latte", description: "Chocolate especial con pasta de avellanas").WithId(35),
-            
+
             // Especial del día (id: 2)
             new Product(parentId: null, categoryId: 1, price: 1000, name: "Especial del día", description: "(consultar origen)").WithId(2),
-            
+
             // Frío (id: 3)
             new Product(parentId: null, categoryId: 1, price: 0, name: "Frío").WithId(3),
             new Product(parentId: 3, categoryId: null, price: 1000, name: "Espresso con hielo").WithId(36),
@@ -431,7 +431,7 @@ public static class ModelBuilderExtensions
             new Product(parentId: 3, categoryId: null, price: 1000, name: "Iced vanilla latte").WithId(41),
             new Product(parentId: 3, categoryId: null, price: 1000, name: "Iced avellana latte").WithId(42),
             new Product(parentId: 3, categoryId: null, price: 1000, name: "Iced americano simple/doble").WithId(43),
-            
+
             // Croissant (id: 4, corregido)
             new Product(parentId: null, categoryId: 2, price: 0, name: "Croissant").WithId(4),
             new Product(parentId: 4, categoryId: null, price: 1000, name: "Con jamon cocido y queso tybo").WithId(44),
@@ -441,14 +441,14 @@ public static class ModelBuilderExtensions
             new Product(parentId: 4, categoryId: null, price: 1000, name: "Croissant").WithId(48),
             new Product(parentId: 4, categoryId: null, price: 1000, name: "Pain au chocolat").WithId(49),
             new Product(parentId: 4, categoryId: null, price: 1000, name: "Roll de canela").WithId(50),
-            
+
             // Budines (id: 5)
             new Product(parentId: null, categoryId: 2, price: 0, name: "Budines").WithId(5),
             new Product(parentId: 5, categoryId: null, price: 1000, name: "Zanahoria").WithId(51),
             new Product(parentId: 5, categoryId: null, price: 1000, name: "Limon y amapolas").WithId(52),
             new Product(parentId: 5, categoryId: null, price: 1000, name: "Avellanas y chocolate (vegano)").WithId(53),
             new Product(parentId: 5, categoryId: null, price: 1000, name: "Banana y tahini").WithId(54),
-            
+
             // Galletas (id: 6)
             new Product(parentId: null, categoryId: 2, price: 0, name: "Galletas").WithId(6),
             new Product(parentId: 6, categoryId: null, price: 1000, name: "Almendras coco y chocolate negro.").WithId(55),
@@ -458,7 +458,7 @@ public static class ModelBuilderExtensions
             new Product(parentId: 6, categoryId: null, price: 1000, name: "Scones de queso y pimienta").WithId(59),
             new Product(parentId: 6, categoryId: null, price: 1000, name: "Scones de queso y verdeo").WithId(60),
             new Product(parentId: 6, categoryId: null, price: 1000, name: "Chipa").WithId(61),
-            
+
             // Sin TACC (id: 7)
             new Product(parentId: null, categoryId: 2, price: 0, name: "Sin TACC").WithId(7),
             new Product(parentId: 7, categoryId: null, price: 1000, name: "Alfajorcito de mani con dulce de leche y sésamo").WithId(62),
@@ -466,7 +466,7 @@ public static class ModelBuilderExtensions
             new Product(parentId: 7, categoryId: null, price: 1000, name: "Alfajorcito de maicena").WithId(64),
             new Product(parentId: 7, categoryId: null, price: 1000, name: "Pepas (2 unidades)").WithId(65),
             new Product(parentId: 7, categoryId: null, price: 1000, name: "Conito de dulce de leche").WithId(66),
-            
+
             // Sandwiches (id: 8)
             new Product(parentId: null, categoryId: 3, price: 0, name: "Sandwiches").WithId(8),
             new Product(parentId: 8, categoryId: null, price: 1000, name: "Catalan", description: "Jamón cocido y queso tybo con pulpa de tomate en pan baguette.").WithId(67),
@@ -476,7 +476,7 @@ public static class ModelBuilderExtensions
             new Product(parentId: 8, categoryId: null, price: 1000, name: "Sandwich Croque Monsieur", description: "Jamón cocido, queso tybo en pan de molde con salsa bechamel y queso gratinado.").WithId(71),
             new Product(parentId: 8, categoryId: null, price: 1000, name: "Sandwich Croque Madame", description: "Jamón cocido, queso tybo en pan de molde con salsa bechamel,queso gratinado y huevo frito.").WithId(72),
             new Product(parentId: 8, categoryId: null, price: 1000, name: "Bagel", description: "Lomito ahumado, queso tybo y huevo.").WithId(73),
-            
+
             // Tostones (id: 9)
             new Product(parentId: null, categoryId: 3, price: 0, name: "Tostones").WithId(9),
             new Product(parentId: 9, categoryId: null, price: 1000, name: "De pan de molde con mermelada/miel y queso crema/ manteca.").WithId(74),
@@ -485,36 +485,36 @@ public static class ModelBuilderExtensions
             new Product(parentId: 9, categoryId: null, price: 1000, name: "De hogaza maíz morado con queso crema, palta, brotes de lenteja y semillas.").WithId(77),
             new Product(parentId: 9, categoryId: null, price: 1000, name: "Francesa con fruta de estación y granola con culis de naranja y menta.").WithId(78),
             new Product(parentId: 9, categoryId: null, price: 1000, name: "Yogurt con granola, frutas de estación y miel").WithId(79),
-            
+
             // Completo (id: 10)
             new Product(parentId: null, categoryId: 4, price: 1000, name: "Completo", description: "Infusion, tostadas de pan de campo y pan de molde, jamon cocido, queso tybo, huevo revuelto con semillas, queso crema y un bowl con yogurt natural, miel y granola").WithId(10),
-            
+
             // Lightweight (id: 11)
             new Product(parentId: null, categoryId: 4, price: 1000, name: "Lightweight", description: "Infusión tostadas de pan de molde, pulpa de tomate y oliva y bowl con yogurt natural, miel, frutas de estación y granola.").WithId(11),
-            
+
             // Baby breakfast (id: 12)
             new Product(parentId: null, categoryId: 4, price: 1000, name: "Baby breakfast", description: "Infusión,panqueques de avena y banana con miel, frutos secos y frutas de estación").WithId(12),
-            
+
             // Tartas (id: 13)
             new Product(parentId: null, categoryId: 5, price: 0, name: "Tartas").WithId(13),
             new Product(parentId: 13, categoryId: null, price: 1000, name: "Tarta veggie", description: "Espuma de espinaca concubos de calabacin y choclo salteado, tomate cherry,cebollacaramelizada en masa quebrada.").WithId(80),
             new Product(parentId: 13, categoryId: null, price: 1000, name: "Tarta gourmet", description: "Pollo, cebollas caramelizadas, espinaca, queso azul y nueces en masa quebrada.").WithId(81),
-            
+
             // Wrap (id: 14)
             new Product(parentId: null, categoryId: 5, price: 0, name: "Wrap").WithId(14),
             new Product(parentId: 14, categoryId: null, price: 1000, name: "Wrap frio", description: "Tortilla de trigo , mix de verdes, palta, zanahoria, pollo y pate de remolacha y semillas.").WithId(82),
             new Product(parentId: 14, categoryId: null, price: 1000, name: "Wrap calentito", description: "Tortilla de trigo calentita, pollo, queso tybo, cebolla caramelizada, zanahoria, pimiento rojo y verde, con mostaza Pauza (mostaza, curry y miel).").WithId(83),
-            
+
             // Ensaladas (id: 15)
             new Product(parentId: null, categoryId: 5, price: 0, name: "Ensaladas").WithId(15),
             new Product(parentId: 15, categoryId: null, price: 1000, name: "Cesar", description: "Lechuga manteca, tomates cherry confitados, jamon cocido y queso tybo en tiras, crutones y pollo al horno con salsa césar").WithId(84),
             new Product(parentId: 15, categoryId: null, price: 1000, name: "Pauza", description: "Mix de verdes, zanahoria, pepino, cherry confitados, crutones, brotes de lenteja, acompañado con vinagreta de yogurt natural").WithId(85),
-            
+
             // Naturales (id: 16)
             new Product(parentId: null, categoryId: 6, price: 0, name: "Naturales").WithId(16),
             new Product(parentId: 16, categoryId: null, price: 1000, name: "Limonada menta y jengibre 1/2L.").WithId(86),
             new Product(parentId: 16, categoryId: null, price: 1000, name: "Jugo de naranja exprimido").WithId(87),
-            
+
             // Otras bebidas (id: 17)
             new Product(parentId: null, categoryId: 6, price: 0, name: "Otras bebidas").WithId(17),
             new Product(parentId: 17, categoryId: null, price: 1000, name: "Gaseosa lata 330 cc").WithId(88),
@@ -522,22 +522,22 @@ public static class ModelBuilderExtensions
             new Product(parentId: 17, categoryId: null, price: 1000, name: "Agua mineral con gas 500 cc").WithId(90),
             new Product(parentId: 17, categoryId: null, price: 1000, name: "Stella Artois 330 cc").WithId(91),
             new Product(parentId: 17, categoryId: null, price: 1000, name: "Sidra Peer").WithId(92),
-            
+
             // Vermút (id: 18)
             new Product(parentId: null, categoryId: 7, price: 1000, name: "Vermút", description: "(Aperitivo a base de hierbas y especias acompañado con dash de soda, hielo y rodaja de naranja)").WithId(18),
             new Product(parentId: 18, categoryId: null, price: 0, name: "Cinzano Rosso/Bianco").WithId(93),
             new Product(parentId: 18, categoryId: null, price: 0, name: "Lunfa").WithId(94),
             new Product(parentId: 18, categoryId: null, price: 0, name: "Lunfa Verbena").WithId(95),
             new Product(parentId: 18, categoryId: null, price: 0, name: "La Fuerza Rojo/Blanco").WithId(96),
-            
+
             // Gin tonic (id: 19)
             new Product(parentId: null, categoryId: 7, price: 1000, name: "Gin tonic", description: "(Destilado inglés acompañado con tónica, hielo y rodaja de limón)").WithId(19),
             new Product(parentId: 19, categoryId: null, price: 0, name: "Brokers").WithId(97),
             new Product(parentId: 19, categoryId: null, price: 0, name: "Tanqueray").WithId(98),
-            
+
             // Aperol Spritz (id: 20)
             new Product(parentId: null, categoryId: 7, price: 1000, name: "Aperol Spritz", description: "(Aperol, vino espumante extra brut, dash de soda y rodaja de naranja)").WithId(20),
-            
+
             // Negroni (id: 21)
             new Product(parentId: null, categoryId: 7, price: 1000, name: "Negroni", description: "(Vermút, gin, campari y rodaja de naranja)").WithId(21)
         );

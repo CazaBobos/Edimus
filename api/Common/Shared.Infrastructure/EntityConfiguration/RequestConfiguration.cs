@@ -7,8 +7,8 @@ public class RequestConfiguration : IEntityTypeConfiguration<Request>
 {
     public void Configure(EntityTypeBuilder<Request> entity)
     {
-        entity.HasKey(e => new {e.TableId, e.ProductId});
-        
+        entity.HasKey(e => new { e.TableId, e.ProductId });
+
         entity.Property(e => e.ProductId)
             .IsRequired();
 

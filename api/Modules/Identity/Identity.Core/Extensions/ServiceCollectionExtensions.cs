@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Identity.Core.Abstractions;
+﻿using Identity.Core.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 using Shared.Core.Extensions;
 
 namespace Identity.Core.Extensions;

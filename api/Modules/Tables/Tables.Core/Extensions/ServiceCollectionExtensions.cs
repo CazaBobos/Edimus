@@ -9,7 +9,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddMediatR<ITablesRepository>();
         services.AddAutoMapper<ITablesRepository>();
-        
+
         return services;
     }
 }

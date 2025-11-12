@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Categories.Core.Abstractions;
+﻿using Categories.Core.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 using Shared.Core.Extensions;
 
 namespace Categories.Core.Extensions;

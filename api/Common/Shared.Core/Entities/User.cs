@@ -43,11 +43,11 @@ public class User : Entity<int>, IUserRecord
         string? email = null,
         string? currentPassword = null,
         string? newPassword = null,
-        UserRole ? role = null,
+        UserRole? role = null,
         List<int>? companyIds = null)
     {
         Guard.Operation(Enabled == true, "A user cannot be modified when it's not active. Restore it and try again.");
-        
+
         var affectedMembers = new List<string>();
 
         if (username is not null && username != Username)
@@ -83,23 +83,23 @@ public class User : Entity<int>, IUserRecord
 
             affectedMembers.Add(nameof(Password));
         }
-        
+
         if (companyIds is not null && !companyIds.OrderBy(x => x).SequenceEqual(CompanyIds.OrderBy(x => x)))
         {
             CompanyIds = ValidateCompanies(companyIds);
         }
 
-        if(role is not null && role != Role)
+        if (role is not null && role != Role)
         {
-            Guard.Operation(Role != UserRole .Root, "A user with root role cannot be changed.");
+            Guard.Operation(Role != UserRole.Root, "A user with root role cannot be changed.");
 
-            Role = (UserRole )role;
+            Role = (UserRole)role;
         }
 
         //if (affectedMembers.Count != 0) AddHistory(user, AuditOperation.Updated, affectedMembers);
     }
 
-    private List<int> ValidateCompanies(List<int> companies) => 
+    private List<int> ValidateCompanies(List<int> companies) =>
         Guard.Argument(() => companies)
             .DoesNotContainDuplicate()
             .DoesNotContainNull()
@@ -123,7 +123,7 @@ public class User : Entity<int>, IUserRecord
         string allowedUppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         string allowedLowercase = "abcdefghijklmnopqrstuvwxyz";
         var random = new Random();
-        
+
         char[] passwordChars = new char[8];
         passwordChars[0] = allowedUppercase[random.Next(allowedUppercase.Length)];
         passwordChars[1] = allowedLowercase[random.Next(allowedLowercase.Length)];

@@ -8,7 +8,7 @@ public class HttpNotFoundException : HttpRequestException, ICustomException
 
     public HttpNotFoundException() : this("The requested resource was not found.") { }
 
-    public HttpNotFoundException(string message, List<string> errorMessages = default) 
+    public HttpNotFoundException(string message, List<string> errorMessages = default)
         : base(message)
     {
         HttpStatusCode = HttpStatusCode.NotFound;

@@ -1,8 +1,5 @@
-﻿using AutoMapper;
-using Ingredients.Core.Abstractions;
-using Ingredients.Core.Model;
+﻿using Ingredients.Core.Abstractions;
 using MediatR;
-using Shared.Core.Entities;
 using Shared.Core.Exceptions;
 
 namespace Ingredients.Core.Features.UpdateIngredient;

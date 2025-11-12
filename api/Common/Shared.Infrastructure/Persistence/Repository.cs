@@ -8,7 +8,7 @@ public abstract class Repository<TAggregate, TIdentity> : IRepository<TAggregate
 {
     protected readonly DatabaseContext _context;
 
-    protected Repository(DatabaseContext context) => 
+    protected Repository(DatabaseContext context) =>
         _context = context ?? throw new ArgumentNullException(nameof(context));
 
     public IQueryable<TAggregate> AsQueryable()

@@ -22,18 +22,18 @@ public static class ServiceCollectionExtensions
     }
 
     public static IServiceCollection AddJwtService(this IServiceCollection services)
-    { 
+    {
         services.AddScoped<IJwtSettings, JwtSettings>();
         services.AddScoped<IJwtService, JwtService>();
-        
+
         return services;
     }
 
     public static IServiceCollection AddMailService(this IServiceCollection services)
-    { 
+    {
         services.AddScoped<MailSettings>();
         services.AddScoped<IMailService, MailService>();
-        
+
         return services;
     }
 

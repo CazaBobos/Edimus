@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using Companies.Core.Abstractions;
-using Companies.Core.Model;
+﻿using Companies.Core.Abstractions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Shared.Core.Entities;
 using Shared.Core.Exceptions;
 
 namespace Companies.Core.Features.UpdateCompany;

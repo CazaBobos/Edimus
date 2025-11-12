@@ -2,13 +2,11 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Core.Abstractions;
-using Shared.Core.Entities;
 using Shared.Infrastructure.Extensions;
 using Tables.Core.Features.CreateTable;
 using Tables.Core.Features.GetManyTables;
 using Tables.Core.Features.RemoveTable;
 using Tables.Core.Features.UpdateTable;
-using Tables.Core.Model;
 using Tables.Input;
 
 namespace Tables.Controllers;

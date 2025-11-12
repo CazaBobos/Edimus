@@ -10,7 +10,7 @@ public class Company : AggregateRoot<int>
     public string Slogan { get; protected set; } = string.Empty;
     public string Acronym { get; protected set; } = string.Empty;
     public virtual List<Establishment>? Establishments { get; protected set; }
-    public virtual List<Category>? Categories{ get; protected set; }
+    public virtual List<Category>? Categories { get; protected set; }
 
     protected Company() { }
     public Company(string name, string slogan, string? acronmym = null)
@@ -46,6 +46,6 @@ public class Company : AggregateRoot<int>
         //if (affectedMembers.Count != 0) AddHistory(user, AuditOperation.Updated, affectedMembers);
     }
 
-    private string GenerateAcronym(string name) => name.Replace(' ', '-').ToLower().Substring(0,7);
+    private string GenerateAcronym(string name) => name.Replace(' ', '-').ToLower().Substring(0, 7);
     private string ValidateName(string name) => Guard.Argument(() => name).NotNull().NotEmpty().NotWhiteSpace().DoesNotContain("  ");
 }

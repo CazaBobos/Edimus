@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Products.Core.Abstractions;
 using Shared.Core.Exceptions;
 
@@ -20,7 +19,7 @@ public class RemoveProductRequestHandler : IRequestHandler<RemoveProductRequest,
 
         product.Remove();
         await _productsRepository.Update(product, cancellationToken);
-        
+
         return new RemoveProductResponse();
     }
 }

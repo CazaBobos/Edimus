@@ -1,7 +1,7 @@
-﻿using Sectors.Controllers;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Sectors.Controllers;
 using Sectors.Core.Extensions;
 using Sectors.Infrastructure.Extensions;
-using Microsoft.Extensions.DependencyInjection;
 using Shared.Infrastructure.Extensions;
 
 namespace Sectors.Extensions;

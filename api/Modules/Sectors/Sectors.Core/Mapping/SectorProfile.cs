@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Sectors.Core.Model;
 using Shared.Core.Entities;
-using System.Drawing;
 
 namespace Sectors.Core.Mapping;
 

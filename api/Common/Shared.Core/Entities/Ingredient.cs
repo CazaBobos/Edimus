@@ -5,10 +5,10 @@ namespace Shared.Core.Entities;
 public class Ingredient : Entity<int>
 {
     public override int Id { get; protected set; }
-    public string Name{ get; protected set; } = string.Empty;
+    public string Name { get; protected set; } = string.Empty;
     public int Stock { get; protected set; }
     public int Alert { get; protected set; }
-    public MeasurementUnit Unit{ get; protected set; }
+    public MeasurementUnit Unit { get; protected set; }
     public virtual List<Consumption>? Consumptions { get; protected set; }
 
     protected Ingredient() { }

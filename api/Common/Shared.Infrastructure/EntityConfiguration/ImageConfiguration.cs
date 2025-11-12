@@ -20,7 +20,7 @@ public class ImageConfiguration : IEntityTypeConfiguration<Image>
 
         entity.Property(e => e.BLOB)
             .IsRequired();
-        
+
         entity.Property(e => e.Enabled)
             .IsRequired();
     }

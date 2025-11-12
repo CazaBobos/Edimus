@@ -1,6 +1,6 @@
-﻿using Sectors.Core.Abstractions;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Sectors.Core.Abstractions;
 using Sectors.Infrastructure.Persistence;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Sectors.Infrastructure.Extensions;
 

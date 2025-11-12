@@ -3,7 +3,6 @@ using Categories.Core.Features.GetManyCategories;
 using Categories.Core.Features.RemoveCategory;
 using Categories.Core.Features.RestoreCategory;
 using Categories.Core.Features.UpdateCategory;
-using Categories.Core.Model;
 using Categories.Input;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

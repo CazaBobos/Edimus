@@ -1,6 +1,6 @@
-﻿using Tables.Core.Abstractions;
+﻿using Shared.Core.Entities;
 using Shared.Infrastructure.Persistence;
-using Shared.Core.Entities;
+using Tables.Core.Abstractions;
 
 namespace Tables.Infrastructure.Persistence;
 public class TablesRepository : Repository<Table, int>, ITablesRepository

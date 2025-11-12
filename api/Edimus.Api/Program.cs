@@ -1,17 +1,17 @@
-using Microsoft.Extensions.Hosting.WindowsServices;
+using Categories.Extensions;
+using Companies.Extensions;
 using Edimus.Api.Extensions;
 using Edimus.Api.FeatureProviders;
 using Edimus.Api.Middleware;
-using NextjsStaticHosting.AspNetCore;
-using Shared.Infrastructure.Extensions;
-using Categories.Extensions;
-using Companies.Extensions;
+using Identity.Extensions;
 using Ingredients.Extensions;
+using Microsoft.Extensions.Hosting.WindowsServices;
+using NextjsStaticHosting.AspNetCore;
 using Products.Extensions;
 using Sectors.Extensions;
+using Shared.Infrastructure.Extensions;
 using Tables.Extensions;
 using Users.Extensions;
-using Identity.Extensions;
 
 var options = new WebApplicationOptions
 {

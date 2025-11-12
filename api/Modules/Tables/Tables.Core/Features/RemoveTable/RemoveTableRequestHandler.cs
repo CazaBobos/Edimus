@@ -1,12 +1,6 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Shared.Core.Entities;
+﻿using MediatR;
 using Shared.Core.Exceptions;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Tables.Core.Abstractions;
-using Tables.Core.Model;
 
 namespace Tables.Core.Features.RemoveTable;
 
@@ -26,7 +20,7 @@ public class RemoveTableRequestHandler : IRequestHandler<RemoveTableRequest, Rem
         if (table is null) throw new HttpNotFoundException();
 
         await _tablesRepository.Remove(table, cancellationToken);
-    
+
         return new RemoveTableResponse();
     }
 }

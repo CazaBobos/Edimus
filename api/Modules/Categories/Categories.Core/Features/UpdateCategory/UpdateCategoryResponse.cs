@@ -1,5 +1,3 @@
-﻿using Categories.Core.Model;
+﻿namespace Categories.Core.Features.UpdateCategory;
 
-namespace Categories.Core.Features.UpdateCategory;
-
-public class UpdateCategoryResponse {}
+public class UpdateCategoryResponse { }

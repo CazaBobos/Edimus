@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Categories.Core.Abstractions;
-using Categories.Core.Model;
+﻿using Categories.Core.Abstractions;
 using MediatR;
 using Shared.Core.Entities;
 

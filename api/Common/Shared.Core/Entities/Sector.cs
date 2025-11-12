@@ -22,7 +22,7 @@ public class Sector : AggregateRoot<int>
         Name = ValidateName(name);
         Color = ValidateName(color);
 
-        if(surface is not null)
+        if (surface is not null)
         {
             Guard.Argument(() => surface).MinCount(1);
             Surface = surface!.Select(s => new SectorCoord(s.Item1, s.Item2, Id)).ToList();

@@ -13,14 +13,14 @@ public static class SectorQueryableExtensions
 
     public static IQueryable<Sector> WhereName(this IQueryable<Sector> queryable, string? name)
     {
-        if(name is null) return queryable;
+        if (name is null) return queryable;
 
         return queryable.Where(sector => sector.Name == name);
     }
 
     public static IQueryable<Sector> WhereEnabled(this IQueryable<Sector> queryable, bool? enabled)
     {
-        if(enabled is null) return queryable;
+        if (enabled is null) return queryable;
 
         return queryable.Where(sector => sector.Enabled == enabled);
     }

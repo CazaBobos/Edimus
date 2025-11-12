@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Shared.Core.Exceptions;
 using Sectors.Core.Abstractions;
+using Shared.Core.Exceptions;
 
 namespace Sectors.Core.Features.UpdateSector;
 
@@ -22,13 +22,13 @@ public class UpdateSectorRequestHandler : IRequestHandler<UpdateSectorRequest, U
         sector.Update(
             request.Name,
             request.Color,
-            request.PositionX, 
+            request.PositionX,
             request.PositionY,
             request.Surface
         );
 
         await _sectorsRepository.Update(sector, cancellationToken);
-    
+
         return new UpdateSectorResponse();
     }
 }

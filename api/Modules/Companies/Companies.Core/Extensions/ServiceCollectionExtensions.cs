@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Companies.Core.Abstractions;
+﻿using Companies.Core.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 using Shared.Core.Extensions;
 
 namespace Companies.Core.Extensions;

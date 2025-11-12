@@ -8,7 +8,6 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Core.Abstractions;
-using Shared.Core.Entities;
 using Shared.Infrastructure.Extensions;
 
 namespace Ingredients.Controllers;

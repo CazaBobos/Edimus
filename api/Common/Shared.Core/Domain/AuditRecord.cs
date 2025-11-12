@@ -11,7 +11,7 @@ public class AuditRecord : ValueObject
     public AuditOperation Operation { get; protected set; }
     public List<string>? AffectedMembers { get; set; }
 
-    public AuditRecord(IUserRecord user, AuditOperation operation, List<string>? affectedMembers) 
+    public AuditRecord(IUserRecord user, AuditOperation operation, List<string>? affectedMembers)
         : this(user, DateTime.UtcNow, operation, affectedMembers)
     {
     }

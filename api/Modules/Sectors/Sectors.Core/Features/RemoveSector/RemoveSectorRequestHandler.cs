@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Shared.Core.Exceptions;
 using Sectors.Core.Abstractions;
+using Shared.Core.Exceptions;
 
 namespace Sectors.Core.Features.RemoveSector;
 
@@ -20,7 +20,7 @@ public class RemoveSectorRequestHandler : IRequestHandler<RemoveSectorRequest, R
         if (table is null) throw new HttpNotFoundException();
 
         await _sectorsRepository.Remove(table, cancellationToken);
-    
+
         return new RemoveSectorResponse();
     }
 }

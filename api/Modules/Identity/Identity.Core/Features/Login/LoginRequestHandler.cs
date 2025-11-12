@@ -3,7 +3,6 @@ using Identity.Core.Abstractions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared.Core.Abstractions;
-using Shared.Core.Entities;
 using Shared.Core.Services;
 using Shared.Core.Settings;
 
@@ -15,7 +14,7 @@ public class LoginRequestHandler : IRequestHandler<LoginRequest, LoginResponse>
     private readonly IJwtSettings _jwtSettings;
     private readonly IJwtService _jwtService;
     public LoginRequestHandler(
-        IUsersRepository usersRepository, 
+        IUsersRepository usersRepository,
         IMapper mapper,
         IJwtSettings jwtSettings,
         IJwtService jwtService)

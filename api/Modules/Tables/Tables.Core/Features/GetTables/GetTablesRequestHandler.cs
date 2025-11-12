@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Shared.Core.Extensions;
 using Tables.Core.Abstractions;
 using Tables.Core.Extensions;
 using Tables.Core.Model;
-using MediatR;
-using Shared.Core.Extensions;
-using Microsoft.EntityFrameworkCore;
 
 namespace Tables.Core.Features.GetManyTables;
 

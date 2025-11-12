@@ -1,6 +1,4 @@
-﻿using Ingredients.Core.Model;
-
-namespace Ingredients.Core.Features.CreateIngredient;
+﻿namespace Ingredients.Core.Features.CreateIngredient;
 
 public class CreateIngredientResponse
 {

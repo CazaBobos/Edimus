@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Shared.Core.Entities;
 using Sectors.Core.Abstractions;
+using Shared.Core.Entities;
 
 namespace Sectors.Core.Features.CreateSector;
 

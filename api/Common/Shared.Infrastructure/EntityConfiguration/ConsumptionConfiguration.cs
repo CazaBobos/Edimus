@@ -8,7 +8,7 @@ public class ConsumptionConfiguration : IEntityTypeConfiguration<Consumption>
     public void Configure(EntityTypeBuilder<Consumption> entity)
     {
         entity.HasKey(e => new { e.ProductId, e.IngredientId });
-        
+
         entity.Property(e => e.ProductId)
             .IsRequired();
         entity.HasOne(e => e.Product)

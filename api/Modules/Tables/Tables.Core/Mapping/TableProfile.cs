@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Shared.Core.Entities;
-using System.Text.Json;
 using Tables.Core.Model;
 
 namespace Tables.Core.Mapping;

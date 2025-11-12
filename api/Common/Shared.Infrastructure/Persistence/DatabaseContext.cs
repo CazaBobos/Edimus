@@ -8,10 +8,10 @@ public class DatabaseContext : DbContext
 {
     public IConfiguration Configuration { get; }
     public DatabaseContext(IConfiguration configuration) => Configuration = configuration;
-    
+
     #region Tables
     public DbSet<Category> Categories { get; set; } = null!;
-    public DbSet<Company> Companies{ get; set; } = null!;
+    public DbSet<Company> Companies { get; set; } = null!;
     public DbSet<Consumption> Consumptions { get; set; } = null!;
     public DbSet<Establishment> Establishments { get; set; } = null!;
     public DbSet<Image> Images { get; set; } = null!;

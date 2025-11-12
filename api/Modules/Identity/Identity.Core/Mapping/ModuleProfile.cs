@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Shared.Core.Entities;
 using Identity.Core.Model;
+using Shared.Core.Entities;
 
 namespace Identity.Core.Mapping;
 public class ModuleProfile : Profile

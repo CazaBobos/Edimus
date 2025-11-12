@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Shared.Core.Extensions;
 using Sectors.Core.Abstractions;
+using Shared.Core.Extensions;
 
 namespace Sectors.Core.Extensions;
 public static class ServiceCollectionExtensions
@@ -9,7 +9,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddMediatR<ISectorsRepository>();
         services.AddAutoMapper<ISectorsRepository>();
-        
+
         return services;
     }
 }

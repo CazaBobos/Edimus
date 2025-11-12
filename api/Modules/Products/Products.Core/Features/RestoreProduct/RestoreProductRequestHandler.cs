@@ -19,7 +19,7 @@ public class RestoreProductRequestHandler : IRequestHandler<RestoreProductReques
 
         product.Restore();
         await _productsRepository.Update(product, cancellationToken);
-        
+
         return new RestoreProductResponse();
     }
 }

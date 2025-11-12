@@ -1,8 +1,8 @@
-﻿using MediatR;
+﻿using Identity.Core.Features.Login;
+using Identity.Input;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Identity.Core.Features.Login;
-using Identity.Input;
 
 namespace Identity.Controllers;
 

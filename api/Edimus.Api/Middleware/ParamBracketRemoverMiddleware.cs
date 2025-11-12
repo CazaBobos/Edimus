@@ -25,7 +25,8 @@ public class ParamBracketRemoverMiddleware
         var queryParams = queryStringValue.Split("&");
 
         List<KeyValuePair<string, string>> list =
-        new(queryParams.Select(param => {
+        new(queryParams.Select(param =>
+        {
             var kvp = param.Split('=');
             var newParamName = kvp[0].Replace("[]", "");
             return new KeyValuePair<string, string>(newParamName, kvp[1]);

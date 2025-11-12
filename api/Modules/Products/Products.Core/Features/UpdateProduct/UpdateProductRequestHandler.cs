@@ -20,7 +20,7 @@ public class UpdateProductRequestHandler : IRequestHandler<UpdateProductRequest,
     {
         var product = await _productsRepository.GetById(request.Id, cancellationToken);
 
-        product.Update( 
+        product.Update(
             request.Parent,
             request.Category,
             request.Price,

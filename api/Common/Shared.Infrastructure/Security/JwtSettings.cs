@@ -2,9 +2,9 @@
 using Shared.Core.Settings;
 
 namespace Shared.Infrastructure.Security;
-public class JwtSettings: IJwtSettings
+public class JwtSettings : IJwtSettings
 {
-    public required string Secret { get; set; } 
+    public required string Secret { get; set; }
     public required int ExpirationInMinutes { get; set; }
 
     public JwtSettings(IConfiguration config)

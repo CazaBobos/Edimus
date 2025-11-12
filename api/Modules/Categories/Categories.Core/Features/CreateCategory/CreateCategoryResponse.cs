@@ -1,6 +1,4 @@
-﻿using Categories.Core.Model;
-
-namespace Categories.Core.Features.CreateCategory;
+﻿namespace Categories.Core.Features.CreateCategory;
 
 public class CreateCategoryResponse
 {

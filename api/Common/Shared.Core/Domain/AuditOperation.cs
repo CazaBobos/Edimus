@@ -1,5 +1,6 @@
 ﻿namespace Shared.Core.Domain;
-public enum AuditOperation {
+public enum AuditOperation
+{
     Created,
     Updated,
     Removed,

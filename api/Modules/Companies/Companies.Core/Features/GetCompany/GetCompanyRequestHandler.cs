@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using MediatR;
 using Companies.Core.Abstractions;
 using Companies.Core.Model;
+using MediatR;
 
 namespace Companies.Core.Features.GetCompany;
 

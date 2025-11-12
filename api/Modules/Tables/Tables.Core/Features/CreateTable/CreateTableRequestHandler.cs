@@ -18,7 +18,7 @@ public class CreateTableRequestHandler : IRequestHandler<CreateTableRequest, Cre
         var table = new Table(
             request.LayoutId,
             request.PositionX,
-            request.PositionY, 
+            request.PositionY,
             request.Surface
         );
 

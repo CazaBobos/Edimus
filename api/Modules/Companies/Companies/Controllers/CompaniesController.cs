@@ -1,5 +1,6 @@
 using Companies.Core.Features.CreateCompany;
 using Companies.Core.Features.GetCompanies;
+using Companies.Core.Features.GetCompany;
 using Companies.Core.Features.RemoveCompany;
 using Companies.Core.Features.RestoreCompany;
 using Companies.Core.Features.UpdateCompany;
@@ -7,9 +8,8 @@ using Companies.Input;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Infrastructure.Extensions;
 using Shared.Core.Abstractions;
-using Companies.Core.Features.GetCompany;
+using Shared.Infrastructure.Extensions;
 
 namespace Companies.Controllers;
 

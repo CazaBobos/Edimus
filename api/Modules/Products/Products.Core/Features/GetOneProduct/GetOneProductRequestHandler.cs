@@ -18,7 +18,7 @@ public class GetOneProductRequestHandler : IRequestHandler<GetOneProductRequest,
     public async Task<GetOneProductResponse> Handle(GetOneProductRequest request, CancellationToken cancellationToken)
     {
         var product = await _productsRepository.GetById(request.Id, cancellationToken);
-        
+
         if (product is null) throw new HttpNotFoundException();
 
         return new GetOneProductResponse

@@ -23,12 +23,12 @@ public class Table : AggregateRoot<int>
         PositionY = Guard.Argument(() => positionY).NotNegative();
         QR = GenerateQRCode(Id);
 
-        if(surface is not null)
+        if (surface is not null)
         {
             Guard.Argument(() => surface).MinCount(1);
             Surface = surface!.Select(s => new TableCoord(s.Item1, s.Item2, Id)).ToList();
         }
-        
+
         Status = status;
         Enabled = true;
     }

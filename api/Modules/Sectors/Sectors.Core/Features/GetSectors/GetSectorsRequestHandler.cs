@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Sectors.Core.Abstractions;
 using Sectors.Core.Extensions;
 using Sectors.Core.Model;
-using MediatR;
 using Shared.Core.Extensions;
-using Microsoft.EntityFrameworkCore;
 
 namespace Sectors.Core.Features.GetManySectors;
 

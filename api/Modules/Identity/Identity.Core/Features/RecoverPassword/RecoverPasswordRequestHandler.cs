@@ -9,13 +9,13 @@ public class RecoverPasswordRequestHandler : IRequestHandler<RecoverPasswordRequ
 {
     private readonly IUsersRepository _usersRepository;
     private readonly MailSettings _mailSettings;
-    private readonly IMailService _mailService ;
+    private readonly IMailService _mailService;
 
-    public RecoverPasswordRequestHandler(IUsersRepository usersRepository, MailSettings mailSettings, IMailService mailService )
+    public RecoverPasswordRequestHandler(IUsersRepository usersRepository, MailSettings mailSettings, IMailService mailService)
     {
         _usersRepository = usersRepository;
         _mailSettings = mailSettings;
-        _mailService = mailService ;
+        _mailService = mailService;
     }
     public async Task<RecoverPasswordResponse> Handle(RecoverPasswordRequest request, CancellationToken cancellationToken)
     {

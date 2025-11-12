@@ -11,9 +11,9 @@ public class Wall : Entity<int>
     public virtual Layout? Layout { get; protected set; }
     public WallType Type { get; protected set; }
     public string Surface { get; protected set; } = string.Empty;
-    
+
     protected Wall() { }
-    public Wall(int layoutId, WallType type, List<(int,int)> surface)
+    public Wall(int layoutId, WallType type, List<(int, int)> surface)
     {
         LayoutId = Guard.Argument(() => layoutId).Positive();
         Type = type;

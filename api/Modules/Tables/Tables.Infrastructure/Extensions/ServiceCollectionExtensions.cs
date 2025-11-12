@@ -1,6 +1,6 @@
-﻿using Tables.Core.Abstractions;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Tables.Core.Abstractions;
 using Tables.Infrastructure.Persistence;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Tables.Infrastructure.Extensions;
 

@@ -1,8 +1,8 @@
-﻿using Tables.Controllers;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Shared.Infrastructure.Extensions;
+using Tables.Controllers;
 using Tables.Core.Extensions;
 using Tables.Infrastructure.Extensions;
-using Microsoft.Extensions.DependencyInjection;
-using Shared.Infrastructure.Extensions;
 
 namespace Tables.Extensions;
 

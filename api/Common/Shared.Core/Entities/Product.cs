@@ -13,7 +13,7 @@ public class Product : AggregateRoot<int>
     public decimal Price { get; protected set; }
     public int? ImageId { get; protected set; }
     public virtual Image? Image { get; protected set; }
-    public virtual List<Tag>? Tags{ get; protected set; }
+    public virtual List<Tag>? Tags { get; protected set; }
     public virtual List<Consumption>? Consumptions { get; protected set; }
 
     protected Product() { }
@@ -34,7 +34,7 @@ public class Product : AggregateRoot<int>
     public void Update(int? parentId, int? categoryId, decimal? price, string? name, string? description)
     {
         Guard.Operation(Enabled == true, "A product cannot be modified when it's not active. Restore it and try again.");
-        
+
         var affectedMembers = new List<string>();
 
         if (parentId is not null && parentId != ParentId)
@@ -64,7 +64,7 @@ public class Product : AggregateRoot<int>
             Price = Guard.Argument(() => (decimal)price).NotNegative();
             affectedMembers.Add(nameof(Price));
         }
-        
+
         //if (affectedMembers.Count != 0) AddHistory(user, AuditOperation.Updated, affectedMembers);
     }
 

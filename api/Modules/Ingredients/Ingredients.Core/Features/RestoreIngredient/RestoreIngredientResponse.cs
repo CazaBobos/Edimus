@@ -1,3 +1,3 @@
 ﻿namespace Ingredients.Core.Features.RestoreIngredient;
 
-public class RestoreIngredientResponse {}
+public class RestoreIngredientResponse { }
