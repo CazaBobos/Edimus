@@ -5,6 +5,26 @@ export type Sector = {
   positionX: number;
   positionY: number;
   color: string;
-  surface: [number, number][];
+  surface: { x: number; y: number }[];
   enabled: boolean;
+};
+
+export type GetSectorsParams = {
+  limit?: number;
+  page?: number;
+  layoutId?: number;
+  name?: string;
+  enabled?: boolean;
+};
+
+export type CreateSectorRequest = {
+  layoutId: number;
+} & Required<UpdateSectorRequest>;
+
+export type UpdateSectorRequest = {
+  name?: string;
+  color?: string;
+  positionX?: number;
+  positionY?: number;
+  surface?: [number, number][];
 };

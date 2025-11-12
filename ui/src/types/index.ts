@@ -1,3 +1,4 @@
+export * from "./auth/auth.types";
 export * from "./categories/category.request";
 export * from "./categories/category.type";
 export * from "./companies/company.type";

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "server": "dotnet run --project ../api/Edimus.Api/Edimus.Api.csproj",
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",

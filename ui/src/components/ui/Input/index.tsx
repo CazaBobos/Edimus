@@ -4,6 +4,7 @@ import { ControlState } from "../common";
 import styles from "./styles.module.scss";
 
 type InputProps = {
+  type?: "text" | "password";
   name?: string;
   title?: string;
   value?: string | number;
@@ -12,7 +13,7 @@ type InputProps = {
 };
 
 export const Input = (props: InputProps) => {
-  const { name, title, value, defaultValue, onChange } = props;
+  const { type = "text", name, title, value, defaultValue, onChange } = props;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -24,7 +25,7 @@ export const Input = (props: InputProps) => {
     <div className={styles.input}>
       {title && <span>{title}</span>}
       <input
-        type="text"
+        type={type}
         style={{ height: "32px" }}
         name={name}
         value={value}

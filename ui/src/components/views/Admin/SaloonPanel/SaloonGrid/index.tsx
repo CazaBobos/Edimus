@@ -31,8 +31,8 @@ export const SaloonGrid = () => {
           }}
         >
           {sector.name && <SectorTag {...sector} />}
-          {sector.surface.map((s) => (
-            <Square key={[s[0], s[1]].join(",")} position={{ x: s[0], y: s[1] }} color={sector.color} />
+          {sector.surface.map((coord) => (
+            <Square key={[coord.x, coord.y].join(",")} position={coord} color={sector.color} />
           ))}
         </div>
       ))}
@@ -46,11 +46,11 @@ export const SaloonGrid = () => {
         }}
       >
         {tables?.map((t) =>
-          t.surface.map((s) => (
+          t.surface.map((coord) => (
             <Square
               onClick={() => setTableDialogOpenState(t.id)}
-              key={[s[0], s[1]].join(",")}
-              position={{ x: s[0], y: s[1] }}
+              key={[coord.x, coord.y].join(",")}
+              position={coord}
               color={
                 {
                   [TableStatus.Free]: "green",

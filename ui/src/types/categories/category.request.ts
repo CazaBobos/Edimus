@@ -5,3 +5,12 @@ export type GetCategoriesParams = {
   name?: string;
   enabled?: boolean;
 };
+
+export type CreateCategoryRequest = {
+  companyId: number;
+  name: string;
+};
+
+export type UpdateCategoryRequest = {
+  name?: string;
+};

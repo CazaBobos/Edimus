@@ -2,7 +2,16 @@ export type Ingredient = {
   id: number;
   name: string;
   stock: number;
-  unit: string;
+  unit: MeasurementUnit;
   alert: number;
   enabled: boolean;
 };
+
+export enum MeasurementUnit {
+  Kilogram,
+  Gram,
+  Unit,
+  Pound,
+  Liter,
+  Mililiter,
+}

@@ -9,5 +9,5 @@ public class SectorModel
     public string Color { get; set; } = string.Empty;
     public int PositionX { get; set; }
     public int PositionY { get; set; }
-    public List<(int X, int Y)> Surface { get; set; } = new();
+    public List<SectorCoordModel> Surface { get; set; } = new();
 }
