@@ -22,7 +22,7 @@ export const MenuCards = () => {
     const map: Record<number, Product[]> = {};
 
     products.forEach((p) => {
-      if (map[p.id]) map[p.id] = [];
+      if (!map[p.id]) map[p.id] = [];
       if (p.parentId) map[p.id] = [...map[p.id], p];
     });
 

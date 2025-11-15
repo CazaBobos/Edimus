@@ -11,6 +11,8 @@
   .user {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+    width: 100%;
     gap: 8px;
     padding: 0 8px;
     .icon {
@@ -18,9 +20,21 @@
       padding: 4px;
       height: 32px;
       width: 32px;
+    }
+    .profile {
+      @extend .icon;
       background-color: #f2f2f2;
       color: #383838;
     }
+    .exit {
+      @extend .icon;
+      margin-left: auto;
+      cursor: pointer;
+      &:hover {
+        background-color: #bbb;
+      }
+    }
+
     span {
       font-size: 18px;
     }

@@ -2,9 +2,11 @@ import { authApi } from "@/services/api.auth";
 import { useAppUserStore } from "@/stores";
 import { LoginRequest } from "@/types";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 export const useAuthMutations = () => {
+  const router = useRouter();
   const setUser = useAppUserStore((store) => store.setUser);
 
   const loginMutation = useMutation({
@@ -18,6 +20,7 @@ export const useAuthMutations = () => {
     onSuccess: (response) => {
       toast.dismiss();
       setUser(response);
+      router.refresh();
     },
   });
 

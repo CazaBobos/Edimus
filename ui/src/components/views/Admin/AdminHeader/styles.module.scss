@@ -1,19 +1,19 @@
- .title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 8px;
-    width: 100%;
-    border-bottom: 1px solid #f2f2f2;
-    .menu {
-      cursor: pointer;
-      border-radius: 50%;
-      padding: 4px;
-        width: 48px;
-        height: 48px;
-      &:hover {
-        background-color: #bbb;
-      }
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px;
+  width: 100%;
+  border-bottom: 1px solid #f2f2f2;
+  .menu {
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 4px;
+    width: 48px;
+    height: 48px;
+    &:hover {
+      background-color: #bbb;
     }
   }
+}
