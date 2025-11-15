@@ -9,6 +9,7 @@ export type SelectOption = {
 };
 
 type SelectProps = {
+  width?: string;
   name?: string;
   title?: string;
   options: SelectOption[] | string[];
@@ -18,7 +19,7 @@ type SelectProps = {
 };
 
 export const Select = (props: SelectProps) => {
-  const { name, title, options, value, defaultValue, onChange } = props;
+  const { width, name, title, options, value, defaultValue, onChange } = props;
 
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
@@ -27,7 +28,7 @@ export const Select = (props: SelectProps) => {
   };
 
   return (
-    <div className={styles.select}>
+    <div className={styles.select} style={{ width }}>
       {title && <span>{title}</span>}
       <select
         name={name}

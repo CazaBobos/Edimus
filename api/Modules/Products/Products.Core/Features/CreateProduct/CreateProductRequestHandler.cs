@@ -15,8 +15,8 @@ public class CreateProductRequestHandler : IRequestHandler<CreateProductRequest,
     public async Task<CreateProductResponse> Handle(CreateProductRequest request, CancellationToken cancellationToken)
     {
         var product = new Product(
-            request.Parent,
-            request.Category,
+            request.ParentId,
+            request.CategoryId,
             request.Price,
             request.Name,
             request.Description

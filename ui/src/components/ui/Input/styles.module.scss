@@ -1,10 +1,11 @@
-.input {
+.container {
     display: flex;
     flex-direction: column;
     gap: 2px;
-    input {
+    .input {
         padding: 0 8px;
-        height: 32px;
+        min-height: 32px;
         width: 100%;
+        resize: vertical;
     } 
 }

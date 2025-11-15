@@ -1,10 +1,16 @@
+import { useProductMutations } from "@/hooks/mutations/useProductMutations";
 import { useCategoriesQuery } from "@/hooks/queries/useCategoriesQuery";
 import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
 import { useAdminStore } from "@/stores";
-import { BiArrowBack, BiHistory, BiPlus, BiSave, BiTrash, BiX } from "react-icons/bi";
+import { ProductRequest } from "@/types";
+import { useState } from "react";
+import { BiSave, BiTrash, BiUpload, BiX } from "react-icons/bi";
 
 import { Button } from "@/components/ui/Button";
+import { ControlState } from "@/components/ui/common";
 import { Dialog } from "@/components/ui/Dialog";
+import { Input } from "@/components/ui/Input";
+import { Select } from "@/components/ui/Select";
 
 import styles from "./styles.module.scss";
 
@@ -17,96 +23,97 @@ export const ProductDialog = () => {
   const { data: categories } = useCategoriesQuery();
 
   const product = products.find((p) => p.id === productDialogOpenState);
-  const variants = products.filter((p) => p.parentId === productDialogOpenState);
+  const parentableProducts = products.filter((p) => !!p.categoryId);
+
+  const { createProductMutation, updateProductMutation, removeProductMutation, restoreProductMutation } =
+    useProductMutations();
+
+  const handleEnable = () => {
+    if (!product) return;
+
+    if (product.enabled) removeProductMutation.mutate(product.id);
+    else restoreProductMutation.mutate(product.id);
+  };
+
+  const [request, setRequest] = useState<ProductRequest>({});
+  const handleChange = (state: ControlState) => {
+    const { name, value } = state;
+
+    setRequest((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const isRequestValid = () => {
+    const valid = true;
+    if (!request.name || !request.price) return false;
+    if (request.categoryId && request.parentId) return false;
+    return valid;
+  };
+
+  const handleSave = () => {
+    if (!!product) {
+      updateProductMutation.mutate(
+        { id: product.id, request },
+        {
+          onSuccess: handleClose,
+        },
+      );
+    } else if (isRequestValid()) {
+      createProductMutation.mutate(request as Required<ProductRequest>, {
+        onSuccess: handleClose,
+      });
+    }
+  };
 
   return (
     <Dialog open={productDialogOpenState !== undefined} onClose={handleClose}>
-      <div className={styles.header}>
-        {product ? (
-          <>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          {product ? (
             <h2>
-              <BiArrowBack size={28} onClick={() => setProductDialogOpenState(0)} />
-              Producto #{product.id}
+              <span>Editar Producto</span>
+              <BiX size={28} onClick={handleClose} />
             </h2>
-            <div>
-              <Button icon={<BiHistory size={28} />} />
-              <Button icon={<BiTrash size={28} />} />
-            </div>
-          </>
-        ) : (
-          <h2>Nuevo Producto</h2>
-        )}
-      </div>
-      <div className={styles.content}>
-        <span>Nombre</span>
-        <input type="text" value={product?.name} />
-
-        <span>Descripción</span>
-        <textarea value={product?.description} />
-
-        <span>Categoría</span>
-        <select value={product?.categoryId}>
-          {categories.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
-        <span>Precio ($)</span>
-        <input type="text" value={product?.price} />
-        <span>Etiquetas</span>
-        <div
-          style={{
-            marginBottom: "16px",
-            border: "1px solid #888",
-            backgroundColor: "#323232",
-            borderRadius: "2px",
-            padding: "8px",
-            display: "flex",
-            gap: "8px",
-          }}
-        >
-          {["Salado", "Veggie"].map((tag) => (
-            <div
-              key={tag}
-              style={{
-                borderRadius: "16px",
-                border: "1px solid #f2f2f2",
-                padding: "4px 8px",
-                width: "fit-content",
-                display: "flex",
-                alignItems: "center",
-                backgroundColor: "#0a0a0a",
-              }}
-            >
-              {tag}
-              <BiX size={24} />
-            </div>
-          ))}
+          ) : (
+            <h2>Nuevo Producto</h2>
+          )}
         </div>
-        <div className={styles.row}>
-          <span>Variantes</span>
-          <Button label="Añadir" icon={<BiPlus size={24} />} />
+        <div className={styles.content}>
+          <Input title="Nombre" name="name" defaultValue={product?.name} onChange={handleChange} />
+          <Input
+            multiline
+            title="Descripción"
+            name="description"
+            defaultValue={product?.description}
+            onChange={handleChange}
+          />
+          <Input title="Precio ($)" name="price" defaultValue={product?.price} onChange={handleChange} />
+          <div className={styles.row}>
+            <Select
+              title="Categoría"
+              name="categoryId"
+              options={categories.map((c) => ({ value: c.id, label: c.name }))}
+              defaultValue={product?.categoryId?.toString()}
+              onChange={handleChange}
+            />
+            <Select
+              title="Padre"
+              name="parentId"
+              options={parentableProducts.map((c) => ({ value: c.id, label: c.name }))}
+              defaultValue={product?.parentId?.toString()}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={styles.row}>
+            {product && (
+              <Button
+                label={product.enabled ? "Eliminar" : "Restaurar"}
+                icon={product.enabled ? <BiTrash /> : <BiUpload />}
+                onClick={handleEnable}
+              />
+            )}
+            <Button label="Guardar" icon={<BiSave />} disabled={!product && !isRequestValid()} onClick={handleSave} />
+          </div>
         </div>
-        <ul>
-          {variants?.map((v) => (
-            <li key={v.name}>
-              <div className={styles.row}>
-                <input type="text" value={v.name} />
-                <div className={styles.row}>
-                  $<input type="text" value={v.price} />
-                  <BiX size={32} color="red" />
-                </div>
-              </div>
-              <textarea value={v.description} />
-            </li>
-          ))}
-        </ul>
-        <div className={styles.row}>
-          <span style={{ marginBottom: "16px" }}>Imagen: </span>
-          <input type="file" name="" id="" />
-        </div>
-        <Button label="Guardar" icon={<BiSave size={24} />} />
       </div>
     </Dialog>
   );

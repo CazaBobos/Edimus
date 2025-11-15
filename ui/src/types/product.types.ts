@@ -1,11 +1,11 @@
 export type Product = {
   id: number;
   parentId?: number;
-  categoryId: number;
+  categoryId?: number;
   name: string;
   description?: string;
   price?: number;
-  tags?: string[];
+  tags?: number[];
   image?: Buffer | null;
   enabled: boolean;
 };
@@ -29,13 +29,5 @@ export type ProductRequest = {
   name?: string;
   description?: string;
   price?: number;
-  tags?: string[];
+  tags?: number[];
 };
-
-export type CreateProductRequest = {
-  companyId: number;
-} & Required<ProductRequest>;
-
-export type UpdateProductRequest = {
-  id: number;
-} & ProductRequest;

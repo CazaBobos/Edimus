@@ -1,4 +1,7 @@
-.header {
+.container {
+  padding: 16px;
+  min-width: 500px;
+  .header {
     width: 100%;
     display: flex;
     align-items: center;
@@ -12,7 +15,10 @@
       border-radius: 50%;
       margin-left: 8px;
     }
-    h2 {
+    > h2 {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
       svg {
         border-radius: 50%;
         background-color: transparent;
@@ -26,30 +32,18 @@
       align-items: center;
     }
   }
-
   .content {
     display: flex;
     flex-direction: column;
-    > input,
-    > textarea,
-    > select {
-      margin-bottom: 16px;
-    }
-    ul {
-      padding-left: 16px;
-      li {
-        margin: 8px 0;
-        input,
-        textarea {
-          width: 100%;
-        }
-      }
-    }
+    gap: 16px;
     .row {
       display: flex;
-      gap: 4px;
+      gap: 16px;
       align-items: center;
       justify-content: space-between;
+      > div {
+        flex-grow: 1;
+      }
     }
-    
   }
+}

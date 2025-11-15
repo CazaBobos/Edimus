@@ -31,6 +31,7 @@ public class GetProductsRequestHandler : IRequestHandler<GetProductsRequest, Get
 
         var products = await query
             .Paginate(request.Limit, request.Page)
+            .OrderBy(x => x.Id)
             .ToListAsync(cancellationToken);
 
         return new GetProductsResponse

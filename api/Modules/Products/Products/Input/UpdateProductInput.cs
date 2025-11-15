@@ -2,8 +2,8 @@
 
 public class UpdateProductInput
 {
-    public int? Parent { get; set; }
-    public int? Category { get; set; }
+    public int? ParentId { get; set; }
+    public int? CategoryId { get; set; }
     public string? Name { get; set; }
     public string? Description { get; set; }
     public decimal? Price { get; set; }

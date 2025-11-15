@@ -21,8 +21,8 @@ public class UpdateProductRequestHandler : IRequestHandler<UpdateProductRequest,
         var product = await _productsRepository.GetById(request.Id, cancellationToken);
 
         product.Update(
-            request.Parent,
-            request.Category,
+            request.ParentId,
+            request.CategoryId,
             request.Price,
             request.Name,
             request.Description);

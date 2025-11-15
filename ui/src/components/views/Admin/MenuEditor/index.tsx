@@ -2,7 +2,9 @@ import { useCategoriesQuery } from "@/hooks/queries/useCategoriesQuery";
 import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
 import { useAdminStore } from "@/stores";
 import { useMemo } from "react";
+import { BiPlus, BiSolidCircle } from "react-icons/bi";
 
+import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 
 import { ProductDialog } from "./ProductDialog";
@@ -22,18 +24,23 @@ export const MenuEditor = () => {
   }, [categories]);
 
   return (
-    <>
-      <Card className={styles.products}>
+    <div className={styles.container}>
+      <h2>
+        Editor de Menú
+        <Button label="Nuevo" icon={<BiPlus />} onClick={() => setProductDialogOpenState(0)} />
+      </h2>
+      <div className={styles.products}>
         {products
-          .filter((p) => !p.parentId)
+          .filter((p) => !!p.categoryId)
           .map((p) => (
             <Card key={p.id} className={styles.card} onClick={() => setProductDialogOpenState(p.id)}>
-              <span>{categoryMap[p.categoryId]}</span>
+              <span>{categoryMap[p.categoryId ?? 0]}</span>
               <span>{p.name}</span>
+              <BiSolidCircle data-enabled={p.enabled} />
             </Card>
           ))}
-      </Card>
+      </div>
       <ProductDialog />
-    </>
+    </div>
   );
 };

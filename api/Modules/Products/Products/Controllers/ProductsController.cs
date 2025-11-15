@@ -55,8 +55,8 @@ public class ProductsController : ControllerBase
     {
         var response = await _mediator.Send(new CreateProductRequest
         {
-            Parent = input.Parent,
-            Category = input.Category,
+            ParentId = input.ParentId,
+            CategoryId = input.CategoryId,
             Name = input.Name,
             Description = input.Description,
             Price = input.Price,
@@ -75,8 +75,8 @@ public class ProductsController : ControllerBase
         var response = await _mediator.Send(new UpdateProductRequest
         {
             Id = id,
-            Category = input.Category,
-            Parent = input.Parent,
+            CategoryId = input.CategoryId,
+            ParentId = input.ParentId,
             Name = input.Name,
             Description = input.Description,
             Price = input.Price,

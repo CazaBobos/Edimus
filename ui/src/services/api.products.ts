@@ -1,4 +1,4 @@
-import { CreateProductRequest, GetProductsParams, Product, UpdateProductRequest } from "@/types";
+import { GetProductsParams, Product, ProductRequest } from "@/types";
 
 import { axiosClient } from "./axios";
 
@@ -8,12 +8,12 @@ export const productsApi = {
 
     return response.data;
   },
-  create: async (request: CreateProductRequest) => {
+  create: async (request: Required<ProductRequest>) => {
     const response = await axiosClient.post<number>("products", request);
 
     return response.data;
   },
-  update: async (id: number, request: UpdateProductRequest) => {
+  update: async (id: number, request: ProductRequest) => {
     const response = await axiosClient.put<void>(`products/${id}`, request);
 
     return response.data;
