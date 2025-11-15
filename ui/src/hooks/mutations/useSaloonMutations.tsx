@@ -1,4 +1,4 @@
-import { Sector, Table, Wall } from "@/types";
+import { Sector, Table } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useSaloonMutations = () => {
@@ -23,18 +23,8 @@ export const useSaloonMutations = () => {
       }),
   });
 
-  const updateWallsMutation = useMutation({
-    mutationFn: async () => await Promise.resolve(),
-    onSuccess: () =>
-      queryClient.setQueriesData<Wall[]>({ queryKey: ["walls"] }, (query) => {
-        if (!query) return;
-        return query;
-      }),
-  });
-
   return {
     updateSectorMutation,
     updateTableMutation,
-    updateWallsMutation,
   };
 };
