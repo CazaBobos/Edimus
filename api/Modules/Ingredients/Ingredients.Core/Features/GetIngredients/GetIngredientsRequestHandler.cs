@@ -30,6 +30,7 @@ public class GetIngredientsRequestHandler : IRequestHandler<GetIngredientsReques
 
         var ingredients = await query
             .Paginate(request.Limit, request.Page)
+            .OrderBy(x => x.Id)
             .ToListAsync(cancellationToken);
 
         return new GetIngredientsResponse

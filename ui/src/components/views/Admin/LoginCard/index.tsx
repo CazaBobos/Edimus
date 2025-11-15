@@ -7,6 +7,8 @@ import { Card } from "@/components/ui/Card";
 import { ControlState } from "@/components/ui/common";
 import { Input } from "@/components/ui/Input";
 
+import styles from "./styles.module.scss";
+
 export const LoginCard = () => {
   const [request, setRequest] = useState<LoginRequest>({
     userOrEmail: "DbSeeder",
@@ -24,9 +26,23 @@ export const LoginCard = () => {
   };
 
   return (
-    <Card>
-      <Input name="userOrEmail" title="Usuario o Email" value={request.userOrEmail} onChange={handleSetRequest} />
-      <Input name="password" title="Contraseña" type="password" value={request.password} onChange={handleSetRequest} />
+    <Card className={styles.login}>
+      <strong>Iniciar Sesión</strong>
+      <Input
+        width="100%"
+        name="userOrEmail"
+        title="Usuario o Email"
+        value={request.userOrEmail}
+        onChange={handleSetRequest}
+      />
+      <Input
+        width="100%"
+        name="password"
+        title="Contraseña"
+        type="password"
+        value={request.password}
+        onChange={handleSetRequest}
+      />
       <Button label="Ingresar" onClick={onSubmit} disabled={!request.userOrEmail || !request.password} />
     </Card>
   );

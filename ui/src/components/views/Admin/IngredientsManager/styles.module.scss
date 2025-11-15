@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  h2 {
+    display: flex;
+    justify-content: space-between;
+  }
+}

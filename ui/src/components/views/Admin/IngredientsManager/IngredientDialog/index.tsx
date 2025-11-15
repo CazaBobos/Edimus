@@ -1,7 +1,7 @@
 import { useIngredientMutations } from "@/hooks/mutations/useIngredientMutations";
 import { useIngredientsQuery } from "@/hooks/queries/useIngredientsQuery";
 import { useAdminStore } from "@/stores";
-import { IngredientRequest } from "@/types";
+import { IngredientRequest, measurementUnitsMap } from "@/types";
 import { useState } from "react";
 import { BiX } from "react-icons/bi";
 
@@ -29,7 +29,8 @@ export const IngredientDialog = () => {
   const [request, setRequest] = useState<IngredientRequest>({});
   const handleSetRequest = (state: ControlState) => {
     const { name, value } = state;
-    setRequest((prev) => ({ ...prev, [name]: value }));
+
+    setRequest((prev) => ({ ...prev, [name]: name === "name" ? value : Number(value) }));
   };
 
   const isRequestValid = () => {
@@ -38,9 +39,16 @@ export const IngredientDialog = () => {
 
   const handleSave = () => {
     if (!!ingredient) {
-      updateIngredientMutation.mutate({ id: ingredient.id, request });
+      updateIngredientMutation.mutate(
+        { id: ingredient.id, request },
+        {
+          onSuccess: handleClose,
+        },
+      );
     } else if (isRequestValid()) {
-      createIngredientMutation.mutate(request as Required<IngredientRequest>);
+      createIngredientMutation.mutate(request as Required<IngredientRequest>, {
+        onSuccess: handleClose,
+      });
     }
   };
 
@@ -51,17 +59,17 @@ export const IngredientDialog = () => {
         <BiX size={28} onClick={handleClose} />
       </h2>
       <div className={styles.content}>
-        <Input title="Nombre" name="name" defaultValue={ingredient?.name} />
+        <Input title="Nombre" name="name" defaultValue={ingredient?.name} onChange={handleSetRequest} />
         <div className={styles.row}>
           <Select
             title="Unidad"
             name="unit"
             onChange={handleSetRequest}
-            defaultValue={ingredient?.unit}
-            options={["unidad", "kg", "g", "bolsas"]}
+            defaultValue={ingredient?.unit.toString()}
+            options={Object.entries(measurementUnitsMap).map(([value, label]) => ({ value, label }))}
           />
-          <Input title="Cant. Stock" name="stock" defaultValue={ingredient?.stock} />
-          <Input title="Cant. Alerta" name="alert" defaultValue={ingredient?.alert} />
+          <Input title="Cant. Stock" name="stock" defaultValue={ingredient?.stock} onChange={handleSetRequest} />
+          <Input title="Cant. Alerta" name="alert" defaultValue={ingredient?.alert} onChange={handleSetRequest} />
         </div>
         <div className={styles.row}>
           <Button label="Cancelar" onClick={handleClose} />

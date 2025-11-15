@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/Card";
 
 import { ProductDialog } from "./ProductDialog";
 import styles from "./styles.module.scss";
-export const MenuPanel = () => {
+export const MenuEditor = () => {
   const { setProductDialogOpenState } = useAdminStore();
   const { data: products } = useProductsQuery();
   const { data: categories } = useCategoriesQuery();

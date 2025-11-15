@@ -6,7 +6,6 @@ export type LoginResponse = {
   refreshToken: string;
   role: number;
   expiresIn: number;
-  created: Date;
 };
 
 export type LoginRequest = {

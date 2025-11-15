@@ -35,3 +35,12 @@ export enum MeasurementUnit {
   Liter,
   Mililiter,
 }
+
+export const measurementUnitsMap = {
+  [MeasurementUnit.Kilogram]: "Kilogramo",
+  [MeasurementUnit.Gram]: "Gramo",
+  [MeasurementUnit.Unit]: "Unidad",
+  [MeasurementUnit.Pound]: "Libra",
+  [MeasurementUnit.Liter]: "Litro",
+  [MeasurementUnit.Mililiter]: "Mililitro",
+};

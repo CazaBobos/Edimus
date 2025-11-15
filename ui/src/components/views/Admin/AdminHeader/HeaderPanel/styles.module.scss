@@ -1,0 +1,28 @@
+.panel {
+  position: absolute;
+  padding: 16px;
+  top: 72px;
+  right: 24px;
+  min-width: 300px;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  .user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 8px;
+    .icon {
+      border-radius: 50%;
+      padding: 4px;
+      height: 32px;
+      width: 32px;
+      background-color: #f2f2f2;
+      color: #383838;
+    }
+    span {
+      font-size: 18px;
+    }
+  }
+}

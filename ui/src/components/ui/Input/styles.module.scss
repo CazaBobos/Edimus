@@ -1,4 +1,10 @@
 .input {
     display: flex;
     flex-direction: column;
+    gap: 2px;
+    input {
+        padding: 0 8px;
+        height: 32px;
+        width: 100%;
+    } 
 }
