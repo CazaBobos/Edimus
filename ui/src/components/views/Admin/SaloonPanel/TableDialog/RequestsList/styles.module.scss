@@ -1,0 +1,11 @@
+.order {
+  ul {
+    padding-left: 16px;
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 8px 0;
+    }
+  }
+}

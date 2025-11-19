@@ -1,4 +1,8 @@
 .select {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  .title {
+    font-weight: 400;
+    font-size: 14px;
+  }
 }

@@ -19,7 +19,7 @@ export const IngredientsManager = () => {
     <div className={styles.container}>
       <h2>
         Gestión de Ingredientes
-        <Button label="Nuevo" icon={<BiPlus />} onClick={() => setIngredientDialogOpenState(0)} />
+        <Button label="Nuevo" icon={<BiPlus />} onClick={() => setIngredientDialogOpenState(null)} />
       </h2>
       <Table data={ingredients} columns={columnDefs} />
       <IngredientDialog />

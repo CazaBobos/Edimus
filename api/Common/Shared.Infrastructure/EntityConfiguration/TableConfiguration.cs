@@ -20,7 +20,7 @@ public class TableConfiguration : IEntityTypeConfiguration<Table>
 
         entity.Property(e => e.Status)
             .IsRequired();
-        entity.Property(e => e.QR)
+        entity.Property(e => e.QrId)
             .IsRequired();
         entity.Property(e => e.PositionX)
             .IsRequired();

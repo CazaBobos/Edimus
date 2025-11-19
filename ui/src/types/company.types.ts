@@ -1,3 +1,5 @@
+import { Coords } from ".";
+
 export type Company = {
   id: number;
   name: string;
@@ -18,7 +20,7 @@ export type Premise = {
 export type Layout = {
   id: number;
   name: string;
-  boundaries: { x: number; y: number; type: BoundaryType }[];
+  boundaries: (Coords & { type: BoundaryType })[];
 };
 
 export enum BoundaryType {

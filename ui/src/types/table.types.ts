@@ -1,11 +1,17 @@
+import { Coords } from ".";
+
 export type Table = {
   id: number;
   layoutId: number;
   status: TableStatus;
-  qr: string;
+  qrId: string;
   positionX: number;
   positionY: number;
-  surface: { x: number; y: number }[];
+  surface: Coords[];
+  requests: {
+    productId: number;
+    amount: number;
+  }[];
   enabled?: boolean;
 };
 
@@ -25,7 +31,7 @@ export type UpdateTableRequest = {
   Status?: TableStatus;
   positionX?: number;
   positionY?: number;
-  surface?: [number, number][];
+  //surface?: [number, number][];
 };
 
 export enum TableStatus {

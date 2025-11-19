@@ -52,7 +52,7 @@ public class IngredientsController : ControllerBase
     /// Creates a new ingredient
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> Create(CreateIngredientInput input, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] CreateIngredientInput input, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new CreateIngredientRequest
         {
@@ -70,7 +70,7 @@ public class IngredientsController : ControllerBase
     /// Updates a ingredient
     /// </summary>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, CreateIngredientInput input, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update(int id, [FromBody] CreateIngredientInput input, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new UpdateIngredientRequest
         {

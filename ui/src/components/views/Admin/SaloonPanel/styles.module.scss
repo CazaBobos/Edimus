@@ -1,6 +1,9 @@
-.panel {
+.container {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  width: 100%;
+  gap: 8px;
+  > h2 {
+    display: flex;
+    justify-content: space-between;
+  }
 }

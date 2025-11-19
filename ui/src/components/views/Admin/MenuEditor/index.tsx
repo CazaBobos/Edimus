@@ -44,14 +44,14 @@ export const MenuEditor = () => {
     <div className={styles.container}>
       <h2>
         Editor de Menú
-        <Button label="Nuevo Producto" icon={<BiPlus />} onClick={() => setProductDialogOpenState(0)} />
+        <Button label="Nuevo Producto" icon={<BiPlus />} onClick={() => setProductDialogOpenState(null)} />
       </h2>
       <div className={styles.products}>
         {Object.entries(categoryMap).map(([category, products], i) => (
           <Accordion title={category} key={i}>
             <div className={styles.categorySection}>
               {products.map((p) => (
-                <Card key={p.id} className={styles.card} onClick={() => setProductDialogOpenState(p.id)}>
+                <Card key={p.id} className={styles.card} onClick={() => setProductDialogOpenState(p)}>
                   <span>{p.name}</span>
                   <BiSolidCircle className={styles.status} data-enabled={p.enabled} />
                   <Accordion title={`${variantsMap[p.id].length} Variantes`}>

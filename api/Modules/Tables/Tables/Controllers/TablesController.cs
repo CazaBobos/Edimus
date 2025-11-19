@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Core.Abstractions;
+using Shared.Core.Entities;
 using Shared.Infrastructure.Extensions;
 using Tables.Core.Features.CreateTable;
 using Tables.Core.Features.GetManyTables;
@@ -50,7 +51,7 @@ public class TablesController : ControllerBase
     /// Creates a new table
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> Create(CreateTableInput input, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] CreateTableInput input, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new CreateTableRequest
         {
@@ -69,7 +70,7 @@ public class TablesController : ControllerBase
     /// Updates a table
     /// </summary>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, UpdateTableInput input, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update(int id, [FromBody] UpdateTableInput input, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new UpdateTableRequest
         {
@@ -79,6 +80,38 @@ public class TablesController : ControllerBase
             PositionY = input.PositionY,
             Surface = input.Surface,
             User = User.GetUser(),
+        }, cancellationToken);
+
+        return Ok(response);
+    }
+
+    /// <summary>
+    /// Sets a table status to Calling
+    /// </summary>
+    [AllowAnonymous]
+    [HttpPut("{id}/call")]
+    public async Task<IActionResult> Call(int id, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new UpdateTableRequest
+        {
+            Id = id,
+            Status = TableStatus.Calling,
+        }, cancellationToken);
+
+        return Ok(response);
+    }
+
+    /// <summary>
+    /// Sets a table status back to Occupied
+    /// </summary>
+    [AllowAnonymous]
+    [HttpPut("{id}/reset")]
+    public async Task<IActionResult> Reset(int id, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new UpdateTableRequest
+        {
+            Id = id,
+            Status = TableStatus.Occupied,
         }, cancellationToken);
 
         return Ok(response);

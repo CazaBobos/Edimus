@@ -1,3 +1,5 @@
+import { useAdminStore } from "@/stores";
+
 import styles from "./styles.module.scss";
 
 type SquareProps = {
@@ -11,6 +13,7 @@ type SquareProps = {
   onClick?: () => void;
 };
 export const Square = (props: SquareProps) => {
+  const squareSize = useAdminStore((store) => store.squareSize);
   const { color, filled, position, content, onClick } = props;
 
   return (
@@ -19,8 +22,8 @@ export const Square = (props: SquareProps) => {
       className={styles.square}
       style={{
         cursor: onClick ? "pointer" : "default",
-        top: `${position.y * 32}px`,
-        left: `${position.x * 32}px`,
+        top: `${position.y * squareSize}px`,
+        left: `${position.x * squareSize}px`,
         border: `1px solid ${color}`,
         backgroundColor: filled ? color : "transparent",
       }}

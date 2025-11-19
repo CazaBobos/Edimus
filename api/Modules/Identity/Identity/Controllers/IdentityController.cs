@@ -19,7 +19,7 @@ public class IdentityController : ControllerBase
     /// </summary>
     [HttpPost]
     [Route("login")]
-    public async Task<LoginResponse> Login(LoginInput input, CancellationToken cancellationToken)
+    public async Task<LoginResponse> Login([FromBody] LoginInput input, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new LoginRequest
         {

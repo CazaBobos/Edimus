@@ -17,7 +17,10 @@ import styles from "./styles.module.scss";
 export const ProductDialog = () => {
   const { productDialogOpenState, setProductDialogOpenState } = useAdminStore();
 
-  const handleClose = () => setProductDialogOpenState(undefined);
+  const handleClose = () => {
+    setRequest({});
+    setProductDialogOpenState(undefined);
+  };
 
   const { data: products } = useProductsQuery();
   const { data: categories } = useCategoriesQuery();

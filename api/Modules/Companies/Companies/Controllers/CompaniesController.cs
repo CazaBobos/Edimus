@@ -63,7 +63,7 @@ public class CompaniesController : ControllerBase
     /// Creates a new company
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> Create(CreateCompanyInput input, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] CreateCompanyInput input, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new CreateCompanyRequest
         {
@@ -79,7 +79,7 @@ public class CompaniesController : ControllerBase
     /// Updates a company's name
     /// </summary>
     [HttpPut("{companyId}")]
-    public async Task<IActionResult> Update(int companyId, CreateCompanyInput input, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update(int companyId, [FromBody] CreateCompanyInput input, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new UpdateCompanyRequest
         {

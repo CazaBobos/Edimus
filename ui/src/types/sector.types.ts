@@ -1,3 +1,5 @@
+import { Coords } from ".";
+
 export type Sector = {
   id: number;
   layoutId: number;
@@ -5,7 +7,7 @@ export type Sector = {
   positionX: number;
   positionY: number;
   color: string;
-  surface: { x: number; y: number }[];
+  surface: Coords[];
   enabled: boolean;
 };
 
@@ -26,5 +28,5 @@ export type UpdateSectorRequest = {
   color?: string;
   positionX?: number;
   positionY?: number;
-  surface?: [number, number][];
+  //surface?: [number, number][];
 };

@@ -46,12 +46,12 @@ public class Sector : AggregateRoot<int>
         }
         if (positionX is not null && positionX != PositionX)
         {
-            PositionX = Guard.Argument(() => (int)positionX).NotNegative();
+            PositionX = (int)Guard.Argument(() => positionX).NotNegative();
             affectedMembers.Add(nameof(PositionX));
         }
         if (positionY is not null && positionY != PositionY)
         {
-            PositionY = Guard.Argument(() => (int)positionY).NotNegative();
+            PositionY = (int)Guard.Argument(() => positionY).NotNegative();
             affectedMembers.Add(nameof(PositionY));
         }
         if (surface is not null)

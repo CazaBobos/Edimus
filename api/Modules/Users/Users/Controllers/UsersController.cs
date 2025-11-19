@@ -40,7 +40,7 @@ public class UsersController : ControllerBase
     /// </summary>
     [AllowAnonymous]
     [HttpPost]
-    public async Task<UserModel> Create(CreateUserInput input, CancellationToken cancellationToken)
+    public async Task<UserModel> Create([FromBody] CreateUserInput input, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new CreateUserRequest
         {

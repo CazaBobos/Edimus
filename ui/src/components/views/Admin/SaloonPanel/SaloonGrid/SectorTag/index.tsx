@@ -1,20 +1,25 @@
+import { useAdminStore } from "@/stores";
+import { Sector } from "@/types";
+
 import styles from "./styles.module.scss";
 
 type SectorTagProps = {
-  name: string;
-  color: string;
+  sector: Sector;
 };
 export const SectorTag = (props: SectorTagProps) => {
-  const { name, color } = props;
+  const { sector } = props;
+
+  const setSectorDialogOpenState = useAdminStore((store) => store.setSectorDialogOpenState);
 
   return (
     <span
+      onClick={() => setSectorDialogOpenState(sector)}
       className={styles.tag}
       style={{
-        background: color,
+        background: sector.color,
       }}
     >
-      {name}
+      {sector.name}
     </span>
   );
 };

@@ -14,15 +14,13 @@ import { Select } from "@/components/ui/Select";
 import styles from "./styles.module.scss";
 
 export const IngredientDialog = () => {
-  const { ingredientDialogOpenState, setIngredientDialogOpenState } = useAdminStore();
+  const ingredient = useAdminStore((store) => store.ingredientDialogOpenState);
+  const setIngredientDialogOpenState = useAdminStore((store) => store.setIngredientDialogOpenState);
 
   const handleClose = () => {
     setRequest({});
     setIngredientDialogOpenState(undefined);
   };
-  const { data: ingredients } = useIngredientsQuery();
-
-  const ingredient = ingredients.find((p) => p.id === ingredientDialogOpenState);
 
   const { createIngredientMutation, updateIngredientMutation } = useIngredientMutations();
 
@@ -53,7 +51,7 @@ export const IngredientDialog = () => {
   };
 
   return (
-    <Dialog open={ingredientDialogOpenState !== undefined} onClose={handleClose}>
+    <Dialog open={ingredient !== undefined} onClose={handleClose}>
       <h2 className={styles.header}>
         {ingredient ? `Editar Ingrediente #${ingredient.id}` : "Nuevo Ingrediente"}
         <BiX size={28} onClick={handleClose} />

@@ -1,26 +1,41 @@
-import { Sector, Table } from "@/types";
+import { sectorsApi, tablesApi } from "@/services";
+import { Sector, Table, UpdateSectorRequest, UpdateTableRequest } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 export const useSaloonMutations = () => {
   const queryClient = useQueryClient();
 
   const updateSectorMutation = useMutation({
-    mutationFn: async () => await Promise.resolve(),
-    onSuccess: () =>
+    mutationFn: async ({ id, request }: { id: number; request: UpdateSectorRequest }) =>
+      await sectorsApi.update(id, request),
+    onMutate: () => toast.info("Por favor, espere..."),
+    onError: () => toast.error("Ha ocurrido un error."),
+    onSuccess: (_, variables) => {
+      toast.success("El sector se ha actualizado correctamente.");
+
       queryClient.setQueriesData<Sector[]>({ queryKey: ["sectors"] }, (query) => {
         if (!query) return;
 
-        return query;
-      }),
+        return query.map((s) => (s.id === variables.id ? { ...s, ...variables.request } : s));
+      });
+    },
   });
 
   const updateTableMutation = useMutation({
-    mutationFn: async () => await Promise.resolve(),
-    onSuccess: () =>
+    mutationFn: async ({ id, request }: { id: number; request: UpdateTableRequest }) =>
+      await tablesApi.update(id, request),
+    onMutate: () => toast.info("Por favor, espere..."),
+    onError: () => toast.error("Ha ocurrido un error."),
+    onSuccess: (_, variables) => {
+      toast.success("La mesa se ha actualizado correctamente.");
+
       queryClient.setQueriesData<Table[]>({ queryKey: ["tables"] }, (query) => {
         if (!query) return;
-        return query;
-      }),
+
+        return query.map((s) => (s.id === variables.id ? { ...s, ...variables.request } : s));
+      });
+    },
   });
 
   return {

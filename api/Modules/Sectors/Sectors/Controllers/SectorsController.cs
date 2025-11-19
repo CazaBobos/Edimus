@@ -50,7 +50,7 @@ public class SectorsController : ControllerBase
     /// Creates a new sector
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> Create(CreateSectorInput input, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] CreateSectorInput input, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new CreateSectorRequest
         {
@@ -70,7 +70,7 @@ public class SectorsController : ControllerBase
     /// Updates a sector
     /// </summary>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, UpdateSectorInput input, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update(int id, [FromBody] UpdateSectorInput input, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new UpdateSectorRequest
         {

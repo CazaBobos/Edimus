@@ -48,7 +48,7 @@ public class CategoriesController : ControllerBase
     /// Creates a new category
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> Create(CreateCategoryInput input, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] CreateCategoryInput input, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new CreateCategoryRequest
         {
@@ -64,7 +64,7 @@ public class CategoriesController : ControllerBase
     /// Updates a category
     /// </summary>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, CreateCategoryInput input, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update(int id, [FromBody] CreateCategoryInput input, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new UpdateCategoryRequest
         {

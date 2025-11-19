@@ -63,9 +63,9 @@ export const useIngredientsColumnDefs = (): ColumnDef<Ingredient>[] => {
     },
     {
       header: " ",
-      accessorKey: "id",
+      accessorFn: (row) => row,
       cell: (props) => (
-        <Button icon={<BiPencil />} onClick={() => setIngredientDialogOpenState(props.getValue<number>())} />
+        <Button icon={<BiPencil />} onClick={() => setIngredientDialogOpenState(props.getValue<Ingredient>())} />
       ),
     },
     {

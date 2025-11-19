@@ -1,5 +1,5 @@
 .tag {
-  z-index: 9;
+  cursor: pointer;
   white-space: nowrap;
   position: absolute;
   top: -22px;
@@ -7,4 +7,7 @@
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   color: #383838;
+  &:hover {
+    text-decoration: underline;
+  }
 }

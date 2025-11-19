@@ -51,7 +51,7 @@ public class ProductsController : ControllerBase
     /// Creates a new product
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> Create(CreateProductInput input, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] CreateProductInput input, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new CreateProductRequest
         {
@@ -70,7 +70,7 @@ public class ProductsController : ControllerBase
     /// Updates an existing product
     /// </summary>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, UpdateProductInput input, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update(int id, [FromBody] UpdateProductInput input, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new UpdateProductRequest
         {

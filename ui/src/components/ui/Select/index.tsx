@@ -29,7 +29,7 @@ export const Select = (props: SelectProps) => {
 
   return (
     <div className={styles.select} style={{ width }}>
-      {title && <span>{title}</span>}
+      {title && <span className={styles.title}>{title}</span>}
       <select
         name={name}
         style={{ height: "32px", width: "100%" }}

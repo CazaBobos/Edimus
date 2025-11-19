@@ -4,6 +4,7 @@ import { useTablesQuery } from "@/hooks/queries/useTablesQuery";
 import { useAdminStore } from "@/stores";
 import { TableStatus, BoundaryType } from "@/types";
 
+import { Area } from "./Area";
 import { SectorTag } from "./SectorTag";
 import { Square } from "./Square";
 import styles from "./styles.module.scss";
@@ -19,60 +20,7 @@ export const SaloonGrid = () => {
       {[...Array(24).keys()].map((_, x) =>
         [...Array(24).keys()].map((_, y) => <Square key={[x, y].join(",")} position={{ x: x, y: y }} color="grey" />),
       )}
-      {sectors.map((sector, i) => (
-        <div
-          key={`${sector.name} ${i}`}
-          style={{
-            position: "relative",
-            left: `${sector.positionX * 32}px`,
-            top: `${sector.positionY * 32}px`,
-            width: "fit-content",
-            height: "fit-content",
-          }}
-        >
-          {sector.name && <SectorTag {...sector} />}
-          {sector.surface.map((coord) => (
-            <Square key={[coord.x, coord.y].join(",")} position={coord} color={sector.color} />
-          ))}
-        </div>
-      ))}
-      <div
-        style={{
-          position: "relative",
-          left: `${4 * 32}px`,
-          top: `${2 * 32}px`,
-          width: "fit-content",
-          height: "fit-content",
-        }}
-      >
-        {tables?.map((t) =>
-          t.surface.map((coord) => (
-            <Square
-              onClick={() => setTableDialogOpenState(t.id)}
-              key={[coord.x, coord.y].join(",")}
-              position={coord}
-              color={
-                {
-                  [TableStatus.Free]: "green",
-                  [TableStatus.Calling]: "orange",
-                  [TableStatus.Occupied]: "red",
-                }[t.status]
-              }
-              content={t.id}
-              filled
-            />
-          )),
-        )}
-      </div>
-      <div
-        style={{
-          position: "relative",
-          left: `${4 * 32}px`,
-          top: `${2 * 32}px`,
-          width: "fit-content",
-          height: "fit-content",
-        }}
-      >
+      <Area>
         {company?.premises[0].layouts[0].boundaries.map((b) => (
           <Square
             key={[b.x, b.y].join(",")}
@@ -86,7 +34,35 @@ export const SaloonGrid = () => {
             }
           />
         ))}
-      </div>
+      </Area>
+      {sectors.map((sector, i) => (
+        <Area key={`${sector.name} ${i}`} positionX={sector.positionX} positionY={sector.positionY}>
+          {sector.name && <SectorTag sector={sector} />}
+          {sector.surface.map((coord) => (
+            <Square key={[coord.x, coord.y].join(",")} position={coord} color={sector.color} />
+          ))}
+        </Area>
+      ))}
+      {tables?.map((table, i) => (
+        <Area key={`${table.layoutId} ${i}`} positionX={table.positionX} positionY={table.positionY}>
+          {table.surface.map((coord) => (
+            <Square
+              onClick={() => setTableDialogOpenState(table)}
+              key={[coord.x, coord.y].join(",")}
+              position={coord}
+              color={
+                {
+                  [TableStatus.Free]: "green",
+                  [TableStatus.Calling]: "orange",
+                  [TableStatus.Occupied]: "red",
+                }[table.status]
+              }
+              content={table.id}
+              filled
+            />
+          ))}
+        </Area>
+      ))}
     </div>
   );
 };

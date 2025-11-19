@@ -1,6 +1,7 @@
 ﻿using Dawn;
 using Microsoft.EntityFrameworkCore;
 using Shared.Core.Entities;
+using Shared.Core.Services;
 using Shared.Infrastructure.EntityConfiguration;
 
 namespace Shared.Infrastructure.Extensions;
@@ -35,6 +36,15 @@ public static class ModelBuilderExtensions
         return entity;
     }
 
+    private static TEntity WithQrId<TEntity>(this TEntity entity, int id) where TEntity : class
+    {
+        entity.WithId(id);
+
+        entity.GetType().GetProperty("QrId")?.SetValue(entity, HashService.CreateHash(id.ToString()));
+
+        return entity;
+    }
+
     public static void SeedTables(this ModelBuilder modelBuilder)
     {
 
@@ -55,34 +65,34 @@ public static class ModelBuilderExtensions
         );
 
         modelBuilder.Entity<Table>().HasData(
-            new Table(layoutId: 1, positionX: 0, positionY: 0, status: TableStatus.Occupied).WithId(1),
-            new Table(layoutId: 1, positionX: 2, positionY: 2, status: TableStatus.Free).WithId(2),
-            new Table(layoutId: 1, positionX: 7, positionY: 0, status: TableStatus.Free).WithId(3),
-            new Table(layoutId: 1, positionX: 9, positionY: 0, status: TableStatus.Occupied).WithId(4),
-            new Table(layoutId: 1, positionX: 11, positionY: 0, status: TableStatus.Calling).WithId(5),
-            new Table(layoutId: 1, positionX: 13, positionY: 0, status: TableStatus.Occupied).WithId(6),
-            new Table(layoutId: 1, positionX: 15, positionY: 1, status: TableStatus.Calling).WithId(7)
+            new Table(layoutId: 1, positionX: 0, positionY: 0, status: TableStatus.Occupied).WithQrId(1),
+            new Table(layoutId: 1, positionX: 2, positionY: 2, status: TableStatus.Free).WithQrId(2),
+            new Table(layoutId: 1, positionX: 7, positionY: 0, status: TableStatus.Free).WithQrId(3),
+            new Table(layoutId: 1, positionX: 9, positionY: 0, status: TableStatus.Occupied).WithQrId(4),
+            new Table(layoutId: 1, positionX: 11, positionY: 0, status: TableStatus.Calling).WithQrId(5),
+            new Table(layoutId: 1, positionX: 13, positionY: 0, status: TableStatus.Occupied).WithQrId(6),
+            new Table(layoutId: 1, positionX: 15, positionY: 1, status: TableStatus.Calling).WithQrId(7)
         );
 
         modelBuilder.Entity<TableCoord>().HasData(
             new TableCoord(tableId: 1, x: 0, y: 0),
-            new TableCoord(tableId: 2, x: 2, y: 2),
-            new TableCoord(tableId: 3, x: 7, y: 0),
-            new TableCoord(tableId: 3, x: 7, y: 1),
-            new TableCoord(tableId: 4, x: 9, y: 0),
-            new TableCoord(tableId: 4, x: 9, y: 1),
-            new TableCoord(tableId: 5, x: 11, y: 0),
-            new TableCoord(tableId: 6, x: 13, y: 0),
-            new TableCoord(tableId: 6, x: 13, y: 1),
-            new TableCoord(tableId: 7, x: 15, y: 1)
+            new TableCoord(tableId: 2, x: 0, y: 0),
+            new TableCoord(tableId: 3, x: 0, y: 0),
+            new TableCoord(tableId: 3, x: 0, y: 1),
+            new TableCoord(tableId: 4, x: 0, y: 0),
+            new TableCoord(tableId: 4, x: 0, y: 1),
+            new TableCoord(tableId: 5, x: 0, y: 0),
+            new TableCoord(tableId: 6, x: 0, y: 0),
+            new TableCoord(tableId: 6, x: 0, y: 1),
+            new TableCoord(tableId: 7, x: 0, y: 1)
         );
 
         modelBuilder.Entity<Sector>().HasData(
-            new Sector(layoutId: 1, positionX: 4, positionY: 2, name: "Deck", color: "violet").WithId(1),
-            new Sector(layoutId: 1, positionX: 4, positionY: 6, name: "Salon", color: "orange").WithId(2),
-            new Sector(layoutId: 1, positionX: 4, positionY: 10, name: "Patio Interno", color: "pink").WithId(3),
-            new Sector(layoutId: 1, positionX: 16, positionY: 6, name: "Garden", color: "cyan").WithId(4),
-            new Sector(layoutId: 1, positionX: 4, positionY: 18, name: "Patio Externo", color: "lime").WithId(5)
+            new Sector(layoutId: 1, positionX: 0, positionY: 0, name: "Deck", color: "violet").WithId(1),
+            new Sector(layoutId: 1, positionX: 0, positionY: 4, name: "Salon", color: "orange").WithId(2),
+            new Sector(layoutId: 1, positionX: 0, positionY: 8, name: "Patio Interno", color: "pink").WithId(3),
+            new Sector(layoutId: 1, positionX: 12, positionY: 4, name: "Garden", color: "cyan").WithId(4),
+            new Sector(layoutId: 1, positionX: 0, positionY: 16, name: "Patio Externo", color: "lime").WithId(5)
         );
 
         modelBuilder.Entity<SectorCoord>().HasData(
