@@ -1,4 +1,5 @@
 import { useAdminStore } from "@/stores";
+import { Coords } from "@/types";
 
 import styles from "./styles.module.scss";
 
@@ -6,10 +7,7 @@ type SquareProps = {
   color: string;
   content?: string | number;
   filled?: boolean;
-  position: {
-    x: number;
-    y: number;
-  };
+  position: Coords;
   onClick?: () => void;
 };
 export const Square = (props: SquareProps) => {

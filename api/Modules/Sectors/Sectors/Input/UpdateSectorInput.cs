@@ -1,4 +1,5 @@
-﻿using Shared.Core.Entities;
+﻿using Sectors.Core.Model;
+using Shared.Core.Entities;
 
 namespace Sectors.Input;
 public class UpdateSectorInput
@@ -8,5 +9,5 @@ public class UpdateSectorInput
     public int? PositionY { get; set; }
     public string? Name { get; set; }
     public string? Color { get; set; }
-    public List<(int, int)>? Surface { get; set; }
+    public List<SectorCoordModel>? Surface { get; set; }
 }

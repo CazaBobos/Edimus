@@ -19,7 +19,7 @@ public class CreateTableRequestHandler : IRequestHandler<CreateTableRequest, Cre
             request.LayoutId,
             request.PositionX,
             request.PositionY,
-            request.Surface
+            request.Surface.Select(c => (c.X, c.Y)).ToList()
         );
 
         await _tablesRepository.Add(table, cancellationToken);

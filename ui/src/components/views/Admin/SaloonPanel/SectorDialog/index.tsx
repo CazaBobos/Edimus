@@ -11,6 +11,7 @@ import { ControlState } from "@/components/ui/common";
 import { Dialog } from "@/components/ui/Dialog";
 
 import { Positioner } from "../Positioner";
+import { SurfaceEditor } from "../SurfaceEditor";
 import styles from "./styles.module.scss";
 
 export const SectorDialog = () => {
@@ -31,6 +32,9 @@ export const SectorDialog = () => {
   const handleSetCoords = (coords: Coords) => {
     setRequest((prev) => ({ ...prev, positionX: coords.x, positionY: coords.y }));
   };
+  const handleSetSurface = (surface: Coords[]) => {
+    setRequest((prev) => ({ ...prev, surface }));
+  };
 
   const { updateSectorMutation } = useSaloonMutations();
   const handleSave = () => {
@@ -48,6 +52,7 @@ export const SectorDialog = () => {
       <div className={styles.content}>
         <ColorPicker onChange={handleSetRequest} defaultValue={sector?.color} />
         <Positioner positionX={sector?.positionX} positionY={sector?.positionY} onChange={handleSetCoords} />
+        <SurfaceEditor content="X" height={15} width={15} defaultValue={sector?.surface} onChange={handleSetSurface} />
         <Button label="Editar Area" icon={<GiResize />} />
         <Button label="Guardar Cambios" icon={<BiSave />} onClick={handleSave} />
       </div>

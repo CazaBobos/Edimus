@@ -23,7 +23,7 @@ public class UpdateTableRequestHandler : IRequestHandler<UpdateTableRequest, Upd
             request.Status,
             request.PositionX,
             request.PositionY,
-            request.Surface
+            request.Surface?.Select(c => (c.X, c.Y)).ToList()
         );
 
         await _tablesRepository.Update(table, cancellationToken);

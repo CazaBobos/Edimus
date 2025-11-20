@@ -28,10 +28,10 @@ export type CreateTableRequest = {
 } & Required<UpdateTableRequest>;
 
 export type UpdateTableRequest = {
-  Status?: TableStatus;
+  status?: TableStatus;
   positionX?: number;
   positionY?: number;
-  //surface?: [number, number][];
+  surface?: Coords[];
 };
 
 export enum TableStatus {

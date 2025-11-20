@@ -84,7 +84,7 @@ public static class ModelBuilderExtensions
             new TableCoord(tableId: 5, x: 0, y: 0),
             new TableCoord(tableId: 6, x: 0, y: 0),
             new TableCoord(tableId: 6, x: 0, y: 1),
-            new TableCoord(tableId: 7, x: 0, y: 1)
+            new TableCoord(tableId: 7, x: 0, y: 0)
         );
 
         modelBuilder.Entity<Sector>().HasData(

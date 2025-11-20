@@ -12,8 +12,8 @@ public class TableCoord
     protected TableCoord() { }
     public TableCoord(int x, int y, int tableId)
     {
-        X = Guard.Argument(() => x).NotNegative();
-        Y = Guard.Argument(() => y).NotNegative();
+        X = Guard.Argument(() => x);
+        Y = Guard.Argument(() => y);
         TableId = Guard.Argument(() => tableId).Positive();
     }
 }

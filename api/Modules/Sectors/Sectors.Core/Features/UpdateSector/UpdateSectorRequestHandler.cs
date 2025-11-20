@@ -24,7 +24,7 @@ public class UpdateSectorRequestHandler : IRequestHandler<UpdateSectorRequest, U
             request.Color,
             request.PositionX,
             request.PositionY,
-            request.Surface
+            request.Surface?.Select(c => (c.X, c.Y)).ToList()
         );
 
         await _sectorsRepository.Update(sector, cancellationToken);

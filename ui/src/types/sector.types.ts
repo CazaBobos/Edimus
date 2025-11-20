@@ -28,5 +28,5 @@ export type UpdateSectorRequest = {
   color?: string;
   positionX?: number;
   positionY?: number;
-  //surface?: [number, number][];
+  surface?: Coords[];
 };

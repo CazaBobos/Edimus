@@ -18,7 +18,7 @@ export const SaloonGrid = () => {
   return (
     <div className={styles.saloonGrid}>
       {[...Array(24).keys()].map((_, x) =>
-        [...Array(24).keys()].map((_, y) => <Square key={[x, y].join(",")} position={{ x: x, y: y }} color="grey" />),
+        [...Array(24).keys()].map((_, y) => <Square key={[x, y].join(",")} position={{ x, y }} color="grey" />),
       )}
       <Area>
         {company?.premises[0].layouts[0].boundaries.map((b) => (

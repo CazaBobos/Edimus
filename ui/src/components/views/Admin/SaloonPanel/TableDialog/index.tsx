@@ -8,10 +8,10 @@ import { HiDocumentCurrencyDollar } from "react-icons/hi2";
 import QRCode from "react-qr-code";
 
 import { Button } from "@/components/ui/Button";
-import { ControlState } from "@/components/ui/common";
 import { Dialog } from "@/components/ui/Dialog";
 
 import { Positioner } from "../Positioner";
+import { SurfaceEditor } from "../SurfaceEditor";
 import { RequestsList } from "./RequestsList";
 import styles from "./styles.module.scss";
 
@@ -24,14 +24,16 @@ export const TableDialog = () => {
     setTableDialogOpenState(undefined);
   };
   const [request, setRequest] = useState<UpdateTableRequest>({});
-  const handleSetRequest = (state: ControlState) => {
-    const { name, value } = state;
-
-    setRequest((prev) => ({ ...prev, [name]: value }));
-  };
+  //const handleSetState = (status: TableStatus) => {
+  //  setRequest((prev) => ({ ...prev, status }));
+  //};
   const handleSetCoords = (coords: Coords) => {
     setRequest((prev) => ({ ...prev, positionX: coords.x, positionY: coords.y }));
   };
+  const handleSetSurface = (surface: Coords[]) => {
+    setRequest((prev) => ({ ...prev, surface }));
+  };
+
   const { updateTableMutation } = useSaloonMutations();
   const handleSave = () => {
     if (table) updateTableMutation.mutate({ id: table.id, request });
@@ -61,10 +63,14 @@ export const TableDialog = () => {
           <Button label="Emitir Control de Pedido" icon={<HiDocumentText size={24} />} />
           <Button label="Emitir Comprobante" icon={<HiDocumentCurrencyDollar size={24} />} />
         </div>
-        <Positioner
-          positionX={request.positionX ?? table?.positionX}
-          positionY={request.positionY ?? table?.positionY}
-          onChange={handleSetCoords}
+        <Positioner positionX={table?.positionX} positionY={table?.positionY} onChange={handleSetCoords} />
+        <SurfaceEditor
+          content={table?.id}
+          offset={{ x: -1, y: -1 }}
+          height={3}
+          width={3}
+          defaultValue={table?.surface}
+          onChange={handleSetSurface}
         />
         <Button label="Guardar Cambios" icon={<BiSave />} onClick={handleSave} />
       </div>

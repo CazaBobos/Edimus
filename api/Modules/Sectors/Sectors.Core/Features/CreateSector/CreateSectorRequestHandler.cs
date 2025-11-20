@@ -21,7 +21,7 @@ public class CreateSectorRequestHandler : IRequestHandler<CreateSectorRequest, C
             request.PositionY,
             request.Name,
             request.Color,
-            request.Surface
+            request.Surface.Select(c => (c.X, c.Y)).ToList()
         );
 
         await _sectorsRepository.Add(sector, cancellationToken);
