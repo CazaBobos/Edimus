@@ -53,15 +53,15 @@ public static class ModelBuilderExtensions
         );
 
         modelBuilder.Entity<Company>().HasData(
-            new Company(name: "Maria Antonieta", "Universo Deli", "MA").WithId(1)
+            new Company(name: "Maria Antonieta", slogan: "Universo Deli", acronym: "MA").WithId(1)
         );
 
         modelBuilder.Entity<Premise>().HasData(
-            new Premise(1, "Barrio Jardin").WithId(1)
+            new Premise(companyId: 1, name: "Barrio Jardin").WithId(1)
         );
 
         modelBuilder.Entity<Layout>().HasData(
-            new Layout(1, "Planta Baja").WithId(1)
+            new Layout(premiseId: 1, name: "Planta Baja", height: 24, width: 24).WithId(1)
         );
 
         modelBuilder.Entity<Table>().HasData(
@@ -88,11 +88,11 @@ public static class ModelBuilderExtensions
         );
 
         modelBuilder.Entity<Sector>().HasData(
-            new Sector(layoutId: 1, positionX: 0, positionY: 0, name: "Deck", color: "violet").WithId(1),
-            new Sector(layoutId: 1, positionX: 0, positionY: 4, name: "Salon", color: "orange").WithId(2),
-            new Sector(layoutId: 1, positionX: 0, positionY: 8, name: "Patio Interno", color: "pink").WithId(3),
-            new Sector(layoutId: 1, positionX: 12, positionY: 4, name: "Garden", color: "cyan").WithId(4),
-            new Sector(layoutId: 1, positionX: 0, positionY: 16, name: "Patio Externo", color: "lime").WithId(5)
+            new Sector(layoutId: 1, positionX: 0, positionY: 0, name: "Deck", color: "#EE82EE").WithId(1),
+            new Sector(layoutId: 1, positionX: 0, positionY: 4, name: "Salon", color: "#FFA208").WithId(2),
+            new Sector(layoutId: 1, positionX: 0, positionY: 8, name: "Patio Interno", color: "#FAC8C0").WithId(3),
+            new Sector(layoutId: 1, positionX: 12, positionY: 4, name: "Garden", color: "#00FFFF").WithId(4),
+            new Sector(layoutId: 1, positionX: 0, positionY: 16, name: "Patio Externo", color: "#00FF00").WithId(5)
         );
 
         modelBuilder.Entity<SectorCoord>().HasData(

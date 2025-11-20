@@ -9,7 +9,7 @@ export const tablesApi = {
     return response.data;
   },
   create: async (request: CreateTableRequest) => {
-    const response = await axiosClient.post<number>("tables", request);
+    const response = await axiosClient.post<{ id: number; qrId: string }>("tables", request);
 
     return response.data;
   },

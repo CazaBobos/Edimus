@@ -1,9 +1,8 @@
 import { useSaloonMutations } from "@/hooks/mutations/useSaloonMutations";
 import { useAdminStore } from "@/stores";
-import { Coords, UpdateSectorRequest } from "@/types";
+import { Coords, CreateSectorRequest, UpdateSectorRequest } from "@/types";
 import { useState } from "react";
 import { BiSave, BiX } from "react-icons/bi";
-import { GiResize } from "react-icons/gi";
 
 import { Button } from "@/components/ui/Button";
 import { ColorPicker } from "@/components/ui/ColorPicker";
@@ -36,9 +35,10 @@ export const SectorDialog = () => {
     setRequest((prev) => ({ ...prev, surface }));
   };
 
-  const { updateSectorMutation } = useSaloonMutations();
+  const { createSectorMutation, updateSectorMutation } = useSaloonMutations();
   const handleSave = () => {
     if (sector) updateSectorMutation.mutate({ id: sector.id, request });
+    else createSectorMutation.mutate(request as CreateSectorRequest);
   };
 
   return (
@@ -50,11 +50,12 @@ export const SectorDialog = () => {
         </h2>
       </div>
       <div className={styles.content}>
-        <ColorPicker onChange={handleSetRequest} defaultValue={sector?.color} />
-        <Positioner positionX={sector?.positionX} positionY={sector?.positionY} onChange={handleSetCoords} />
+        <div>
+          <ColorPicker name="color" onChange={handleSetRequest} defaultValue={sector?.color} />
+          <Positioner positionX={sector?.positionX} positionY={sector?.positionY} onChange={handleSetCoords} />
+          <Button label="Guardar Cambios" icon={<BiSave />} onClick={handleSave} />
+        </div>
         <SurfaceEditor content="X" height={15} width={15} defaultValue={sector?.surface} onChange={handleSetSurface} />
-        <Button label="Editar Area" icon={<GiResize />} />
-        <Button label="Guardar Cambios" icon={<BiSave />} onClick={handleSave} />
       </div>
     </Dialog>
   );

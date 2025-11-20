@@ -38,6 +38,7 @@ export const SurfaceEditor = (props: SurfaceEditorProps) => {
             <Square
               key={[x, y].join(",")}
               position={{ x, y }}
+              borderColor="#f2f2f2"
               color="grey"
               content={centerX === 0 && centerY === 0 ? content : ""}
               filled={currentSurface.some((s) => s.x === centerX && s.y === centerY)}

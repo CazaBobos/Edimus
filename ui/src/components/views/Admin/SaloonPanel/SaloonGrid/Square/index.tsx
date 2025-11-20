@@ -5,6 +5,7 @@ import styles from "./styles.module.scss";
 
 type SquareProps = {
   color: string;
+  borderColor?: string;
   content?: string | number;
   filled?: boolean;
   position: Coords;
@@ -12,7 +13,7 @@ type SquareProps = {
 };
 export const Square = (props: SquareProps) => {
   const squareSize = useAdminStore((store) => store.squareSize);
-  const { color, filled, position, content, onClick } = props;
+  const { borderColor, color, filled, position, content, onClick } = props;
 
   return (
     <div
@@ -22,7 +23,7 @@ export const Square = (props: SquareProps) => {
         cursor: onClick ? "pointer" : "default",
         top: `${position.y * squareSize}px`,
         left: `${position.x * squareSize}px`,
-        border: `1px solid ${color}`,
+        border: `1px solid ${borderColor ?? color}`,
         backgroundColor: filled ? color : "transparent",
       }}
     >

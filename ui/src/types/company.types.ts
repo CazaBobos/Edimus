@@ -20,6 +20,8 @@ export type Premise = {
 export type Layout = {
   id: number;
   name: string;
+  height: number;
+  width: number;
   boundaries: (Coords & { type: BoundaryType })[];
 };
 

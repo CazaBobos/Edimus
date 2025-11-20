@@ -26,7 +26,8 @@ public class CreateTableRequestHandler : IRequestHandler<CreateTableRequest, Cre
 
         return new CreateTableResponse
         {
-            Id = table.Id
+            Id = table.Id,
+            QrId = table.QrId,
         };
     }
 }

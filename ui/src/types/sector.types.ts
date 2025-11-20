@@ -8,7 +8,6 @@ export type Sector = {
   positionY: number;
   color: string;
   surface: Coords[];
-  enabled: boolean;
 };
 
 export type GetSectorsParams = {

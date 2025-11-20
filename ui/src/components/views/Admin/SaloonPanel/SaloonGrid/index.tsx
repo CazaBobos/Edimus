@@ -15,13 +15,18 @@ export const SaloonGrid = () => {
   const { data: sectors } = useSectorsQuery();
   const { setTableDialogOpenState } = useAdminStore();
 
+  const currentLayout = company?.premises[0].layouts[0];
+
+  if (!currentLayout) return null;
   return (
     <div className={styles.saloonGrid}>
-      {[...Array(24).keys()].map((_, x) =>
-        [...Array(24).keys()].map((_, y) => <Square key={[x, y].join(",")} position={{ x, y }} color="grey" />),
+      {[...Array(currentLayout?.width).keys()].map((_, x) =>
+        [...Array(currentLayout?.height).keys()].map((_, y) => (
+          <Square key={[x, y].join(",")} position={{ x, y }} color="grey" />
+        )),
       )}
       <Area>
-        {company?.premises[0].layouts[0].boundaries.map((b) => (
+        {currentLayout.boundaries.map((b) => (
           <Square
             key={[b.x, b.y].join(",")}
             position={b}

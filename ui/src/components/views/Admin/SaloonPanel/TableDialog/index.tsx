@@ -1,6 +1,6 @@
 import { useSaloonMutations } from "@/hooks/mutations/useSaloonMutations";
 import { useAdminStore } from "@/stores";
-import { Coords, TableStatus, UpdateTableRequest } from "@/types";
+import { Coords, CreateTableRequest, TableStatus, UpdateTableRequest } from "@/types";
 import { useState } from "react";
 import { BiQr, BiSave, BiSolidCircle, BiTrash, BiX } from "react-icons/bi";
 import { HiDocumentText } from "react-icons/hi";
@@ -34,9 +34,10 @@ export const TableDialog = () => {
     setRequest((prev) => ({ ...prev, surface }));
   };
 
-  const { updateTableMutation } = useSaloonMutations();
+  const { createTableMutation, updateTableMutation } = useSaloonMutations();
   const handleSave = () => {
     if (table) updateTableMutation.mutate({ id: table.id, request });
+    else createTableMutation.mutate(request as CreateTableRequest);
   };
 
   const statusColor = {

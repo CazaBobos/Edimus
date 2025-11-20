@@ -13,11 +13,11 @@ public class Company : AggregateRoot<int>
     public virtual List<Category>? Categories { get; protected set; }
 
     protected Company() { }
-    public Company(string name, string slogan, string? acronmym = null)
+    public Company(string name, string slogan, string? acronym = null)
     {
         Name = ValidateName(name);
         Slogan = Guard.Argument(() => slogan).NotWhiteSpace().DoesNotContain("  ");
-        Acronym = acronmym ?? GenerateAcronym(name);
+        Acronym = acronym ?? GenerateAcronym(name);
         Enabled = true;
     }
     public void Update(

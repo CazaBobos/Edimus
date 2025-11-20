@@ -12,7 +12,6 @@ export type Table = {
     productId: number;
     amount: number;
   }[];
-  enabled?: boolean;
 };
 
 export type GetTablesParams = {

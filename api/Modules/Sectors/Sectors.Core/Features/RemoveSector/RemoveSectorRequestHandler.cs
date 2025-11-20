@@ -15,11 +15,11 @@ public class RemoveSectorRequestHandler : IRequestHandler<RemoveSectorRequest, R
 
     public async Task<RemoveSectorResponse> Handle(RemoveSectorRequest request, CancellationToken cancellationToken)
     {
-        var table = await _sectorsRepository.GetById(request.Id);
+        var sector = await _sectorsRepository.GetById(request.Id);
 
-        if (table is null) throw new HttpNotFoundException();
+        if (sector is null) throw new HttpNotFoundException();
 
-        await _sectorsRepository.Remove(table, cancellationToken);
+        await _sectorsRepository.Remove(sector, cancellationToken);
 
         return new RemoveSectorResponse();
     }

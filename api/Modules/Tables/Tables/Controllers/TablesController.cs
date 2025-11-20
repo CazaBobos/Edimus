@@ -63,7 +63,7 @@ public class TablesController : ControllerBase
             User = User.GetUser(),
         }, cancellationToken);
 
-        return Ok(response.Id);
+        return Ok(response);
     }
 
     /// <summary>
