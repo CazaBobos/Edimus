@@ -20,12 +20,15 @@ public class CreateSectorRequestHandler : IRequestHandler<CreateSectorRequest, C
             request.PositionX,
             request.PositionY,
             request.Name,
-            request.Color,
-            request.Surface.Select(c => (c.X, c.Y)).ToList()
+            request.Color
         );
 
         await _sectorsRepository.Add(sector, cancellationToken);
+        
+        sector.Update(surface: request.Surface.Select(c => (c.X, c.Y)).ToList());
 
+        await _sectorsRepository.Update(sector, cancellationToken);
+        
         return new CreateSectorResponse
         {
             Id = sector.Id

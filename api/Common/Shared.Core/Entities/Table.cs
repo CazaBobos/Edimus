@@ -33,7 +33,7 @@ public class Table : AggregateRoot<int>
         Enabled = true;
     }
 
-    public void Update(TableStatus? status, int? positionX, int? positionY, List<(int, int)>? surface)
+    public void Update(TableStatus? status = null, int? positionX = null, int? positionY = null, List<(int, int)>? surface = null)
     {
         var affectedMembers = new List<string>();
 

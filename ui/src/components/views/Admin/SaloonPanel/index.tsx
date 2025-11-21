@@ -1,7 +1,6 @@
 import { useAdminStore } from "@/stores";
 import { BiWine, BiArea } from "react-icons/bi";
 
-import { Accordion } from "@/components/ui/Accordion";
 import { Button } from "@/components/ui/Button";
 
 import { SaloonGrid } from "./SaloonGrid";
@@ -15,11 +14,11 @@ export const SaloonPanel = () => {
   return (
     <div className={styles.container}>
       <h2>
-        Plano de salón
-        <Accordion title="Nuevo">
-          <Button label="Mesa" icon={<BiWine />} onClick={() => setTableDialogOpenState(null)} />
-          <Button label="Sector" icon={<BiArea />} onClick={() => setSectorDialogOpenState(null)} />
-        </Accordion>
+        <span>Plano de salón</span>
+        <div>
+          <Button label="Añadir Mesa" icon={<BiWine />} onClick={() => setTableDialogOpenState(null)} />
+          <Button label="Añadir Sector" icon={<BiArea />} onClick={() => setSectorDialogOpenState(null)} />
+        </div>
       </h2>
       <SaloonGrid />
       <TableDialog />

@@ -19,9 +19,16 @@ export const ColorPicker = (props: ColorPickerProps) => {
   };
 
   return (
-    <div className={styles.colorPicker}>
-      <span>Color:</span>
-      <input type="color" name={name} value={value} defaultValue={defaultValue} onChange={handleChange} />
+    <div className={styles.container}>
+      <span>Color</span>
+      <input
+        type="color"
+        className={styles.picker}
+        name={name}
+        value={value}
+        defaultValue={defaultValue}
+        onChange={handleChange}
+      />
     </div>
   );
 };

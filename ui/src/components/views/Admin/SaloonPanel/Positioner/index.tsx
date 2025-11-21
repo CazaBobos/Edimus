@@ -1,6 +1,6 @@
 import { Coords } from "@/types";
 import { useState } from "react";
-import { BiSolidUpArrow, BiSolidDownArrow, BiSolidRightArrow, BiSolidLeftArrow, BiCheck } from "react-icons/bi";
+import { BiSolidUpArrow, BiSolidDownArrow, BiSolidRightArrow, BiSolidLeftArrow } from "react-icons/bi";
 
 import { Button } from "@/components/ui/Button";
 
@@ -35,7 +35,7 @@ export const Positioner = (props: PositionerProps) => {
       <Button icon={<BiSolidUpArrow />} onClick={up} />
       <div className={styles.row}>
         <Button icon={<BiSolidLeftArrow />} onClick={left} />
-        <Button icon={<BiCheck />} />
+        <div className={styles.spacer} />
         <Button icon={<BiSolidRightArrow />} onClick={right} />
       </div>
       <Button icon={<BiSolidDownArrow />} onClick={down} />

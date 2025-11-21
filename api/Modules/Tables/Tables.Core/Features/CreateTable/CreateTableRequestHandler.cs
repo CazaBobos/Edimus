@@ -18,12 +18,15 @@ public class CreateTableRequestHandler : IRequestHandler<CreateTableRequest, Cre
         var table = new Table(
             request.LayoutId,
             request.PositionX,
-            request.PositionY,
-            request.Surface.Select(c => (c.X, c.Y)).ToList()
+            request.PositionY
         );
 
         await _tablesRepository.Add(table, cancellationToken);
 
+        table.Update(surface: request.Surface.Select(c => (c.X, c.Y)).ToList());
+
+        await _tablesRepository.Update(table, cancellationToken);
+        
         return new CreateTableResponse
         {
             Id = table.Id,

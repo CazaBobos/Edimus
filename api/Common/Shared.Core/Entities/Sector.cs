@@ -30,7 +30,7 @@ public class Sector : AggregateRoot<int>
         Enabled = true;
     }
 
-    public void Update(string? name, string? color, int? positionX, int? positionY, List<(int, int)>? surface)
+    public void Update(string? name = null, string? color = null, int? positionX = null, int? positionY = null, List<(int, int)>? surface = null)
     {
         var affectedMembers = new List<string>();
 

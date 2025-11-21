@@ -6,9 +6,15 @@
   gap: 8px;
   > h2 {
     display: flex;
-    gap: 8px;
     align-items: center;
-    svg {
+    justify-content: space-between;
+    gap: 8px;
+    > div {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    > svg {
       cursor: pointer;
       border-radius: 50%;
       padding: 4px;
@@ -22,10 +28,11 @@
 }
 .content {
   display: flex;
+  flex-direction: column;
   gap: 16px;
-  .buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
 }
