@@ -1,7 +1,7 @@
 ﻿using Dawn;
 
 namespace Shared.Core.Entities;
-public class Request
+public class Order
 {
     public int ProductId { get; protected set; }
     public virtual Product? Product { get; protected set; }
@@ -9,8 +9,8 @@ public class Request
     public virtual Table? Table { get; protected set; }
     public int Amount { get; protected set; }
 
-    protected Request() { }
-    public Request(int productId, int tableId, int amount)
+    protected Order() { }
+    public Order(int productId, int tableId, int amount)
     {
         ProductId = Guard.Argument(() => productId).Positive();
         TableId = Guard.Argument(() => tableId).Positive();

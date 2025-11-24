@@ -18,7 +18,7 @@ public static class ModelBuilderExtensions
         modelBuilder.ApplyConfiguration(new LayoutConfiguration());
         modelBuilder.ApplyConfiguration(new LayoutCoordConfiguration());
         modelBuilder.ApplyConfiguration(new ProductConfiguration());
-        modelBuilder.ApplyConfiguration(new RequestConfiguration());
+        modelBuilder.ApplyConfiguration(new OrderConfiguration());
         modelBuilder.ApplyConfiguration(new SectorConfiguration());
         modelBuilder.ApplyConfiguration(new SectorCoordConfiguration());
         modelBuilder.ApplyConfiguration(new TableConfiguration());

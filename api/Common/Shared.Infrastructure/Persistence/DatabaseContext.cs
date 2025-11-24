@@ -19,7 +19,7 @@ public class DatabaseContext : DbContext
     public DbSet<Layout> Layouts { get; set; } = null!;
     public DbSet<LayoutCoord> LayoutCoords { get; set; } = null!;
     public DbSet<Product> Products { get; set; } = null!;
-    public DbSet<Request> Requests { get; set; } = null!;
+    public DbSet<Order> Orders { get; set; } = null!;
     public DbSet<Sector> Sectors { get; set; } = null!;
     public DbSet<SectorCoord> SectorCoords { get; set; } = null!;
     public DbSet<Table> Tables { get; set; } = null!;

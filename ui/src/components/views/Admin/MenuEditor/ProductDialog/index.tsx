@@ -15,7 +15,8 @@ import { Select } from "@/components/ui/Select";
 import styles from "./styles.module.scss";
 
 export const ProductDialog = () => {
-  const { productDialogOpenState, setProductDialogOpenState } = useAdminStore();
+  const product = useAdminStore((store) => store.productDialogOpenState);
+  const setProductDialogOpenState = useAdminStore((store) => store.setProductDialogOpenState);
 
   const handleClose = () => {
     setRequest({});
@@ -25,7 +26,6 @@ export const ProductDialog = () => {
   const { data: products } = useProductsQuery();
   const { data: categories } = useCategoriesQuery();
 
-  const product = products.find((p) => p.id === productDialogOpenState);
   const parentableProducts = products.filter((p) => !!p.categoryId);
 
   const { createProductMutation, updateProductMutation, removeProductMutation, restoreProductMutation } =
@@ -68,7 +68,7 @@ export const ProductDialog = () => {
   };
 
   return (
-    <Dialog open={productDialogOpenState !== undefined} onClose={handleClose}>
+    <Dialog open={product !== undefined} onClose={handleClose}>
       <div className={styles.container}>
         <div className={styles.header}>
           {product ? (

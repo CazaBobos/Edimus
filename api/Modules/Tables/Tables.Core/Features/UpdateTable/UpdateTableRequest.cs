@@ -12,5 +12,6 @@ public class UpdateTableRequest : IRequest<UpdateTableResponse>
     public int? PositionX { get; set; }
     public int? PositionY { get; set; }
     public List<TableCoordModel>? Surface { get; set; }
+    public List<OrderModel>? Orders { get; set; }
     public IUserRecord? User { get; set; }
 }

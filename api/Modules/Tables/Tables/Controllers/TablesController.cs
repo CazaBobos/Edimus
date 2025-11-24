@@ -79,6 +79,7 @@ public class TablesController : ControllerBase
             PositionX = input.PositionX,
             PositionY = input.PositionY,
             Surface = input.Surface,
+            Orders = input.Orders,
             User = User.GetUser(),
         }, cancellationToken);
 

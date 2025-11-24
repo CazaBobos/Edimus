@@ -31,7 +31,7 @@ public class TableConfiguration : IEntityTypeConfiguration<Table>
             .WithOne(e => e.Table)
             .HasForeignKey(e => e.TableId);
 
-        entity.HasMany(e => e.Requests)
+        entity.HasMany(e => e.Orders)
             .WithOne(e => e.Table)
             .HasForeignKey(e => e.TableId);
 

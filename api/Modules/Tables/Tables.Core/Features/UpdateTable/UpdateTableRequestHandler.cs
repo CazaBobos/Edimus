@@ -23,7 +23,8 @@ public class UpdateTableRequestHandler : IRequestHandler<UpdateTableRequest, Upd
             request.Status,
             request.PositionX,
             request.PositionY,
-            request.Surface?.Select(c => (c.X, c.Y)).ToList()
+            request.Surface?.Select(c => (c.X, c.Y)).ToList(),
+            request.Orders?.Select(r => (r.ProductId, r.Amount)).ToList()
         );
 
         await _tablesRepository.Update(table, cancellationToken);

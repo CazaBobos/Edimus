@@ -10,6 +10,6 @@ public class TableProfile : Profile
     {
         CreateMap<Table, TableModel>().ReverseMap();
         CreateMap<TableCoord, TableCoordModel>().ReverseMap();
-        CreateMap<Request, RequestModel>().ReverseMap();
+        CreateMap<Order, OrderModel>().ReverseMap();
     }
 }

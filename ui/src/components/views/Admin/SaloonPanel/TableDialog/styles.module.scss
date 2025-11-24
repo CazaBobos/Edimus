@@ -30,9 +30,18 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  min-width: 200px
 }
 .row {
   display: flex;
   justify-content: space-between;
   gap: 16px;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 350px;
+  width: 350px;
 }

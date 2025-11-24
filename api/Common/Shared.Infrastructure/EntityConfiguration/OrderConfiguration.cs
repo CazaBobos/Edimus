@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Shared.Core.Entities;
 
 namespace Shared.Infrastructure.EntityConfiguration;
-public class RequestConfiguration : IEntityTypeConfiguration<Request>
+public class OrderConfiguration : IEntityTypeConfiguration<Order>
 {
-    public void Configure(EntityTypeBuilder<Request> entity)
+    public void Configure(EntityTypeBuilder<Order> entity)
     {
         entity.HasKey(e => new { e.TableId, e.ProductId });
 

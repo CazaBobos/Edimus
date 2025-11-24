@@ -8,10 +8,12 @@ export type Table = {
   positionX: number;
   positionY: number;
   surface: Coords[];
-  requests: {
-    productId: number;
-    amount: number;
-  }[];
+  orders: TableOrder[];
+};
+
+export type TableOrder = {
+  productId: number;
+  amount: number;
 };
 
 export type GetTablesParams = {
@@ -24,9 +26,13 @@ export type GetTablesParams = {
 
 export type CreateTableRequest = {
   layoutId: number;
-} & Required<UpdateTableRequest>;
+} & Required<TableRequest>;
 
 export type UpdateTableRequest = {
+  orders?: TableOrder[];
+} & TableRequest;
+
+type TableRequest = {
   status?: TableStatus;
   positionX?: number;
   positionY?: number;
@@ -38,3 +44,9 @@ export enum TableStatus {
   Calling,
   Occupied,
 }
+
+export const tableStatusMap = {
+  [TableStatus.Free]: "Libre",
+  [TableStatus.Calling]: "Llamando",
+  [TableStatus.Occupied]: "Ocupada",
+};

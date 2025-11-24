@@ -5,17 +5,18 @@ import styles from "./styles.module.scss";
 
 type InputProps = {
   width?: string;
-  type?: "text" | "password";
+  type?: "text" | "password" | "number";
   multiline?: boolean;
   name?: string;
   title?: string;
   value?: string | number;
   defaultValue?: string | number;
+  placeholder?: string;
   onChange?: (state: ControlState) => void;
 };
 
 export const Input = (props: InputProps) => {
-  const { width, type = "text", multiline, name, title, value, defaultValue, onChange } = props;
+  const { width, type = "text", multiline, name, title, value, defaultValue, placeholder, onChange } = props;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -32,15 +33,18 @@ export const Input = (props: InputProps) => {
           name={name}
           value={value}
           defaultValue={defaultValue}
+          placeholder={placeholder}
           onChange={handleChange}
         />
       ) : (
         <input
           className={styles.input}
           type={type}
+          min={1}
           name={name}
           value={value}
           defaultValue={defaultValue}
+          placeholder={placeholder}
           onChange={handleChange}
         />
       )}

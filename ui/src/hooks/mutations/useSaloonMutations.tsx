@@ -4,6 +4,7 @@ import {
   CreateTableRequest,
   Sector,
   Table,
+  TableStatus,
   UpdateSectorRequest,
   UpdateTableRequest,
 } from "@/types";
@@ -69,7 +70,16 @@ export const useSaloonMutations = () => {
       queryClient.setQueriesData<Table[]>({ queryKey: ["tables"] }, (query) => {
         if (!query) return;
 
-        return [...query, { id, ...variables, qrId, requests: [] }];
+        return [
+          ...query,
+          {
+            ...variables,
+            id,
+            qrId,
+            status: variables.status ?? TableStatus.Free,
+            orders: [],
+          },
+        ];
       });
     },
   });

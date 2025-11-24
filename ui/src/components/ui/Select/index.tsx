@@ -6,6 +6,7 @@ import styles from "./styles.module.scss";
 export type SelectOption = {
   label: string;
   value: string | number;
+  hidden?: boolean;
 };
 
 type SelectProps = {
@@ -37,10 +38,13 @@ export const Select = (props: SelectProps) => {
         defaultValue={defaultValue}
         onChange={handleChange}
       >
+        <option hidden selected value="-1">
+          -- seleccione una opción --
+        </option>
         {options.map((o) => {
           const option = typeof o === "string" ? { label: o, value: o } : o;
           return (
-            <option key={option.value} value={option.value}>
+            <option key={option.value} value={option.value} hidden={option.hidden}>
               {option.label}
             </option>
           );

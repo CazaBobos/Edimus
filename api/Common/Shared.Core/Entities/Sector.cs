@@ -57,7 +57,10 @@ public class Sector : AggregateRoot<int>
         if (surface is not null)
         {
             Guard.Argument(() => surface).Require(surface => surface.Any(s => s.Item1 == 0 && s.Item2 == 0));
-            Surface?.Clear();
+
+            if (Surface is null) Surface = new();
+            else Surface.Clear();
+
             var newSurface = surface.Select(s => new SectorCoord(s.Item1, s.Item2, Id)).ToList();
             Surface?.AddRange(newSurface);
             affectedMembers.Add(nameof(Surface));

@@ -10,5 +10,5 @@ public class TableModel
     public int PositionX { get; set; }
     public int PositionY { get; set; }
     public List<TableCoordModel> Surface { get; set; } = new();
-    public List<RequestModel> Requests { get; set; } = new();
+    public List<OrderModel> Orders { get; set; } = new();
 }
