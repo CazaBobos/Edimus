@@ -48,7 +48,7 @@ export const useTableMutations = () => {
             ? {
                 ...t,
                 ...request,
-                orders: request.status === TableStatus.Free ? [] : t.orders,
+                orders: request.status === TableStatus.Free ? [] : (request.orders ?? t.orders),
               }
             : t,
         );
