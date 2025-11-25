@@ -1,0 +1,35 @@
+.container {
+  width: 100%;
+  > button {
+    position: relative;
+  }
+  > strong {
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+  .variants {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    list-style: none;
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .status {
+          min-height: 12px;
+          min-width: 12px;
+          fill: red;
+          &[data-enabled="true"] {
+            fill: green;
+          }
+        }
+      &:hover{
+      cursor: pointer;
+      text-decoration: underline;
+    }}
+  }
+}

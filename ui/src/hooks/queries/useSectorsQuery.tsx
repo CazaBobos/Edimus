@@ -8,5 +8,8 @@ export const useSectorsQuery = (params: GetSectorsParams = {}) => {
     queryFn: () => sectorsApi.findMany(params),
   });
 
-  return { data: query.data ?? [] };
+  return {
+    data: query.data ?? [],
+    isLoading: query.isLoading,
+  };
 };

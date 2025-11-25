@@ -16,11 +16,12 @@ type SelectProps = {
   options: SelectOption[] | string[];
   value?: string;
   defaultValue?: string;
+  disabled?: boolean;
   onChange?: (state: ControlState) => void;
 };
 
 export const Select = (props: SelectProps) => {
-  const { width, name, title, options, value, defaultValue, onChange } = props;
+  const { width, name, title, options, value, defaultValue, disabled, onChange } = props;
 
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
@@ -37,8 +38,9 @@ export const Select = (props: SelectProps) => {
         value={value}
         defaultValue={defaultValue}
         onChange={handleChange}
+        disabled={disabled}
       >
-        <option hidden selected value="-1">
+        <option hidden value="-1">
           -- seleccione una opción --
         </option>
         {options.map((o) => {

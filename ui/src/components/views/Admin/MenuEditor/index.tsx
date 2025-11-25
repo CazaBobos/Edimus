@@ -12,6 +12,7 @@ import { Card } from "@/components/ui/Card";
 
 import { ProductDialog } from "./ProductDialog";
 import styles from "./styles.module.scss";
+import { VariantsList } from "./VariantsList";
 
 export const MenuEditor = () => {
   const { setProductDialogOpenState } = useAdminStore();
@@ -25,20 +26,6 @@ export const MenuEditor = () => {
     });
     return map;
   }, [categories, products]);
-
-  const variantsMap = useMemo(() => {
-    const map: Record<number, Product[]> = {};
-
-    products.forEach((product) => {
-      if (!product.parentId) {
-        if (!map[product.id]) map[product.id] = [];
-      } else if (map[product.parentId]) {
-        map[product.parentId] = [...map[product.parentId], product];
-      }
-    });
-
-    return map;
-  }, [products]);
 
   return (
     <div className={styles.container}>
@@ -54,13 +41,7 @@ export const MenuEditor = () => {
                 <Card key={p.id} className={styles.card} onClick={() => setProductDialogOpenState(p)}>
                   <span>{p.name}</span>
                   <BiSolidCircle className={styles.status} data-enabled={p.enabled} />
-                  <Accordion title={`${variantsMap[p.id].length} Variantes`}>
-                    <div className={styles.variants}>
-                      {variantsMap[p.id].map((v) => (
-                        <span key={v.id}>{v.name}</span>
-                      ))}
-                    </div>
-                  </Accordion>
+                  <VariantsList product={p} />
                 </Card>
               ))}
             </div>

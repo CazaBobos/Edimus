@@ -8,5 +8,8 @@ export const useProductsQuery = (params: GetProductsParams = {}) => {
     queryFn: () => productsApi.findMany(params),
   });
 
-  return { data: query.data ?? [] };
+  return {
+    data: query.data ?? [],
+    isLoading: query.isLoading,
+  };
 };

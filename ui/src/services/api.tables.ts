@@ -23,4 +23,15 @@ export const tablesApi = {
 
     return response.data;
   },
+
+  link: async (tableId: string) => {
+    const response = await axiosClient.get<Table>(`tables/${tableId}`);
+
+    return response.data;
+  },
+  call: async (id: number) => {
+    const response = await axiosClient.put<void>(`tables/${id}/call`);
+
+    return response.data;
+  },
 };

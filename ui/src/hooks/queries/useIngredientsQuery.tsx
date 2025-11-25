@@ -8,5 +8,8 @@ export const useIngredientsQuery = (params: GetIngredientsParams = {}) => {
     queryFn: () => ingredientsApi.findMany(params),
   });
 
-  return { data: query.data ?? [] };
+  return {
+    data: query.data ?? [],
+    isLoading: query.isLoading,
+  };
 };

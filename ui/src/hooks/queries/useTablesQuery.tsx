@@ -8,5 +8,8 @@ export const useTablesQuery = (params: GetTablesParams = {}) => {
     queryFn: () => tablesApi.findMany(params),
   });
 
-  return { data: query.data ?? [] };
+  return {
+    data: query.data ?? [],
+    isLoading: query.isLoading,
+  };
 };

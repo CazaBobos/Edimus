@@ -3,10 +3,11 @@ import { useCategoriesQuery } from "@/hooks/queries/useCategoriesQuery";
 import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
 import { useAdminStore } from "@/stores";
 import { ProductRequest } from "@/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiSave, BiTrash, BiUpload, BiX } from "react-icons/bi";
 
 import { Button } from "@/components/ui/Button";
+import { Checkbox } from "@/components/ui/Checkbox";
 import { ControlState } from "@/components/ui/common";
 import { Dialog } from "@/components/ui/Dialog";
 import { Input } from "@/components/ui/Input";
@@ -36,13 +37,19 @@ export const ProductDialog = () => {
 
     if (product.enabled) removeProductMutation.mutate(product.id);
     else restoreProductMutation.mutate(product.id);
+
+    handleClose();
   };
 
   const [request, setRequest] = useState<ProductRequest>({});
   const handleChange = (state: ControlState) => {
     const { name, value } = state;
 
-    setRequest((prev) => ({ ...prev, [name]: value }));
+    const newState: ProductRequest = {
+      [name]: ["name", "description"].includes(name) ? value : Number(value),
+    };
+
+    setRequest((prev) => ({ ...prev, ...newState }));
   };
 
   const isRequestValid = () => {
@@ -53,19 +60,34 @@ export const ProductDialog = () => {
   };
 
   const handleSave = () => {
+    const filteredRequest: ProductRequest = isVariant
+      ? {
+          ...request,
+          categoryId: undefined,
+        }
+      : {
+          ...request,
+          parentId: undefined,
+        };
+
     if (!!product) {
       updateProductMutation.mutate(
-        { id: product.id, request },
+        { id: product.id, request: filteredRequest },
         {
           onSuccess: handleClose,
         },
       );
     } else if (isRequestValid()) {
-      createProductMutation.mutate(request as Required<ProductRequest>, {
+      createProductMutation.mutate(filteredRequest as Required<ProductRequest>, {
         onSuccess: handleClose,
       });
     }
   };
+
+  const [isVariant, setIsVariant] = useState<boolean>(false);
+  useEffect(() => {
+    setIsVariant(!!product?.parentId);
+  }, [product?.parentId]);
 
   return (
     <Dialog open={product !== undefined} onClose={handleClose}>
@@ -89,7 +111,18 @@ export const ProductDialog = () => {
             defaultValue={product?.description}
             onChange={handleChange}
           />
-          <Input title="Precio ($)" name="price" defaultValue={product?.price} onChange={handleChange} />
+          <div className={styles.row}>
+            <Input
+              title="Precio ($)"
+              name="price"
+              type="number"
+              defaultValue={product?.price}
+              onChange={handleChange}
+            />
+            <div style={{ alignSelf: "flex-end", marginBottom: "4px" }}>
+              <Checkbox checked={isVariant} title="Variante" onChange={() => setIsVariant(!isVariant)} />
+            </div>
+          </div>
           <div className={styles.row}>
             <Select
               title="Categoría"
@@ -97,6 +130,7 @@ export const ProductDialog = () => {
               options={categories.map((c) => ({ value: c.id, label: c.name }))}
               defaultValue={product?.categoryId?.toString()}
               onChange={handleChange}
+              disabled={isVariant}
             />
             <Select
               title="Padre"
@@ -104,9 +138,11 @@ export const ProductDialog = () => {
               options={parentableProducts.map((c) => ({ value: c.id, label: c.name }))}
               defaultValue={product?.parentId?.toString()}
               onChange={handleChange}
+              disabled={!isVariant}
             />
           </div>
           <div className={styles.row}>
+            <Button label="Guardar" icon={<BiSave />} disabled={!product && !isRequestValid()} onClick={handleSave} />
             {product && (
               <Button
                 label={product.enabled ? "Eliminar" : "Restaurar"}
@@ -114,7 +150,6 @@ export const ProductDialog = () => {
                 onClick={handleEnable}
               />
             )}
-            <Button label="Guardar" icon={<BiSave />} disabled={!product && !isRequestValid()} onClick={handleSave} />
           </div>
         </div>
       </div>

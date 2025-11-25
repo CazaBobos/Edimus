@@ -12,7 +12,7 @@ using Shared.Infrastructure.Extensions;
 namespace Products.Controllers;
 
 [ApiController]
-//[Authorize]
+[Authorize]
 [Route("api/products")]
 public class ProductsController : ControllerBase
 {

@@ -1,4 +1,4 @@
-import { useSaloonMutations } from "@/hooks/mutations/useSaloonMutations";
+import { useSectorMutations } from "@/hooks/mutations/useSectorMutations";
 import { useAdminStore } from "@/stores";
 import { Coords, CreateSectorRequest, UpdateSectorRequest } from "@/types";
 import { useState } from "react";
@@ -36,7 +36,7 @@ export const SectorDialog = () => {
     setRequest((prev) => ({ ...prev, surface }));
   };
 
-  const { createSectorMutation, updateSectorMutation, removeSectorMutation } = useSaloonMutations();
+  const { createSectorMutation, updateSectorMutation, removeSectorMutation } = useSectorMutations();
 
   const mutationOptions = { onSuccess: handleClose };
 

@@ -6,6 +6,7 @@ using Shared.Core.Entities;
 using Shared.Infrastructure.Extensions;
 using Tables.Core.Features.CreateTable;
 using Tables.Core.Features.GetManyTables;
+using Tables.Core.Features.LinkTable;
 using Tables.Core.Features.RemoveTable;
 using Tables.Core.Features.UpdateTable;
 using Tables.Input;
@@ -87,6 +88,21 @@ public class TablesController : ControllerBase
     }
 
     /// <summary>
+    /// Sets a table status to Occupied and returns it.
+    /// </summary>
+    [AllowAnonymous]
+    [HttpGet("{tableId}")]
+    public async Task<IActionResult> Link(string tableId, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new LinkTableRequest
+        {
+            TableId = tableId,
+        }, cancellationToken);
+
+        return Ok(response.Table);
+    }
+
+    /// <summary>
     /// Sets a table status to Calling
     /// </summary>
     [AllowAnonymous]
@@ -97,22 +113,6 @@ public class TablesController : ControllerBase
         {
             Id = id,
             Status = TableStatus.Calling,
-        }, cancellationToken);
-
-        return Ok(response);
-    }
-
-    /// <summary>
-    /// Sets a table status back to Occupied
-    /// </summary>
-    [AllowAnonymous]
-    [HttpPut("{id}/reset")]
-    public async Task<IActionResult> Reset(int id, CancellationToken cancellationToken)
-    {
-        var response = await _mediator.Send(new UpdateTableRequest
-        {
-            Id = id,
-            Status = TableStatus.Occupied,
         }, cancellationToken);
 
         return Ok(response);

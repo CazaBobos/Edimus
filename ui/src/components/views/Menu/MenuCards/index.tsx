@@ -11,7 +11,7 @@ export const MenuCards = () => {
   const { data: categories } = useCategoriesQuery();
   const { data: products } = useProductsQuery();
 
-  const [selectedCategory, setSelectedCategory] = useState<number>();
+  const [selectedCategory, setSelectedCategory] = useState<number>(1);
 
   const categoryOptions: SelectOption[] = categories.map((c) => ({
     label: c.name,
@@ -22,8 +22,11 @@ export const MenuCards = () => {
     const map: Record<number, Product[]> = {};
 
     products.forEach((p) => {
-      if (!map[p.id]) map[p.id] = [];
-      if (p.parentId) map[p.id] = [...map[p.id], p];
+      if (!p.parentId) return;
+
+      if (!map[p.parentId]) map[p.parentId] = [];
+
+      map[p.parentId] = [...map[p.parentId], p];
     });
 
     return map;
@@ -31,14 +34,18 @@ export const MenuCards = () => {
 
   return (
     <>
-      <Select options={categoryOptions} onChange={({ value }) => setSelectedCategory(Number(value))}></Select>
+      <Select
+        options={categoryOptions}
+        value={selectedCategory.toString()}
+        onChange={({ value }) => setSelectedCategory(Number(value))}
+      />
       {products
-        .filter((p) => p.categoryId === (selectedCategory ?? 1))
+        .filter((p) => p.categoryId === selectedCategory)
         .map((p) => (
           <div key={p.id} className={styles.card}>
             <div className={styles.title}>
               <h3>{p.name}</h3>
-              {p.price && <b>${p.price}</b>}
+              {!!p.price && <b>${p.price}</b>}
             </div>
             <p>{p.description}</p>
             <ul className={styles.list}>
@@ -46,7 +53,7 @@ export const MenuCards = () => {
                 <li key={v.name}>
                   <div className={styles.title}>
                     <h5>{v.name}</h5>
-                    {v.price && <span>${v.price}</span>}
+                    {!!v.price && <span>${v.price}</span>}
                   </div>
                   <p>{v.description}</p>
                 </li>

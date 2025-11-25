@@ -17,7 +17,7 @@ export const Accordion = (props: AccordionProps) => {
 
   return (
     <div className={styles.container}>
-      <Button label={title} icon={open ? <BiChevronDown /> : <BiChevronUp />} onClick={toggleOpen} />
+      <Button label={title} icon={open ? <BiChevronUp /> : <BiChevronDown />} onClick={toggleOpen} />
       {open && children}
     </div>
   );

@@ -7,5 +7,8 @@ export const useCompanyQuery = (companyId: number) => {
     queryFn: () => companiesApi.findOne(companyId),
   });
 
-  return { data: query.data };
+  return {
+    data: query.data,
+    isLoading: query.isLoading,
+  };
 };

@@ -47,7 +47,10 @@ public class Table : AggregateRoot<int>
         {
             Status = (TableStatus)status;
 
-            if (status == TableStatus.Free) Orders = new();
+            if (status == TableStatus.Free) {
+                Orders ??= new();
+                Orders.Clear();
+            };
 
             affectedMembers.Add(nameof(Status));
         }

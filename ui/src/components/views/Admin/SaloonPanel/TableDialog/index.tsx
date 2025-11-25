@@ -1,6 +1,14 @@
-import { useSaloonMutations } from "@/hooks/mutations/useSaloonMutations";
+import { useTableMutations } from "@/hooks/mutations/useTableMutations";
 import { useAdminStore } from "@/stores";
-import { Coords, CreateTableRequest, TableOrder, TableStatus, tableStatusMap, UpdateTableRequest } from "@/types";
+import {
+  Coords,
+  CreateTableRequest,
+  Table,
+  TableOrder,
+  TableStatus,
+  tableStatusMap,
+  UpdateTableRequest,
+} from "@/types";
 import { useState } from "react";
 import { BiSave, BiSolidCircle, BiTrash, BiX } from "react-icons/bi";
 import QRCode from "react-qr-code";
@@ -40,7 +48,7 @@ export const TableDialog = () => {
     setRequest((prev) => ({ ...prev, surface }));
   };
 
-  const { createTableMutation, updateTableMutation, removeTableMutation } = useSaloonMutations();
+  const { createTableMutation, updateTableMutation, removeTableMutation } = useTableMutations();
 
   const mutationOptions = { onSuccess: handleClose };
 
@@ -118,7 +126,7 @@ export const TableDialog = () => {
               {
                 {
                   0: <OrdersList table={table} onChange={handleSetOrders} />,
-                  1: <QRCode value={`${window.location.hostname}/${table.qrId}`} />,
+                  1: <QRLink table={table} />,
                 }[activeTab]
               }
             </Card>
@@ -126,5 +134,17 @@ export const TableDialog = () => {
         )}
       </div>
     </Dialog>
+  );
+};
+
+type QRLinkProps = { table: Table };
+const QRLink = ({ table }: QRLinkProps) => {
+  const { protocol, hostname, port } = window.location;
+  const link = `${protocol}//${hostname}:${port}?tableId=${table.qrId}`;
+
+  return (
+    <a target="_blank" href={link}>
+      <QRCode value={link} />
+    </a>
   );
 };

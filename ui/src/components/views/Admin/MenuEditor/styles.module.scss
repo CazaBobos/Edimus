@@ -16,7 +16,8 @@
     .categorySection {
       padding: 24px;
       display: flex;
-      flex-wrap: wrap;
+      justify-content: space-between;
+      flex-wrap:wrap;
       gap: 24px;
       .card {
         position: relative;
@@ -25,10 +26,11 @@
         flex-direction: column;
         gap: 4px;
         align-items: center;
-        justify-content: center;
-        width: 150px;
-        height: 100px;
-        span {
+        width: 250px;
+        min-height: 100px;
+        height: fit-content;
+        > span {
+          margin-top: 16px;
           padding: 8px;
         }
         .status {

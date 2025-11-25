@@ -1,5 +1,4 @@
 import { useIngredientMutations } from "@/hooks/mutations/useIngredientMutations";
-import { useIngredientsQuery } from "@/hooks/queries/useIngredientsQuery";
 import { useAdminStore } from "@/stores";
 import { IngredientRequest, measurementUnitsMap } from "@/types";
 import { useState } from "react";

@@ -1,4 +1,7 @@
+import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
+import { useSingleTableQuery } from "@/hooks/queries/useSingleTableQuery";
 import { useMenuStore } from "@/stores";
+import { Product } from "@/types";
 import { BiX } from "react-icons/bi";
 
 import { Dialog } from "../../../ui/Dialog";
@@ -8,6 +11,11 @@ export const OrderDialog = () => {
   const { isOrderDialogOpen, setIsOrderDialogOpen } = useMenuStore();
   const handleClose = () => setIsOrderDialogOpen(false);
 
+  const { data: table } = useSingleTableQuery();
+  const { data: products } = useProductsQuery();
+
+  const productsMap = new Map<number, Product>(products.map((p) => [p.id, p]));
+
   return (
     <Dialog open={isOrderDialogOpen} onClose={handleClose}>
       <div className={styles.content}>
@@ -15,18 +23,33 @@ export const OrderDialog = () => {
           <h2>Cuenta</h2>
           <BiX size={32} />
         </div>
-        <h3 style={{ paddingTop: 16 }}>Su pedido:</h3>
-        <OrderCard product="Café" variant="Flat White" price={2300} owned />
-        <OrderCard product="" variant="Roll de canela" price={2800} owned />
-        <h3 style={{ paddingTop: 16, color: "#bbb" }}>En mesa:</h3>
-        <OrderCard product="Café" variant="Latte" price={2600} />
-        <OrderCard product="Café" variant="Cortado" price={2000} />
-        <OrderCard product="Sandwich" variant="Croque Madame" price={8500} />
-        <OrderCard product="Tostón" variant="de pan de campo" price={4500} />
+        {!table?.orders.length && <strong>La mesa no registra pedidos</strong>}
+        {table?.orders.map((o) => {
+          const p = productsMap.get(o.productId);
+          if (!p) return null;
 
+          let name = p.name;
+          let price = p.price;
+
+          if (p.parentId) {
+            const parent = productsMap.get(p.parentId);
+
+            if (p.price === 0) price = parent!.price;
+
+            name = `${parent!.name} - ` + name;
+          }
+
+          return <OrderCard key={name} product={name} price={price ?? 0} owned />;
+        })}
         <div className={styles.footer}>
-          <b>Su Total: ${5100}</b>
-          <b style={{ color: "#bbb" }}>Total Mesa: ${17600}</b>
+          <b style={{ color: "#bbb" }}>
+            Total Mesa: $
+            {table?.orders.reduce((acum, curr) => {
+              const p = productsMap.get(curr.productId);
+
+              return acum + curr.amount * (p?.price ?? 0);
+            }, 0)}
+          </b>
         </div>
       </div>
     </Dialog>
@@ -35,17 +58,14 @@ export const OrderDialog = () => {
 
 type OrderCardProps = {
   product: string;
-  variant: string;
   price: number;
   owned?: boolean;
 };
 const OrderCard = (props: OrderCardProps) => {
-  const { product, variant, price, owned } = props;
+  const { product, price, owned } = props;
   return (
     <div className={styles.card} data-owned={owned}>
-      <b>
-        {product} - {variant}
-      </b>
+      <b>{product}</b>
       <b>${price}</b>
     </div>
   );

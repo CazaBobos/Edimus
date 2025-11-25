@@ -34,13 +34,21 @@ public class Product : AggregateRoot<int>
     public void Update(int? parentId, int? categoryId, decimal? price, string? name, string? description)
     {
         Guard.Operation(Enabled == true, "A product cannot be modified when it's not active. Restore it and try again.");
-
+        Guard.Operation(parentId != null ^ categoryId != null, "A product can either have a parent, or a category");
+        
         var affectedMembers = new List<string>();
 
         if (parentId is not null && parentId != ParentId)
         {
-            ParentId = parentId;
+            ParentId = (int)Guard.Argument(() => parentId).Positive();
+            CategoryId = null;
             affectedMembers.Add(nameof(ParentId));
+        }
+        if (categoryId is not null && categoryId != CategoryId)
+        {
+            CategoryId = (int)Guard.Argument(() => categoryId).Positive();
+            ParentId = null;
+            affectedMembers.Add(nameof(CategoryId));
         }
         if (name is not null && name != Name)
         {
@@ -53,11 +61,6 @@ public class Product : AggregateRoot<int>
                 .NotNull()
                 .MaxLength(128);
             affectedMembers.Add(nameof(Description));
-        }
-        if (categoryId is not null && categoryId != CategoryId)
-        {
-            CategoryId = Guard.Argument(() => (int)categoryId).Positive();
-            affectedMembers.Add(nameof(CategoryId));
         }
         if (price is not null && price != Price)
         {

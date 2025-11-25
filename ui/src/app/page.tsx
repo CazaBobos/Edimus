@@ -1,5 +1,7 @@
 "use client";
 
+import { useSingleTableQuery } from "@/hooks/queries/useSingleTableQuery";
+
 import { FiltersDialog } from "@/components/views/Menu/FiltersDialog";
 import { MenuBar } from "@/components/views/Menu/MenuBar";
 import { MenuCards } from "@/components/views/Menu/MenuCards";
@@ -8,6 +10,8 @@ import { OrderDialog } from "@/components/views/Menu/OrderDialog";
 import styles from "./page.module.scss";
 
 export default function Menu() {
+  const { data: table } = useSingleTableQuery();
+
   return (
     <div className={styles.page}>
       <header className={styles.header}>
@@ -16,7 +20,7 @@ export default function Menu() {
             <h1>Ēdimus</h1>
             <b>Nunc est Ēdimus</b>
           </div>
-          <span>Nº Mesa: 1</span>
+          {table && <span>Nº Mesa: {table.id}</span>}
         </div>
       </header>
       <main className={styles.main}>
