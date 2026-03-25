@@ -1,7 +1,7 @@
 import { useAppUserStore } from "@/stores";
 import axios, { AxiosInstance } from "axios";
 
-const API_URI: string = "http://localhost:5183/api/";
+const API_URI: string = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
 export const axiosClient: AxiosInstance = axios.create({
   baseURL: API_URI,
