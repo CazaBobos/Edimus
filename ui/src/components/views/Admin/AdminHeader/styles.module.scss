@@ -1,3 +1,5 @@
+@use "common/colors" as *;
+
 .title {
   display: flex;
   align-items: center;
@@ -5,7 +7,7 @@
   gap: 8px;
   padding: 8px;
   width: 100%;
-  border-bottom: 1px solid #f2f2f2;
+  border-bottom: 1px solid $light_text;
   .menu {
     cursor: pointer;
     border-radius: 50%;
@@ -13,7 +15,7 @@
     width: 48px;
     height: 48px;
     &:hover {
-      background-color: #bbb;
+      background-color: $light_grey;
     }
   }
 }

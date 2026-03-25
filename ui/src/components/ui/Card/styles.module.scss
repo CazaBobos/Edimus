@@ -1,6 +1,8 @@
+@use "common/colors" as *;
+
 .card {
     border-radius: 8px;
-    border: 1px solid #f2f2f2;
+    border: 1px solid $light_text;
     padding: 8px;
-    background-color: #383838;
+    background-color: $dark_text;
   }

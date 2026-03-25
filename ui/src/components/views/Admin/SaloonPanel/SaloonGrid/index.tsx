@@ -1,3 +1,4 @@
+import { colors } from "@/common/colors";
 import { useCompanyQuery } from "@/hooks/queries/useCompanyQuery";
 import { useSectorsQuery } from "@/hooks/queries/useSectorsQuery";
 import { useTablesQuery } from "@/hooks/queries/useTablesQuery";
@@ -14,7 +15,8 @@ export const SaloonGrid = () => {
   const { data: company } = useCompanyQuery(1);
   const { data: tables } = useTablesQuery();
   const { data: sectors } = useSectorsQuery();
-  const { setTableDialogOpenState } = useAdminStore();
+  const squareSize = useAdminStore((store) => store.squareSize);
+  const setTableDialogOpenState = useAdminStore((store) => store.setTableDialogOpenState);
 
   const currentLayout = company?.premises[0].layouts[0];
 
@@ -22,22 +24,23 @@ export const SaloonGrid = () => {
 
   const gridWidth = currentLayout?.width;
   const gridHeight = currentLayout?.height;
+
   return (
     <div
       className={styles.saloonGrid}
       style={{
-        width: `${gridWidth * 32}px`,
-        height: `${gridHeight * 32}px`,
-        marginTop: "32px",
-        marginLeft: "32px",
+        width: `${gridWidth * squareSize}px`,
+        height: `${gridHeight * squareSize}px`,
+        marginTop: `${squareSize}px`,
+        marginLeft: `${squareSize}px`,
       }}
     >
       {[...Array(gridWidth).keys()].map((_, x) =>
         [...Array(gridHeight).keys()].map((_, y) => (
           <React.Fragment key={[x, y].join(",")}>
-            {y === 0 && <Square position={{ x, y: -1 }} color="#383838" content={x} />}
-            {x === 0 && <Square position={{ x: -1, y }} color="#383838" content={y} />}
-            <Square position={{ x, y }} color="grey" />
+            {y === 0 && <Square position={{ x, y: -1 }} color={colors.darkText} content={x} />}
+            {x === 0 && <Square position={{ x: -1, y }} color={colors.darkText} content={y} />}
+            <Square position={{ x, y }} color={colors.grey} />
           </React.Fragment>
         )),
       )}
@@ -48,8 +51,8 @@ export const SaloonGrid = () => {
           filled
           color={
             {
-              [BoundaryType.Wall]: "grey",
-              [BoundaryType.Doorway]: "blue",
+              [BoundaryType.Wall]: colors.grey,
+              [BoundaryType.Doorway]: colors.blue,
             }[b.type]
           }
         />
@@ -71,9 +74,9 @@ export const SaloonGrid = () => {
               position={coord}
               color={
                 {
-                  [TableStatus.Free]: "green",
-                  [TableStatus.Calling]: "orange",
-                  [TableStatus.Occupied]: "red",
+                  [TableStatus.Free]: colors.green,
+                  [TableStatus.Calling]: colors.orange,
+                  [TableStatus.Occupied]: colors.red,
                 }[table.status]
               }
               content={table.id}

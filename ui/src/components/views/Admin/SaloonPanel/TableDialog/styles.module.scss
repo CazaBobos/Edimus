@@ -1,3 +1,5 @@
+@use "common/colors" as *;
+
 .header {
   width: 100%;
   display: flex;
@@ -21,7 +23,7 @@
       width: 32px;
       height: 32px;
       &:hover {
-        background-color: #bbb;
+        background-color: $light_grey;
       }
     }
   }

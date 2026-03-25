@@ -1,3 +1,4 @@
+import { colors } from "@/common/colors";
 import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
 import { useSingleTableQuery } from "@/hooks/queries/useSingleTableQuery";
 import { useMenuStore } from "@/stores";
@@ -42,7 +43,7 @@ export const OrderDialog = () => {
           return <OrderCard key={name} product={name} price={price ?? 0} owned />;
         })}
         <div className={styles.footer}>
-          <b style={{ color: "#bbb" }}>
+          <b style={{ color: colors.lightGrey }}>
             Total Mesa: $
             {table?.orders.reduce((acum, curr) => {
               const p = productsMap.get(curr.productId);

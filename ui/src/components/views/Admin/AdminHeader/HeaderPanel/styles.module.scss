@@ -1,3 +1,5 @@
+@use "common/colors" as *;
+
 .panel {
   position: absolute;
   padding: 16px;
@@ -24,15 +26,15 @@
     }
     .profile {
       @extend .icon;
-      background-color: #f2f2f2;
-      color: #383838;
+      background-color: $light_text;
+      color: $dark_text;
     }
     .exit {
       @extend .icon;
       margin-left: auto;
       cursor: pointer;
       &:hover {
-        background-color: #bbb;
+        background-color: $light_grey;
       }
     }
 

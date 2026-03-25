@@ -1,3 +1,4 @@
+import { colors } from "@/common/colors";
 import { useAdminStore } from "@/stores";
 import { Coords } from "@/types";
 import { useState } from "react";
@@ -50,8 +51,8 @@ export const SurfaceEditor = (props: SurfaceEditorProps) => {
               <Square
                 key={[x, y].join(",")}
                 position={{ x, y }}
-                borderColor="#f2f2f2"
-                color="grey"
+                borderColor={colors.lightText}
+                color={colors.grey}
                 content={centerX === 0 && centerY === 0 ? content : ""}
                 filled={currentSurface.some((s) => s.x === centerX && s.y === centerY)}
                 onClick={() => handleClick({ x: centerX, y: y + offset.y })}

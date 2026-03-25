@@ -1,3 +1,5 @@
+@use "common/colors" as *;
+
 .button {
   display: flex;
   align-items: center;
@@ -7,7 +9,7 @@
   cursor: pointer;
   height: 36px;
   border-radius: 18px;
-  border: 1px solid #f2f2f2;
+  border: 1px solid $light_text;
   font-size: 18px;
   span {
     padding: 0 4px;

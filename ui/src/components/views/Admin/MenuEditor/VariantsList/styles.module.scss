@@ -1,3 +1,5 @@
+@use "common/colors" as *;
+
 .container {
   width: 100%;
   > button {
@@ -22,9 +24,9 @@
       .status {
           min-height: 12px;
           min-width: 12px;
-          fill: red;
+          fill: $red;
           &[data-enabled="true"] {
-            fill: green;
+            fill: $green;
           }
         }
       &:hover{

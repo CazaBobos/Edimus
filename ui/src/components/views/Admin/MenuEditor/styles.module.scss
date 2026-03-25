@@ -1,3 +1,5 @@
+@use "common/colors" as *;
+
 .container {
   display: flex;
   flex-direction: column;
@@ -39,9 +41,9 @@
           right: 4px;
           height: 20px;
           width: 20px;
-          fill: red;
+          fill: $red;
           &[data-enabled="true"] {
-            fill: green;
+            fill: $green;
           }
         }
       }

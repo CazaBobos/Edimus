@@ -1,4 +1,6 @@
+@use "common/colors" as *;
+
 .saloonGrid {
     position: relative;
-    border: 1px solid #383838;
+    border: 1px solid $dark_text;
 }
