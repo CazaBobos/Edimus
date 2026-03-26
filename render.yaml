@@ -19,9 +19,7 @@ services:
       - key: ASPNETCORE_URLS
         value: http://+:8080
       - key: ConnectionStrings__ConnectionString
-        fromDatabase:
-          name: edimus-db
-          property: connectionString
+        sync: false
       - key: Jwt__Secret
         sync: false
       - key: Jwt__ExpirationMinutes
