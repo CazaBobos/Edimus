@@ -1,4 +1,4 @@
-﻿using MediatR;
+using Mediator;
 using Sectors.Core.Abstractions;
 using Shared.Core.Exceptions;
 
@@ -13,7 +13,7 @@ public class RemoveSectorRequestHandler : IRequestHandler<RemoveSectorRequest, R
         _sectorsRepository = sectorsRepository;
     }
 
-    public async Task<RemoveSectorResponse> Handle(RemoveSectorRequest request, CancellationToken cancellationToken)
+    public async ValueTask<RemoveSectorResponse> Handle(RemoveSectorRequest request, CancellationToken cancellationToken)
     {
         var sector = await _sectorsRepository.GetById(request.Id);
 

@@ -1,14 +1,14 @@
-﻿using AutoMapper;
+using Mapster;
 using Sectors.Core.Model;
 using Shared.Core.Entities;
 
 namespace Sectors.Core.Mapping;
 
-public class SectorProfile : Profile
+public class SectorProfile : IRegister
 {
-    public SectorProfile()
+    public void Register(TypeAdapterConfig config)
     {
-        CreateMap<Sector, SectorModel>().ReverseMap();
-        CreateMap<SectorCoord, SectorCoordModel>().ReverseMap();
+        config.NewConfig<Sector, SectorModel>().TwoWays();
+        config.NewConfig<SectorCoord, SectorCoordModel>().TwoWays();
     }
 }

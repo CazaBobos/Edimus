@@ -1,13 +1,13 @@
-﻿using AutoMapper;
+using Mapster;
 using Products.Core.Model;
 using Shared.Core.Entities;
 
 namespace Products.Core.Mapping;
 
-public class ProductProfile : Profile
+public class ProductProfile : IRegister
 {
-    public ProductProfile()
+    public void Register(TypeAdapterConfig config)
     {
-        CreateMap<Product, ProductModel>().ReverseMap();
+        config.NewConfig<Product, ProductModel>().TwoWays();
     }
 }

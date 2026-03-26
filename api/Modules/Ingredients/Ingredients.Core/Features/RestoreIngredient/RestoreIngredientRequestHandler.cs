@@ -1,5 +1,5 @@
-﻿using Ingredients.Core.Abstractions;
-using MediatR;
+using Ingredients.Core.Abstractions;
+using Mediator;
 using Shared.Core.Exceptions;
 
 namespace Ingredients.Core.Features.RestoreIngredient;
@@ -13,7 +13,7 @@ public class RestoreIngredientRequestHandler : IRequestHandler<RestoreIngredient
         _ingredientsRepository = ingredientsRepository;
     }
 
-    public async Task<RestoreIngredientResponse> Handle(RestoreIngredientRequest request, CancellationToken cancellationToken)
+    public async ValueTask<RestoreIngredientResponse> Handle(RestoreIngredientRequest request, CancellationToken cancellationToken)
     {
         var ingredient = await _ingredientsRepository.GetById(request.Id, cancellationToken);
 

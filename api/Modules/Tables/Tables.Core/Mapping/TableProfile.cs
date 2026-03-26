@@ -1,15 +1,15 @@
-﻿using AutoMapper;
+using Mapster;
 using Shared.Core.Entities;
 using Tables.Core.Model;
 
 namespace Tables.Core.Mapping;
 
-public class TableProfile : Profile
+public class TableProfile : IRegister
 {
-    public TableProfile()
+    public void Register(TypeAdapterConfig config)
     {
-        CreateMap<Table, TableModel>().ReverseMap();
-        CreateMap<TableCoord, TableCoordModel>().ReverseMap();
-        CreateMap<Order, OrderModel>().ReverseMap();
+        config.NewConfig<Table, TableModel>().TwoWays();
+        config.NewConfig<TableCoord, TableCoordModel>().TwoWays();
+        config.NewConfig<Order, OrderModel>().TwoWays();
     }
 }

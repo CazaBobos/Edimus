@@ -1,4 +1,4 @@
-﻿using MediatR;
+using Mediator;
 using Shared.Core.Exceptions;
 using Tables.Core.Abstractions;
 
@@ -13,7 +13,7 @@ public class RemoveTableRequestHandler : IRequestHandler<RemoveTableRequest, Rem
         _tablesRepository = tablesRepository;
     }
 
-    public async Task<RemoveTableResponse> Handle(RemoveTableRequest request, CancellationToken cancellationToken)
+    public async ValueTask<RemoveTableResponse> Handle(RemoveTableRequest request, CancellationToken cancellationToken)
     {
         var table = await _tablesRepository.GetById(request.Id);
 

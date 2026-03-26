@@ -1,4 +1,4 @@
-﻿using MediatR;
+using Mediator;
 using Shared.Core.Entities;
 using Tables.Core.Abstractions;
 
@@ -13,7 +13,7 @@ public class CreateTableRequestHandler : IRequestHandler<CreateTableRequest, Cre
         _tablesRepository = tablesRepository;
     }
 
-    public async Task<CreateTableResponse> Handle(CreateTableRequest request, CancellationToken cancellationToken)
+    public async ValueTask<CreateTableResponse> Handle(CreateTableRequest request, CancellationToken cancellationToken)
     {
         var table = new Table(
             request.LayoutId,

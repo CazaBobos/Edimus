@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using MediatR;
+using Mapster;
+using Mediator;
 using Shared.Core.Exceptions;
 using Users.Core.Abstractions;
 using Users.Core.Model;
@@ -8,14 +8,12 @@ namespace Users.Core.Features.UpdateUser;
 public class UpdateUserRequestHandler : IRequestHandler<UpdateUserRequest, UpdateUserResponse>
 {
     private readonly IUsersRepository _usersRepository;
-    private readonly IMapper _mapper;
 
-    public UpdateUserRequestHandler(IUsersRepository usersRepository, IMapper mapper)
+    public UpdateUserRequestHandler(IUsersRepository usersRepository)
     {
         _usersRepository = usersRepository;
-        _mapper = mapper;
     }
-    public async Task<UpdateUserResponse> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
+    public async ValueTask<UpdateUserResponse> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
     {
         var user = await _usersRepository.GetById(request.Id, cancellationToken);
 
@@ -37,7 +35,7 @@ public class UpdateUserRequestHandler : IRequestHandler<UpdateUserRequest, Updat
 
         return new UpdateUserResponse
         {
-            User = _mapper.Map<UserModel>(user)
+            User = user.Adapt<UserModel>()
         };
     }
 }

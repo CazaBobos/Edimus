@@ -1,5 +1,5 @@
-﻿using Companies.Core.Abstractions;
-using MediatR;
+using Companies.Core.Abstractions;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using Shared.Core.Exceptions;
 
@@ -14,7 +14,7 @@ public class UpdateCompanyRequestHandler : IRequestHandler<UpdateCompanyRequest,
         _companiesRepository = companiesRepository;
     }
 
-    public async Task<UpdateCompanyResponse> Handle(UpdateCompanyRequest request, CancellationToken cancellationToken)
+    public async ValueTask<UpdateCompanyResponse> Handle(UpdateCompanyRequest request, CancellationToken cancellationToken)
     {
         var company = await _companiesRepository.GetById(request.Id, cancellationToken);
 

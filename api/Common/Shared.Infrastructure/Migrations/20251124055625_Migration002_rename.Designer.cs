@@ -9,11 +9,11 @@ using Shared.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace Edimus.Api.Migrations
+namespace Shared.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20251124055025_Migration001_init")]
-    partial class Migration001_init
+    [Migration("20251124055625_Migration002_rename")]
+    partial class Migration002_rename
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -818,7 +818,7 @@ namespace Edimus.Api.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Requests");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Shared.Core.Entities.Premise", b =>

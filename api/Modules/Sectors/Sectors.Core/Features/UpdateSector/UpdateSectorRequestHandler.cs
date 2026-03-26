@@ -1,4 +1,4 @@
-﻿using MediatR;
+using Mediator;
 using Sectors.Core.Abstractions;
 using Shared.Core.Exceptions;
 
@@ -13,7 +13,7 @@ public class UpdateSectorRequestHandler : IRequestHandler<UpdateSectorRequest, U
         _sectorsRepository = sectorsRepository;
     }
 
-    public async Task<UpdateSectorResponse> Handle(UpdateSectorRequest request, CancellationToken cancellationToken)
+    public async ValueTask<UpdateSectorResponse> Handle(UpdateSectorRequest request, CancellationToken cancellationToken)
     {
         var sector = await _sectorsRepository.GetById(request.Id);
 

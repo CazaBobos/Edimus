@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using MediatR;
+using Mapster;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using Shared.Core.Extensions;
 using Tables.Core.Abstractions;
@@ -11,15 +11,13 @@ namespace Tables.Core.Features.GetManyTables;
 public class GetTablesRequestHandler : IRequestHandler<GetTablesRequest, GetTablesResponse>
 {
     private readonly ITablesRepository _tablesRepository;
-    private readonly IMapper _mapper;
 
-    public GetTablesRequestHandler(ITablesRepository tablesRepository, IMapper mapper)
+    public GetTablesRequestHandler(ITablesRepository tablesRepository)
     {
         _tablesRepository = tablesRepository;
-        _mapper = mapper;
     }
 
-    public async Task<GetTablesResponse> Handle(GetTablesRequest request, CancellationToken cancellationToken)
+    public async ValueTask<GetTablesResponse> Handle(GetTablesRequest request, CancellationToken cancellationToken)
     {
         var query = _tablesRepository.AsQueryable()
             .WhereLayout(request.LayoutId)
@@ -35,7 +33,7 @@ public class GetTablesRequestHandler : IRequestHandler<GetTablesRequest, GetTabl
             Count = query.Count(),
             Limit = request.Limit,
             Page = request.Page,
-            Tables = _mapper.Map<List<TableModel>>(tables)
+            Tables = tables.Adapt<List<TableModel>>()
         };
     }
 }

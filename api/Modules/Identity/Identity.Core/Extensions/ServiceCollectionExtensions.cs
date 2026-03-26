@@ -1,4 +1,4 @@
-﻿using Identity.Core.Abstractions;
+using Identity.Core.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Core.Extensions;
 
@@ -7,8 +7,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddIdentityCore(this IServiceCollection services)
     {
-        services.AddMediatR<IUsersRepository>();
-        services.AddAutoMapper<IUsersRepository>();
+        services.AddMapster<IUsersRepository>();
         return services;
     }
 }

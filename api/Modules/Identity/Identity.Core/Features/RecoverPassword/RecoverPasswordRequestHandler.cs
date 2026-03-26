@@ -1,5 +1,5 @@
-﻿using Identity.Core.Abstractions;
-using MediatR;
+using Identity.Core.Abstractions;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using Shared.Core.Services;
 using Shared.Core.Settings;
@@ -17,7 +17,7 @@ public class RecoverPasswordRequestHandler : IRequestHandler<RecoverPasswordRequ
         _mailSettings = mailSettings;
         _mailService = mailService;
     }
-    public async Task<RecoverPasswordResponse> Handle(RecoverPasswordRequest request, CancellationToken cancellationToken)
+    public async ValueTask<RecoverPasswordResponse> Handle(RecoverPasswordRequest request, CancellationToken cancellationToken)
     {
         var user = await _usersRepository.AsQueryable()
             .Where(u => u.Email == request.Email)

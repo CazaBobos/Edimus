@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using MediatR;
+using Mapster;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using Shared.Core.Extensions;
 using Users.Core.Abstractions;
@@ -9,14 +9,12 @@ namespace Users.Core.Features.GetUsers;
 public class GetUsersRequestHandler : IRequestHandler<GetUsersRequest, GetUsersResponse>
 {
     private readonly IUsersRepository _usersRepository;
-    private readonly IMapper _mapper;
 
-    public GetUsersRequestHandler(IUsersRepository usersRepository, IMapper mapper)
+    public GetUsersRequestHandler(IUsersRepository usersRepository)
     {
         _usersRepository = usersRepository;
-        _mapper = mapper;
     }
-    public async Task<GetUsersResponse> Handle(GetUsersRequest request, CancellationToken cancellationToken)
+    public async ValueTask<GetUsersResponse> Handle(GetUsersRequest request, CancellationToken cancellationToken)
     {
         var query = _usersRepository.AsQueryable()
             .Where(u => request.Username == null || u.Username.Contains(request.Username))
@@ -31,7 +29,7 @@ public class GetUsersRequestHandler : IRequestHandler<GetUsersRequest, GetUsersR
             Count = query.Count(),
             Limit = request.Limit,
             Page = request.Page,
-            Users = _mapper.Map<List<UserModel>>(users),
+            Users = users.Adapt<List<UserModel>>(),
         };
     }
 }

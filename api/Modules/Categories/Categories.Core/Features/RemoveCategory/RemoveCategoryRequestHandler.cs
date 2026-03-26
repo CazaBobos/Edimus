@@ -1,5 +1,5 @@
-﻿using Categories.Core.Abstractions;
-using MediatR;
+using Categories.Core.Abstractions;
+using Mediator;
 using Shared.Core.Exceptions;
 
 namespace Categories.Core.Features.RemoveCategory;
@@ -13,7 +13,7 @@ public class RemoveCategoryRequestHandler : IRequestHandler<RemoveCategoryReques
         _categoriesRepository = categoriesRepository;
     }
 
-    public async Task<RemoveCategoryResponse> Handle(RemoveCategoryRequest request, CancellationToken cancellationToken)
+    public async ValueTask<RemoveCategoryResponse> Handle(RemoveCategoryRequest request, CancellationToken cancellationToken)
     {
         var category = await _categoriesRepository.GetById(request.Id, cancellationToken);
 

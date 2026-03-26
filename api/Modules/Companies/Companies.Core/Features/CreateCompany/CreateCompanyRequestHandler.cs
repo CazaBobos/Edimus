@@ -1,5 +1,5 @@
-﻿using Companies.Core.Abstractions;
-using MediatR;
+using Companies.Core.Abstractions;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using Shared.Core.Entities;
 
@@ -14,7 +14,7 @@ public class CreateCompanyRequestHandler : IRequestHandler<CreateCompanyRequest,
         _companiesRepository = companiesRepository;
     }
 
-    public async Task<CreateCompanyResponse> Handle(CreateCompanyRequest request, CancellationToken cancellationToken)
+    public async ValueTask<CreateCompanyResponse> Handle(CreateCompanyRequest request, CancellationToken cancellationToken)
     {
         var company = new Company(
             request.Name,

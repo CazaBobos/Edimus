@@ -5,7 +5,7 @@ using Companies.Core.Features.RemoveCompany;
 using Companies.Core.Features.RestoreCompany;
 using Companies.Core.Features.UpdateCompany;
 using Companies.Input;
-using MediatR;
+using Mediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Core.Abstractions;

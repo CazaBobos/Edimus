@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using MediatR;
+using Mapster;
+using Mediator;
 using Users.Core.Abstractions;
 using Users.Core.Model;
 
@@ -7,14 +7,12 @@ namespace Users.Core.Features.RemoveUser;
 public class RemoveUserRequestHandler : IRequestHandler<RemoveUserRequest, RemoveUserResponse>
 {
     private readonly IUsersRepository _usersRepository;
-    private readonly IMapper _mapper;
 
-    public RemoveUserRequestHandler(IUsersRepository usersRepository, IMapper mapper)
+    public RemoveUserRequestHandler(IUsersRepository usersRepository)
     {
         _usersRepository = usersRepository;
-        _mapper = mapper;
     }
-    public async Task<RemoveUserResponse> Handle(RemoveUserRequest request, CancellationToken cancellationToken)
+    public async ValueTask<RemoveUserResponse> Handle(RemoveUserRequest request, CancellationToken cancellationToken)
     {
         var user = await _usersRepository.GetById(request.UserId, cancellationToken);
 
@@ -26,7 +24,7 @@ public class RemoveUserRequestHandler : IRequestHandler<RemoveUserRequest, Remov
 
         return new RemoveUserResponse
         {
-            User = _mapper.Map<UserModel>(user)
+            User = user.Adapt<UserModel>()
         };
     }
 }

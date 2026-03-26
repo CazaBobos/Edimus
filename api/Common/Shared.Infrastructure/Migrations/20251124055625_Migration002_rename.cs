@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Edimus.Api.Migrations
+namespace Shared.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class Migration002_rename : Migration

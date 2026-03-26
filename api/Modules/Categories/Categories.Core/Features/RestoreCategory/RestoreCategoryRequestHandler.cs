@@ -1,5 +1,5 @@
-﻿using Categories.Core.Abstractions;
-using MediatR;
+using Categories.Core.Abstractions;
+using Mediator;
 using Shared.Core.Exceptions;
 
 namespace Categories.Core.Features.RestoreCategory;
@@ -13,7 +13,7 @@ public class RestoreCategoryRequestHandler : IRequestHandler<RestoreCategoryRequ
         _categoriesRepository = categoriesRepository;
     }
 
-    public async Task<RestoreCategoryResponse> Handle(RestoreCategoryRequest request, CancellationToken cancellationToken)
+    public async ValueTask<RestoreCategoryResponse> Handle(RestoreCategoryRequest request, CancellationToken cancellationToken)
     {
         var category = await _categoriesRepository.GetById(request.Id, cancellationToken);
 

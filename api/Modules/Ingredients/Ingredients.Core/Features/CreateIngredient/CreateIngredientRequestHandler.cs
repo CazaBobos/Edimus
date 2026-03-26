@@ -1,5 +1,5 @@
-﻿using Ingredients.Core.Abstractions;
-using MediatR;
+using Ingredients.Core.Abstractions;
+using Mediator;
 using Shared.Core.Entities;
 
 namespace Ingredients.Core.Features.CreateIngredient;
@@ -13,7 +13,7 @@ public class CreateIngredientRequestHandler : IRequestHandler<CreateIngredientRe
         _ingredientsRepository = ingredientsRepository;
     }
 
-    public async Task<CreateIngredientResponse> Handle(CreateIngredientRequest request, CancellationToken cancellationToken)
+    public async ValueTask<CreateIngredientResponse> Handle(CreateIngredientRequest request, CancellationToken cancellationToken)
     {
         var ingredient = new Ingredient(request.Name, request.Stock, request.Alert, request.Unit);
 

@@ -1,4 +1,4 @@
-﻿using Companies.Core.Abstractions;
+using Companies.Core.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Core.Extensions;
 
@@ -7,8 +7,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddCompaniesCore(this IServiceCollection services)
     {
-        services.AddMediatR<ICompaniesRepository>();
-        services.AddAutoMapper<ICompaniesRepository>();
+        services.AddMapster<ICompaniesRepository>();
         return services;
     }
 }

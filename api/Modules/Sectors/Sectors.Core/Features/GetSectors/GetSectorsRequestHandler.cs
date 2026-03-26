@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using MediatR;
+using Mapster;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using Sectors.Core.Abstractions;
 using Sectors.Core.Extensions;
@@ -11,15 +11,13 @@ namespace Sectors.Core.Features.GetManySectors;
 public class GetSectorsRequestHandler : IRequestHandler<GetSectorsRequest, GetSectorsResponse>
 {
     private readonly ISectorsRepository _sectorsRepository;
-    private readonly IMapper _mapper;
 
-    public GetSectorsRequestHandler(ISectorsRepository sectorsRepository, IMapper mapper)
+    public GetSectorsRequestHandler(ISectorsRepository sectorsRepository)
     {
         _sectorsRepository = sectorsRepository;
-        _mapper = mapper;
     }
 
-    public async Task<GetSectorsResponse> Handle(GetSectorsRequest request, CancellationToken cancellationToken)
+    public async ValueTask<GetSectorsResponse> Handle(GetSectorsRequest request, CancellationToken cancellationToken)
     {
         var query = _sectorsRepository.AsQueryable()
             .WhereLayout(request.LayoutId)
@@ -35,7 +33,7 @@ public class GetSectorsRequestHandler : IRequestHandler<GetSectorsRequest, GetSe
             Count = query.Count(),
             Limit = request.Limit,
             Page = request.Page,
-            Sectors = _mapper.Map<List<SectorModel>>(sectors)
+            Sectors = sectors.Adapt<List<SectorModel>>()
         };
     }
 }

@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using MediatR;
+using Mapster;
+using Mediator;
 using Users.Core.Abstractions;
 using Users.Core.Model;
 
@@ -7,14 +7,12 @@ namespace Users.Core.Features.RestoreUser;
 public class RestoreUserRequestHandler : IRequestHandler<RestoreUserRequest, RestoreUserResponse>
 {
     private readonly IUsersRepository _usersRepository;
-    private readonly IMapper _mapper;
 
-    public RestoreUserRequestHandler(IUsersRepository usersRepository, IMapper mapper)
+    public RestoreUserRequestHandler(IUsersRepository usersRepository)
     {
         _usersRepository = usersRepository;
-        _mapper = mapper;
     }
-    public async Task<RestoreUserResponse> Handle(RestoreUserRequest request, CancellationToken cancellationToken)
+    public async ValueTask<RestoreUserResponse> Handle(RestoreUserRequest request, CancellationToken cancellationToken)
     {
         var user = await _usersRepository.GetById(request.UserId, cancellationToken);
 
@@ -26,7 +24,7 @@ public class RestoreUserRequestHandler : IRequestHandler<RestoreUserRequest, Res
 
         return new RestoreUserResponse
         {
-            User = _mapper.Map<UserModel>(user)
+            User = user.Adapt<UserModel>()
         };
     }
 }

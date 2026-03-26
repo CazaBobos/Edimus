@@ -1,6 +1,6 @@
-﻿using AutoMapper;
+using Mapster;
 using Identity.Core.Abstractions;
-using MediatR;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using Shared.Core.Abstractions;
 using Shared.Core.Services;
@@ -10,21 +10,18 @@ namespace Identity.Core.Features.Login;
 public class LoginRequestHandler : IRequestHandler<LoginRequest, LoginResponse>
 {
     private readonly IUsersRepository _usersRepository;
-    private readonly IMapper _mapper;
     private readonly IJwtSettings _jwtSettings;
     private readonly IJwtService _jwtService;
     public LoginRequestHandler(
         IUsersRepository usersRepository,
-        IMapper mapper,
         IJwtSettings jwtSettings,
         IJwtService jwtService)
     {
         _usersRepository = usersRepository;
         _jwtSettings = jwtSettings;
         _jwtService = jwtService;
-        _mapper = mapper;
     }
-    public async Task<LoginResponse> Handle(LoginRequest request, CancellationToken cancellationToken)
+    public async ValueTask<LoginResponse> Handle(LoginRequest request, CancellationToken cancellationToken)
     {
         var hashedPass = HashService.CreateHash(request.Password);
 
@@ -33,7 +30,7 @@ public class LoginRequestHandler : IRequestHandler<LoginRequest, LoginResponse>
             .Where(u => u.Username == request.UserOrEmail || u.Email == request.UserOrEmail)
             .SingleAsync(cancellationToken);
 
-        var userRecord = _mapper.Map<IUserRecord>(user);
+        var userRecord = (IUserRecord)user;
 
         return new LoginResponse
         {

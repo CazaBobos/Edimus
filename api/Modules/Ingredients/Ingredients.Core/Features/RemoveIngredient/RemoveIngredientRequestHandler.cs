@@ -1,5 +1,5 @@
-﻿using Ingredients.Core.Abstractions;
-using MediatR;
+using Ingredients.Core.Abstractions;
+using Mediator;
 using Shared.Core.Exceptions;
 
 namespace Ingredients.Core.Features.RemoveIngredient;
@@ -13,7 +13,7 @@ public class RemoveIngredientRequestHandler : IRequestHandler<RemoveIngredientRe
         _ingredientsRepository = ingredientsRepository;
     }
 
-    public async Task<RemoveIngredientResponse> Handle(RemoveIngredientRequest request, CancellationToken cancellationToken)
+    public async ValueTask<RemoveIngredientResponse> Handle(RemoveIngredientRequest request, CancellationToken cancellationToken)
     {
         var ingredient = await _ingredientsRepository.GetById(request.Id, cancellationToken);
 

@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using MediatR;
+using Mapster;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using Shared.Core.Entities;
 using Shared.Core.Exceptions;
@@ -11,15 +11,13 @@ namespace Tables.Core.Features.LinkTable;
 public class LinkTableRequestHandler : IRequestHandler<LinkTableRequest, LinkTableResponse>
 {
     private readonly ITablesRepository _tablesRepository;
-    private readonly IMapper _mapper;
 
-    public LinkTableRequestHandler(ITablesRepository tablesRepository, IMapper mapper)
+    public LinkTableRequestHandler(ITablesRepository tablesRepository)
     {
         _tablesRepository = tablesRepository;
-        _mapper = mapper;
     }
 
-    public async Task<LinkTableResponse> Handle(LinkTableRequest request, CancellationToken cancellationToken)
+    public async ValueTask<LinkTableResponse> Handle(LinkTableRequest request, CancellationToken cancellationToken)
     {
         var table = await _tablesRepository.FindOne(x => x.QrId == request.TableId);
 
@@ -31,7 +29,7 @@ public class LinkTableRequestHandler : IRequestHandler<LinkTableRequest, LinkTab
 
         return new LinkTableResponse
         {
-            Table = _mapper.Map<TableModel>(table),
+            Table = table.Adapt<TableModel>(),
         };
     }
 }

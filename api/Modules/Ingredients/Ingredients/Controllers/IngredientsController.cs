@@ -4,7 +4,7 @@ using Ingredients.Core.Features.RemoveIngredient;
 using Ingredients.Core.Features.RestoreIngredient;
 using Ingredients.Core.Features.UpdateIngredient;
 using Ingredients.Input;
-using MediatR;
+using Mediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Core.Abstractions;

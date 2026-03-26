@@ -1,5 +1,5 @@
-﻿using Categories.Core.Abstractions;
-using MediatR;
+using Categories.Core.Abstractions;
+using Mediator;
 using Shared.Core.Exceptions;
 
 namespace Categories.Core.Features.UpdateCategory;
@@ -13,7 +13,7 @@ public class UpdateCategoryRequestHandler : IRequestHandler<UpdateCategoryReques
         _categoriesRepository = categoriesRepository;
     }
 
-    public async Task<UpdateCategoryResponse> Handle(UpdateCategoryRequest request, CancellationToken cancellationToken)
+    public async ValueTask<UpdateCategoryResponse> Handle(UpdateCategoryRequest request, CancellationToken cancellationToken)
     {
         var category = await _categoriesRepository.GetById(request.Id, cancellationToken);
 

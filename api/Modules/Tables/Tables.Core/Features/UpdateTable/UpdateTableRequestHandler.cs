@@ -1,4 +1,4 @@
-﻿using MediatR;
+using Mediator;
 using Shared.Core.Exceptions;
 using Tables.Core.Abstractions;
 
@@ -13,7 +13,7 @@ public class UpdateTableRequestHandler : IRequestHandler<UpdateTableRequest, Upd
         _tablesRepository = tablesRepository;
     }
 
-    public async Task<UpdateTableResponse> Handle(UpdateTableRequest request, CancellationToken cancellationToken)
+    public async ValueTask<UpdateTableResponse> Handle(UpdateTableRequest request, CancellationToken cancellationToken)
     {
         var table = await _tablesRepository.GetById(request.Id);
 

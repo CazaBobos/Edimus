@@ -37,6 +37,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerWithAuth();
 builder.Services.AddJWTAuthentication();
 
+builder.Services.AddMediator(options => options.ServiceLifetime = ServiceLifetime.Scoped);
 builder.Services.AddDatabaseContext();
 builder.Services.AddJwtService();
 builder.Services.AddMailService();
@@ -58,7 +59,8 @@ app.MapNextjsStaticHtmls(); // <= Serves Static HTMLs
 app.UseNextjsStaticHosting(); // <= For other required files (i.e. css and js files)
 
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseStaticFiles();
+app.UseSwaggerUI(options => options.InjectStylesheet("/swagger-dark.css"));
 
 app.UseCors(options =>
 {

@@ -1,16 +1,16 @@
-﻿using AutoMapper;
+using Mapster;
 using Companies.Core.Model;
 using Shared.Core.Entities;
 
 namespace Companies.Core.Mapping;
 
-public class CompanyProfile : Profile
+public class CompanyProfile : IRegister
 {
-    public CompanyProfile()
+    public void Register(TypeAdapterConfig config)
     {
-        CreateMap<Company, CompanyModel>().ReverseMap();
-        CreateMap<Premise, PremiseModel>().ReverseMap();
-        CreateMap<Layout, LayoutModel>().ReverseMap();
-        CreateMap<LayoutCoord, LayoutCoordModel>().ReverseMap();
+        config.NewConfig<Company, CompanyModel>().TwoWays();
+        config.NewConfig<Premise, PremiseModel>().TwoWays();
+        config.NewConfig<Layout, LayoutModel>().TwoWays();
+        config.NewConfig<LayoutCoord, LayoutCoordModel>().TwoWays();
     }
 }

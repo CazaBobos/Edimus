@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using MediatR;
+using Mapster;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using Shared.Core.Entities;
 using Shared.Core.Exceptions;
@@ -10,14 +10,12 @@ namespace Users.Core.Features.CreateUser;
 public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, CreateUserResponse>
 {
     private readonly IUsersRepository _usersRepository;
-    private readonly IMapper _mapper;
 
-    public CreateUserRequestHandler(IUsersRepository usersRepository, IMapper mapper)
+    public CreateUserRequestHandler(IUsersRepository usersRepository)
     {
         _usersRepository = usersRepository;
-        _mapper = mapper;
     }
-    public async Task<CreateUserResponse> Handle(CreateUserRequest request, CancellationToken cancellationToken)
+    public async ValueTask<CreateUserResponse> Handle(CreateUserRequest request, CancellationToken cancellationToken)
     {
         var user = new User(
             request.Username,
@@ -36,7 +34,7 @@ public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, Creat
 
         return new CreateUserResponse
         {
-            User = _mapper.Map<UserModel>(user)
+            User = user.Adapt<UserModel>()
         };
     }
 }

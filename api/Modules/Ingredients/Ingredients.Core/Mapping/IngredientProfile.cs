@@ -1,14 +1,13 @@
-﻿using AutoMapper;
+using Mapster;
 using Ingredients.Core.Model;
 using Shared.Core.Entities;
 
 namespace Ingredients.Core.Mapping;
 
-public class IngredientProfile : Profile
+public class IngredientProfile : IRegister
 {
-    public IngredientProfile()
+    public void Register(TypeAdapterConfig config)
     {
-        CreateMap<Ingredient, IngredientModel>()
-            .ReverseMap();
+        config.NewConfig<Ingredient, IngredientModel>().TwoWays();
     }
 }

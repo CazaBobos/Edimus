@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using MediatR;
+using Mapster;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using Users.Core.Abstractions;
 using Users.Core.Model;
@@ -8,14 +8,12 @@ namespace Users.Core.Features.GetManyUsers;
 public class GetManyUsersRequestHandler : IRequestHandler<GetManyUsersRequest, GetManyUsersResponse>
 {
     private readonly IUsersRepository _usersRepository;
-    private readonly IMapper _mapper;
 
-    public GetManyUsersRequestHandler(IUsersRepository usersRepository, IMapper mapper)
+    public GetManyUsersRequestHandler(IUsersRepository usersRepository)
     {
         _usersRepository = usersRepository;
-        _mapper = mapper;
     }
-    public async Task<GetManyUsersResponse> Handle(GetManyUsersRequest request, CancellationToken cancellationToken)
+    public async ValueTask<GetManyUsersResponse> Handle(GetManyUsersRequest request, CancellationToken cancellationToken)
     {
         var user = await _usersRepository.AsQueryable()
             .Where(u => request.Username == null || u.Username.Contains(request.Username))
@@ -25,7 +23,7 @@ public class GetManyUsersRequestHandler : IRequestHandler<GetManyUsersRequest, G
 
         return new GetManyUsersResponse
         {
-            Users = _mapper.Map<List<UserModel>>(user)
+            Users = user.Adapt<List<UserModel>>()
         };
     }
 }

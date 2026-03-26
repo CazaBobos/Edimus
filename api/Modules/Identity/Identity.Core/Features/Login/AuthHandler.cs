@@ -1,4 +1,4 @@
-﻿//namespace Identity.Core.Features.Login;
+//namespace Identity.Core.Features.Login;
 //
 //using System;
 //using System.Linq;
@@ -6,7 +6,7 @@
 //using System.Text;
 //using System.Threading;
 //using System.Threading.Tasks;
-//using MediatR;
+//using Mediator;
 //using Microsoft.EntityFrameworkCore;
 //using Microsoft.Extensions.Localization;
 //using Microsoft.Extensions.Options;

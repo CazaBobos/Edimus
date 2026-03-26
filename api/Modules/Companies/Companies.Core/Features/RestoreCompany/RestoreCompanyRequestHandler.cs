@@ -1,5 +1,5 @@
-﻿using Companies.Core.Abstractions;
-using MediatR;
+using Companies.Core.Abstractions;
+using Mediator;
 using Shared.Core.Exceptions;
 
 namespace Companies.Core.Features.RestoreCompany;
@@ -13,7 +13,7 @@ public class RestoreCompanyRequestHandler : IRequestHandler<RestoreCompanyReques
         _companiesRepository = companiesRepository;
     }
 
-    public async Task<RestoreCompanyResponse> Handle(RestoreCompanyRequest request, CancellationToken cancellationToken)
+    public async ValueTask<RestoreCompanyResponse> Handle(RestoreCompanyRequest request, CancellationToken cancellationToken)
     {
         var company = await _companiesRepository.GetById(request.Id, cancellationToken);
 

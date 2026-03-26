@@ -1,12 +1,12 @@
-﻿using AutoMapper;
+using Mapster;
 using Identity.Core.Model;
 using Shared.Core.Entities;
 
 namespace Identity.Core.Mapping;
-public class ModuleProfile : Profile
+public class ModuleProfile : IRegister
 {
-    public ModuleProfile()
+    public void Register(TypeAdapterConfig config)
     {
-        CreateMap<User, UserModel>().ReverseMap();
+        config.NewConfig<User, UserModel>().TwoWays();
     }
 }

@@ -1,4 +1,4 @@
-﻿using MediatR;
+using Mediator;
 
 namespace Identity.Core.Features.Login;
 public class LoginRequest : IRequest<LoginResponse>

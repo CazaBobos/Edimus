@@ -1,4 +1,4 @@
-﻿using MediatR;
+using Mediator;
 
 namespace Users.Core.Features.RecoverPassword;
 public class RecoverPasswordRequest : IRequest<RecoverPasswordResponse>

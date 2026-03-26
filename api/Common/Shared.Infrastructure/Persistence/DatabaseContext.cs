@@ -36,8 +36,7 @@ public class DatabaseContext : DbContext
     {
         optionsBuilder.UseLazyLoadingProxies();
         optionsBuilder.UseNpgsql(
-            Configuration.GetConnectionString("ConnectionString"),
-            options => options.MigrationsAssembly("Edimus.Api")
+            Configuration.GetConnectionString("ConnectionString")
         );
     }
 

@@ -1,4 +1,4 @@
-﻿using MediatR;
+using Mediator;
 using Sectors.Core.Model;
 using Shared.Core.Abstractions;
 

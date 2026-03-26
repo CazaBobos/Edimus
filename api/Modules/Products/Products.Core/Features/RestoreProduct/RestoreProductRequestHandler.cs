@@ -1,4 +1,4 @@
-﻿using MediatR;
+using Mediator;
 using Products.Core.Abstractions;
 using Shared.Core.Exceptions;
 
@@ -11,7 +11,7 @@ public class RestoreProductRequestHandler : IRequestHandler<RestoreProductReques
     {
         _productsRepository = productsRepository;
     }
-    public async Task<RestoreProductResponse> Handle(RestoreProductRequest request, CancellationToken cancellationToken)
+    public async ValueTask<RestoreProductResponse> Handle(RestoreProductRequest request, CancellationToken cancellationToken)
     {
         var product = await _productsRepository.GetById(request.Id, cancellationToken);
 

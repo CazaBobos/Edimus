@@ -1,4 +1,4 @@
-﻿using MediatR;
+using Mediator;
 using Shared.Core.Abstractions;
 
 namespace Users.Core.Features.GetUsers;

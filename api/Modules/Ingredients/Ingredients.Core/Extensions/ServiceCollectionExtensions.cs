@@ -1,4 +1,4 @@
-﻿using Ingredients.Core.Abstractions;
+using Ingredients.Core.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Core.Extensions;
 
@@ -7,8 +7,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddIngredientsCore(this IServiceCollection services)
     {
-        services.AddMediatR<IIngredientsRepository>();
-        services.AddAutoMapper<IIngredientsRepository>();
+        services.AddMapster<IIngredientsRepository>();
         return services;
     }
 }

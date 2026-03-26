@@ -4,7 +4,7 @@ using Categories.Core.Features.RemoveCategory;
 using Categories.Core.Features.RestoreCategory;
 using Categories.Core.Features.UpdateCategory;
 using Categories.Input;
-using MediatR;
+using Mediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Core.Abstractions;

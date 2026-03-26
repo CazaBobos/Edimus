@@ -8,7 +8,7 @@ using Shared.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace Edimus.Api.Migrations
+namespace Shared.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
     partial class DatabaseContextModelSnapshot : ModelSnapshot

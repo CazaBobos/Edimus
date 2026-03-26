@@ -1,8 +1,8 @@
-﻿using AutoMapper;
+using Mapster;
 using Ingredients.Core.Abstractions;
 using Ingredients.Core.Extensions;
 using Ingredients.Core.Model;
-using MediatR;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using Shared.Core.Extensions;
 
@@ -11,15 +11,13 @@ namespace Ingredients.Core.Features.GetManyIngredients;
 public class GetIngredientsRequestHandler : IRequestHandler<GetIngredientsRequest, GetIngredientsResponse>
 {
     private readonly IIngredientsRepository _ingredientsRepository;
-    private readonly IMapper _mapper;
 
-    public GetIngredientsRequestHandler(IIngredientsRepository ingredientsRepository, IMapper mapper)
+    public GetIngredientsRequestHandler(IIngredientsRepository ingredientsRepository)
     {
         _ingredientsRepository = ingredientsRepository;
-        _mapper = mapper;
     }
 
-    public async Task<GetIngredientsResponse> Handle(GetIngredientsRequest request, CancellationToken cancellationToken)
+    public async ValueTask<GetIngredientsResponse> Handle(GetIngredientsRequest request, CancellationToken cancellationToken)
     {
         var query = _ingredientsRepository.AsQueryable()
             .WhereName(request.Name)
@@ -38,7 +36,7 @@ public class GetIngredientsRequestHandler : IRequestHandler<GetIngredientsReques
             Count = query.Count(),
             Limit = request.Limit,
             Page = request.Page,
-            Ingredients = _mapper.Map<List<IngredientModel>>(ingredients)
+            Ingredients = ingredients.Adapt<List<IngredientModel>>()
         };
     }
 }

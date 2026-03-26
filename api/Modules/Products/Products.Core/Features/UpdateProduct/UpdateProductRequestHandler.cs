@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using MediatR;
+using Mapster;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using Products.Core.Abstractions;
 using Products.Core.Model;
@@ -8,15 +8,13 @@ namespace Products.Core.Features.CreateProduct;
 public class UpdateProductRequestHandler : IRequestHandler<UpdateProductRequest, UpdateProductResponse>
 {
     private readonly IProductsRepository _productsRepository;
-    private readonly IMapper _mapper;
 
-    public UpdateProductRequestHandler(IProductsRepository productsRepository, IMapper mapper)
+    public UpdateProductRequestHandler(IProductsRepository productsRepository)
     {
         _productsRepository = productsRepository;
-        _mapper = mapper;
     }
 
-    public async Task<UpdateProductResponse> Handle(UpdateProductRequest request, CancellationToken cancellationToken)
+    public async ValueTask<UpdateProductResponse> Handle(UpdateProductRequest request, CancellationToken cancellationToken)
     {
         var product = await _productsRepository.GetById(request.Id, cancellationToken);
 
@@ -38,7 +36,7 @@ public class UpdateProductRequestHandler : IRequestHandler<UpdateProductRequest,
 
         return new UpdateProductResponse
         {
-            Product = _mapper.Map<ProductModel>(product)
+            Product = product.Adapt<ProductModel>()
         };
     }
 }

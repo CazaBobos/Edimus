@@ -1,4 +1,4 @@
-﻿using MediatR;
+using Mediator;
 using Products.Core.Abstractions;
 using Shared.Core.Entities;
 
@@ -12,7 +12,7 @@ public class CreateProductRequestHandler : IRequestHandler<CreateProductRequest,
         _productsRepository = productsRepository;
     }
 
-    public async Task<CreateProductResponse> Handle(CreateProductRequest request, CancellationToken cancellationToken)
+    public async ValueTask<CreateProductResponse> Handle(CreateProductRequest request, CancellationToken cancellationToken)
     {
         var product = new Product(
             request.ParentId,

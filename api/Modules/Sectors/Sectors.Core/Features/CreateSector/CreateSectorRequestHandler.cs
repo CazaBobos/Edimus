@@ -1,4 +1,4 @@
-﻿using MediatR;
+using Mediator;
 using Sectors.Core.Abstractions;
 using Shared.Core.Entities;
 
@@ -13,7 +13,7 @@ public class CreateSectorRequestHandler : IRequestHandler<CreateSectorRequest, C
         _sectorsRepository = sectorsRepository;
     }
 
-    public async Task<CreateSectorResponse> Handle(CreateSectorRequest request, CancellationToken cancellationToken)
+    public async ValueTask<CreateSectorResponse> Handle(CreateSectorRequest request, CancellationToken cancellationToken)
     {
         var sector = new Sector(
             request.LayoutId,

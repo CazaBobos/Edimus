@@ -1,28 +1,26 @@
-﻿using AutoMapper;
+using Mapster;
 using Companies.Core.Abstractions;
 using Companies.Core.Model;
-using MediatR;
+using Mediator;
 
 namespace Companies.Core.Features.GetCompany;
 
 public class GetCompanyRequestHandler : IRequestHandler<GetCompanyRequest, GetCompanyResponse>
 {
     private readonly ICompaniesRepository _companiesRepository;
-    private readonly IMapper _mapper;
 
-    public GetCompanyRequestHandler(ICompaniesRepository companiesRepository, IMapper mapper)
+    public GetCompanyRequestHandler(ICompaniesRepository companiesRepository)
     {
         _companiesRepository = companiesRepository;
-        _mapper = mapper;
     }
 
-    public async Task<GetCompanyResponse> Handle(GetCompanyRequest request, CancellationToken cancellationToken)
+    public async ValueTask<GetCompanyResponse> Handle(GetCompanyRequest request, CancellationToken cancellationToken)
     {
         var company = await _companiesRepository.GetById(request.Id, cancellationToken);
 
         return new GetCompanyResponse
         {
-            Company = _mapper.Map<CompanyModel>(company)
+            Company = company.Adapt<CompanyModel>()
         };
     }
 }

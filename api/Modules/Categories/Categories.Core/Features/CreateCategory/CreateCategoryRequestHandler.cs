@@ -1,5 +1,5 @@
-﻿using Categories.Core.Abstractions;
-using MediatR;
+using Categories.Core.Abstractions;
+using Mediator;
 using Shared.Core.Entities;
 
 namespace Categories.Core.Features.CreateCategory;
@@ -13,7 +13,7 @@ public class CreateCategoryRequestHandler : IRequestHandler<CreateCategoryReques
         _categoriesRepository = categoriesRepository;
     }
 
-    public async Task<CreateCategoryResponse> Handle(CreateCategoryRequest request, CancellationToken cancellationToken)
+    public async ValueTask<CreateCategoryResponse> Handle(CreateCategoryRequest request, CancellationToken cancellationToken)
     {
         var category = new Category(request.CompanyId, request.Name);
 

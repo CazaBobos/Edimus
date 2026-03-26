@@ -1,14 +1,13 @@
-﻿using AutoMapper;
+using Mapster;
 using Categories.Core.Model;
 using Shared.Core.Entities;
 
 namespace Categories.Core.Mapping;
 
-public class CategoryProfile : Profile
+public class CategoryProfile : IRegister
 {
-    public CategoryProfile()
+    public void Register(TypeAdapterConfig config)
     {
-        CreateMap<Category, CategoryModel>()
-            .ReverseMap();
+        config.NewConfig<Category, CategoryModel>().TwoWays();
     }
 }

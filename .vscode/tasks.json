@@ -41,6 +41,55 @@
       ],
       "problemMatcher": "$msCompile",
       "isBackground": true
+    },
+    {
+      "label": "migrations: add",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "ef",
+        "migrations",
+        "add",
+        "${input:migrationName}",
+        "--project",
+        "${workspaceFolder}/api/Common/Shared.Infrastructure",
+        "--startup-project",
+        "${workspaceFolder}/api/Edimus.Api"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "migrations: remove last",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "ef",
+        "migrations",
+        "remove",
+        "--project",
+        "${workspaceFolder}/api/Common/Shared.Infrastructure",
+        "--startup-project",
+        "${workspaceFolder}/api/Edimus.Api"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "migrations: run",
+      "type": "shell",
+      "command": "dotnet ef database update ${input:targetMigration} --project '${workspaceFolder}/api/Common/Shared.Infrastructure' --startup-project '${workspaceFolder}/api/Edimus.Api'",
+      "problemMatcher": "$msCompile"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "migrationName",
+      "type": "promptString",
+      "description": "Migration name"
+    },
+    {
+      "id": "targetMigration",
+      "type": "promptString",
+      "description": "Target migration (leave blank to apply all pending)"
     }
   ]
 }
