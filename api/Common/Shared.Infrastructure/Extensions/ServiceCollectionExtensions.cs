@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Shared.Core.Services;
 using Shared.Core.Settings;
 using Shared.Infrastructure.Persistence;
@@ -11,12 +12,11 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddDatabaseContext(this IServiceCollection services)
     {
         services.AddDbContext<DatabaseContext>();
-        //Uncomment for auto-migrate on start
-        //using (var scope = services.BuildServiceProvider().CreateScope())
-        //{
-        //    var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
-        //    dbContext.Database.Migrate();
-        //}
+        using (var scope = services.BuildServiceProvider().CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+            dbContext.Database.Migrate();
+        }
 
         return services;
     }
