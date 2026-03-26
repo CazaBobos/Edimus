@@ -4,6 +4,8 @@ WORKDIR /ui
 COPY ui/package.json ui/package-lock.json ./
 RUN npm ci
 COPY ui/ .
+ARG NEXT_PUBLIC_API_BASE_URL=/api/
+ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL
 RUN npm run build
 
 # ── Stage 2: Build .NET API ───────────────────────────────────────────────────

@@ -18,7 +18,7 @@ services:
         value: Production
       - key: ASPNETCORE_URLS
         value: http://+:8080
-      - key: ConnectionStrings__DefaultConnection
+      - key: ConnectionStrings__ConnectionString
         fromDatabase:
           name: edimus-db
           property: connectionString
