@@ -1,19 +1,19 @@
-import styles from "./styles.module.scss";
+import { Tabs as MantineTabs } from "@mantine/core";
 
 type TabsProps = {
   source: string[];
   active: number;
   onChange: (index: number) => void;
 };
-export const Tabs = (props: TabsProps) => {
-  const { source, active, onChange } = props;
-  return (
-    <div className={styles.tabs}>
+
+export const Tabs = ({ source, active, onChange }: TabsProps) => (
+  <MantineTabs value={String(active)} onChange={(v) => onChange(Number(v ?? 0))}>
+    <MantineTabs.List>
       {source.map((t, i) => (
-        <div key={t} className={styles.tab} data-selected={active === i} onClick={() => onChange(i)}>
+        <MantineTabs.Tab key={t} value={String(i)}>
           {t}
-        </div>
+        </MantineTabs.Tab>
       ))}
-    </div>
-  );
-};
+    </MantineTabs.List>
+  </MantineTabs>
+);

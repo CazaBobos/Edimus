@@ -1,22 +1,27 @@
-import { ReactNode } from "react";
+"use client";
 
-import { Card } from "../Card";
-import styles from "./styles.module.scss";
+import { Modal } from "@mantine/core";
+import { ReactNode } from "react";
 
 type DialogProps = {
   open: boolean;
   onClose: () => void;
   children: ReactNode;
 };
-export const Dialog = (props: DialogProps) => {
-  const { open, onClose, children } = props;
 
-  if (!open) return null;
-  return (
-    <div className={styles.backdrop} onClick={onClose}>
-      <Card className={styles.dialog} onClick={(e) => e.stopPropagation()}>
-        {children}
-      </Card>
-    </div>
-  );
-};
+export const Dialog = ({ open, onClose, children }: DialogProps) => (
+  <Modal
+    opened={open}
+    onClose={onClose}
+    withCloseButton={false}
+    centered
+    size="auto"
+    padding={0}
+    styles={{
+      content: { background: "transparent", boxShadow: "none" },
+      overlay: { backdropFilter: "blur(4px)" },
+    }}
+  >
+    {children}
+  </Modal>
+);

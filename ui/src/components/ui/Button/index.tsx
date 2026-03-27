@@ -1,6 +1,5 @@
+import { ActionIcon, Button as MantineButton } from "@mantine/core";
 import { ReactNode } from "react";
-
-import styles from "./styles.module.scss";
 
 type ButtonProps = {
   label?: string;
@@ -8,13 +7,19 @@ type ButtonProps = {
   disabled?: boolean;
   onClick?: () => void;
 };
-export const Button = (props: ButtonProps) => {
-  const { label, icon, disabled, onClick } = props;
+
+export const Button = ({ label, icon, disabled, onClick }: ButtonProps) => {
+  if (!label) {
+    return (
+      <ActionIcon variant="default" size="lg" radius="xl" disabled={disabled} onClick={onClick}>
+        {icon}
+      </ActionIcon>
+    );
+  }
 
   return (
-    <button className={styles.button} disabled={disabled} onClick={onClick}>
-      {label && <span>{label}</span>}
-      {icon}
-    </button>
+    <MantineButton variant="default" radius="xl" rightSection={icon} disabled={disabled} onClick={onClick} fullWidth>
+      {label}
+    </MantineButton>
   );
 };

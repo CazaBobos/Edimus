@@ -1,9 +1,0 @@
-@use "common/colors" as *;
-
-.card {
-    border-radius: 8px;
-    border: 1px solid $light_text;
-    padding: 8px;
-    background-color: $dark_text;
-    box-shadow: 0 2px 8px $shadow_dark;
-  }

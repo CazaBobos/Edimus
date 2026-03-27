@@ -1,35 +1,38 @@
-import { useReactTable, getCoreRowModel, flexRender, ColumnDef } from "@tanstack/react-table";
-
-import styles from "./styles.module.scss";
+import { Table as MantineTable } from "@mantine/core";
+import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
 type TableProps<T> = {
   data: T[];
   columns: ColumnDef<T, unknown>[];
 };
-export default function Table<T>(props: TableProps<T>) {
-  const { data, columns } = props;
+
+export default function Table<T>({ data, columns }: TableProps<T>) {
   const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel() });
 
   return (
-    <table className={styles.table}>
-      <thead>
+    <MantineTable striped highlightOnHover withTableBorder withColumnBorders>
+      <MantineTable.Thead>
         {table.getHeaderGroups().map((hg) => (
-          <tr key={hg.id}>
+          <MantineTable.Tr key={hg.id}>
             {hg.headers.map((header, i) => (
-              <th key={`${header.id} ${i}`}>{flexRender(header.column.columnDef.header, header.getContext())}</th>
+              <MantineTable.Th key={`${header.id} ${i}`}>
+                {flexRender(header.column.columnDef.header, header.getContext())}
+              </MantineTable.Th>
             ))}
-          </tr>
+          </MantineTable.Tr>
         ))}
-      </thead>
-      <tbody>
+      </MantineTable.Thead>
+      <MantineTable.Tbody>
         {table.getRowModel().rows.map((row) => (
-          <tr key={row.id}>
+          <MantineTable.Tr key={row.id}>
             {row.getVisibleCells().map((cell, i) => (
-              <td key={`${cell.id} ${i}`}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+              <MantineTable.Td key={`${cell.id} ${i}`}>
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </MantineTable.Td>
             ))}
-          </tr>
+          </MantineTable.Tr>
         ))}
-      </tbody>
-    </table>
+      </MantineTable.Tbody>
+    </MantineTable>
   );
 }

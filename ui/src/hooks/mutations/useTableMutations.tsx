@@ -1,17 +1,18 @@
+import { useToast } from "@/hooks/useToast";
 import { tablesApi } from "@/services";
 import { CreateTableRequest, Table, TableStatus, UpdateTableRequest } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
 
 export const useTableMutations = () => {
   const queryClient = useQueryClient();
+  const { showSuccess, showError, showInfo } = useToast();
 
   const createTableMutation = useMutation({
     mutationFn: async (request: CreateTableRequest) => await tablesApi.create(request),
-    onMutate: () => toast.info("Por favor, espere..."),
-    onError: () => toast.error("Ha ocurrido un error."),
+    onMutate: () => showInfo("Por favor, espere..."),
+    onError: () => showError("Ha ocurrido un error."),
     onSuccess: ({ id, qrId }, variables) => {
-      toast.success("La mesa se ha creado correctamente.");
+      showSuccess("La mesa se ha creado correctamente.");
 
       queryClient.setQueriesData<Table[]>({ queryKey: ["tables"] }, (query) => {
         if (!query) return;
@@ -33,10 +34,10 @@ export const useTableMutations = () => {
   const updateTableMutation = useMutation({
     mutationFn: async ({ id, request }: { id: number; request: UpdateTableRequest }) =>
       await tablesApi.update(id, request),
-    onMutate: () => toast.info("Por favor, espere..."),
-    onError: () => toast.error("Ha ocurrido un error."),
+    onMutate: () => showInfo("Por favor, espere..."),
+    onError: () => showError("Ha ocurrido un error."),
     onSuccess: (_, variables) => {
-      toast.success("La mesa se ha actualizado correctamente.");
+      showSuccess("La mesa se ha actualizado correctamente.");
 
       queryClient.setQueriesData<Table[]>({ queryKey: ["tables"] }, (query) => {
         if (!query) return;
@@ -58,10 +59,10 @@ export const useTableMutations = () => {
 
   const removeTableMutation = useMutation({
     mutationFn: async (id: number) => await tablesApi.remove(id),
-    onMutate: () => toast.info("Por favor, espere..."),
-    onError: () => toast.error("Ha ocurrido un error."),
+    onMutate: () => showInfo("Por favor, espere..."),
+    onError: () => showError("Ha ocurrido un error."),
     onSuccess: (_, id) => {
-      toast.success("La  mesa se ha eliminado correctamente.");
+      showSuccess("La mesa se ha eliminado correctamente.");
 
       queryClient.setQueriesData<Table[]>({ queryKey: ["tables"] }, (query) => {
         if (!query) return;

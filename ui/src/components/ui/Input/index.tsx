@@ -1,7 +1,7 @@
+import { TextInput, Textarea } from "@mantine/core";
 import { ChangeEvent } from "react";
 
 import { ControlState } from "../common";
-import styles from "./styles.module.scss";
 
 type InputProps = {
   width?: string;
@@ -20,34 +20,25 @@ export const Input = (props: InputProps) => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
-
     onChange?.({ name, value });
   };
 
-  return (
-    <div className={styles.container} style={{ width }}>
-      {title && <span>{title}</span>}
-      {multiline ? (
-        <textarea
-          className={styles.input}
-          name={name}
-          value={value}
-          defaultValue={defaultValue}
-          placeholder={placeholder}
-          onChange={handleChange}
-        />
-      ) : (
-        <input
-          className={styles.input}
-          type={type}
-          min={1}
-          name={name}
-          value={value}
-          defaultValue={defaultValue}
-          placeholder={placeholder}
-          onChange={handleChange}
-        />
-      )}
-    </div>
-  );
+  const stringValue = value !== undefined ? String(value) : undefined;
+  const stringDefault = defaultValue !== undefined ? String(defaultValue) : undefined;
+
+  const commonProps = {
+    style: { width },
+    name,
+    label: title,
+    value: stringValue,
+    defaultValue: stringDefault,
+    placeholder,
+    onChange: handleChange,
+  };
+
+  if (multiline) {
+    return <Textarea {...commonProps} autosize minRows={2} />;
+  }
+
+  return <TextInput {...commonProps} type={type} />;
 };

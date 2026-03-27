@@ -1,17 +1,18 @@
+import { useToast } from "@/hooks/useToast";
 import { productsApi } from "@/services";
 import { Product, ProductRequest } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
 
 export const useProductMutations = () => {
   const queryClient = useQueryClient();
+  const { showSuccess, showError, showInfo } = useToast();
 
   const createProductMutation = useMutation({
     mutationFn: async (request: Required<ProductRequest>) => await productsApi.create(request),
-    onMutate: () => toast.info("Por favor, espere..."),
-    onError: () => toast.error("Ha ocurrido un error."),
+    onMutate: () => showInfo("Por favor, espere..."),
+    onError: () => showError("Ha ocurrido un error."),
     onSuccess: (id, request) => {
-      toast.success("El producto se ha creado correctamente.");
+      showSuccess("El producto se ha creado correctamente.");
 
       queryClient.setQueriesData<Product[]>({ queryKey: ["products"] }, (query) => {
         if (!query) return;
@@ -24,10 +25,10 @@ export const useProductMutations = () => {
   const updateProductMutation = useMutation({
     mutationFn: async ({ id, request }: { id: number; request: ProductRequest }) =>
       await productsApi.update(id, request),
-    onMutate: () => toast.info("Por favor, espere..."),
-    onError: () => toast.error("Ha ocurrido un error."),
+    onMutate: () => showInfo("Por favor, espere..."),
+    onError: () => showError("Ha ocurrido un error."),
     onSuccess: (_, variables) => {
-      toast.success("El producto se ha actualizado correctamente.");
+      showSuccess("El producto se ha actualizado correctamente.");
 
       queryClient.setQueriesData<Product[]>({ queryKey: ["products"] }, (query) => {
         if (!query) return;
@@ -38,10 +39,10 @@ export const useProductMutations = () => {
 
   const removeProductMutation = useMutation({
     mutationFn: async (id: number) => await productsApi.remove(id),
-    onMutate: () => toast.info("Por favor, espere..."),
-    onError: () => toast.error("Ha ocurrido un error."),
+    onMutate: () => showInfo("Por favor, espere..."),
+    onError: () => showError("Ha ocurrido un error."),
     onSuccess: (_, id) => {
-      toast.success("El producto se ha eliminado correctamente.");
+      showSuccess("El producto se ha eliminado correctamente.");
 
       queryClient.setQueriesData<Product[]>({ queryKey: ["products"] }, (query) => {
         if (!query) return;
@@ -52,10 +53,10 @@ export const useProductMutations = () => {
 
   const restoreProductMutation = useMutation({
     mutationFn: async (id: number) => await productsApi.restore(id),
-    onMutate: () => toast.info("Por favor, espere..."),
-    onError: () => toast.error("Ha ocurrido un error."),
+    onMutate: () => showInfo("Por favor, espere..."),
+    onError: () => showError("Ha ocurrido un error."),
     onSuccess: (_, id) => {
-      toast.success("El producto se ha restaurado correctamente.");
+      showSuccess("El producto se ha restaurado correctamente.");
 
       queryClient.setQueriesData<Product[]>({ queryKey: ["products"] }, (query) => {
         if (!query) return;

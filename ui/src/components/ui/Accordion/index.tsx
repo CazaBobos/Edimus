@@ -1,24 +1,17 @@
-import { ReactNode, useState } from "react";
-import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-
-import { Button } from "../Button";
-import styles from "./styles.module.scss";
+import { Accordion as MantineAccordion } from "@mantine/core";
+import { ReactNode } from "react";
 
 type AccordionProps = {
   title: string;
   children: ReactNode;
   defaultOpen?: boolean;
 };
-export const Accordion = (props: AccordionProps) => {
-  const { title, children, defaultOpen = false } = props;
 
-  const [open, setOpen] = useState<boolean>(defaultOpen);
-  const toggleOpen = () => setOpen(!open);
-
-  return (
-    <div className={styles.container}>
-      <Button label={title} icon={open ? <BiChevronUp /> : <BiChevronDown />} onClick={toggleOpen} />
-      {open && children}
-    </div>
-  );
-};
+export const Accordion = ({ title, children, defaultOpen = false }: AccordionProps) => (
+  <MantineAccordion defaultValue={defaultOpen ? "item" : null}>
+    <MantineAccordion.Item value="item">
+      <MantineAccordion.Control>{title}</MantineAccordion.Control>
+      <MantineAccordion.Panel>{children}</MantineAccordion.Panel>
+    </MantineAccordion.Item>
+  </MantineAccordion>
+);

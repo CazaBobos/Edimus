@@ -1,16 +1,10 @@
-import clsx from "clsx";
+import { Paper } from "@mantine/core";
 import { HTMLAttributes } from "react";
-
-import styles from "./styles.module.scss";
 
 type CardProps = Pick<HTMLAttributes<HTMLDivElement>, "children" | "className" | "onClick">;
 
-export const Card = (props: CardProps) => {
-  const { children, className, onClick } = props;
-
-  return (
-    <div className={clsx(styles.card, className)} onClick={onClick}>
-      {children}
-    </div>
-  );
-};
+export const Card = ({ children, className, onClick }: CardProps) => (
+  <Paper shadow="sm" withBorder p="sm" radius="md" className={className} onClick={onClick}>
+    {children}
+  </Paper>
+);

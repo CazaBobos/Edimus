@@ -1,7 +1,7 @@
+import { NativeSelect } from "@mantine/core";
 import { ChangeEvent } from "react";
 
 import { ControlState } from "../common";
-import styles from "./styles.module.scss";
 
 export type SelectOption = {
   label: string;
@@ -25,33 +25,27 @@ export const Select = (props: SelectProps) => {
 
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
-
     onChange?.({ name, value });
   };
 
+  const data = [
+    { label: "-- seleccione una opción --", value: "-1", disabled: true },
+    ...options.map((o) => {
+      const option = typeof o === "string" ? { label: o, value: o } : o;
+      return { label: option.label, value: String(option.value), disabled: !!option.hidden };
+    }),
+  ];
+
   return (
-    <div className={styles.select} style={{ width }}>
-      {title && <span className={styles.title}>{title}</span>}
-      <select
-        name={name}
-        style={{ height: "32px", width: "100%" }}
-        value={value}
-        defaultValue={defaultValue}
-        onChange={handleChange}
-        disabled={disabled}
-      >
-        <option hidden value="-1">
-          -- seleccione una opción --
-        </option>
-        {options.map((o) => {
-          const option = typeof o === "string" ? { label: o, value: o } : o;
-          return (
-            <option key={option.value} value={option.value} hidden={option.hidden}>
-              {option.label}
-            </option>
-          );
-        })}
-      </select>
-    </div>
+    <NativeSelect
+      style={{ width }}
+      name={name}
+      label={title}
+      value={value}
+      defaultValue={defaultValue ?? "-1"}
+      disabled={disabled}
+      onChange={handleChange}
+      data={data}
+    />
   );
 };

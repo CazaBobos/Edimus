@@ -1,7 +1,6 @@
-import { ChangeEvent } from "react";
+import { ColorInput } from "@mantine/core";
 
 import { ControlState } from "../common";
-import styles from "./styles.module.scss";
 
 type ColorPickerProps = {
   name?: string;
@@ -9,26 +8,13 @@ type ColorPickerProps = {
   defaultValue?: string;
   onChange?: (state: ControlState) => void;
 };
-export const ColorPicker = (props: ColorPickerProps) => {
-  const { name, value, defaultValue, onChange } = props;
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-
-    onChange?.({ name, value });
-  };
-
-  return (
-    <div className={styles.container}>
-      <span>Color</span>
-      <input
-        type="color"
-        className={styles.picker}
-        name={name}
-        value={value}
-        defaultValue={defaultValue}
-        onChange={handleChange}
-      />
-    </div>
-  );
-};
+export const ColorPicker = ({ name, value, defaultValue, onChange }: ColorPickerProps) => (
+  <ColorInput
+    label="Color"
+    value={value}
+    defaultValue={defaultValue}
+    format="hex"
+    onChange={(color) => onChange?.({ name: name ?? "", value: color })}
+  />
+);

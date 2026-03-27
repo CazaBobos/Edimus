@@ -1,17 +1,18 @@
+import { useToast } from "@/hooks/useToast";
 import { sectorsApi } from "@/services";
 import { CreateSectorRequest, Sector, UpdateSectorRequest } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
 
 export const useSectorMutations = () => {
   const queryClient = useQueryClient();
+  const { showSuccess, showError, showInfo } = useToast();
 
   const createSectorMutation = useMutation({
     mutationFn: async (request: CreateSectorRequest) => await sectorsApi.create(request),
-    onMutate: () => toast.info("Por favor, espere..."),
-    onError: () => toast.error("Ha ocurrido un error."),
+    onMutate: () => showInfo("Por favor, espere..."),
+    onError: () => showError("Ha ocurrido un error."),
     onSuccess: (id, variables) => {
-      toast.success("El sector se ha creado correctamente.");
+      showSuccess("El sector se ha creado correctamente.");
 
       queryClient.setQueriesData<Sector[]>({ queryKey: ["sectors"] }, (query) => {
         if (!query) return;
@@ -24,10 +25,10 @@ export const useSectorMutations = () => {
   const updateSectorMutation = useMutation({
     mutationFn: async ({ id, request }: { id: number; request: UpdateSectorRequest }) =>
       await sectorsApi.update(id, request),
-    onMutate: () => toast.info("Por favor, espere..."),
-    onError: () => toast.error("Ha ocurrido un error."),
+    onMutate: () => showInfo("Por favor, espere..."),
+    onError: () => showError("Ha ocurrido un error."),
     onSuccess: (_, variables) => {
-      toast.success("El sector se ha actualizado correctamente.");
+      showSuccess("El sector se ha actualizado correctamente.");
 
       queryClient.setQueriesData<Sector[]>({ queryKey: ["sectors"] }, (query) => {
         if (!query) return;
@@ -39,10 +40,10 @@ export const useSectorMutations = () => {
 
   const removeSectorMutation = useMutation({
     mutationFn: async (id: number) => await sectorsApi.remove(id),
-    onMutate: () => toast.info("Por favor, espere..."),
-    onError: () => toast.error("Ha ocurrido un error."),
+    onMutate: () => showInfo("Por favor, espere..."),
+    onError: () => showError("Ha ocurrido un error."),
     onSuccess: (_, id) => {
-      toast.success("El sector se ha eliminado correctamente.");
+      showSuccess("El sector se ha eliminado correctamente.");
 
       queryClient.setQueriesData<Sector[]>({ queryKey: ["sectors"] }, (query) => {
         if (!query) return;
