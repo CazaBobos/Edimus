@@ -1,8 +1,26 @@
+@use "common/colors" as *;
+
 .select {
   display: flex;
   flex-direction: column;
+  gap: 4px;
   .title {
     font-weight: 400;
     font-size: 14px;
+  }
+  select {
+    border: 1px solid $light_grey;
+    border-radius: 6px;
+    outline: none;
+    padding: 0 8px;
+    transition: border-color 0.15s ease;
+    cursor: pointer;
+    &:focus {
+      border-color: $grey;
+    }
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 }

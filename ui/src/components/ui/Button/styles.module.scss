@@ -11,7 +11,18 @@
   border-radius: 18px;
   border: 1px solid $light_text;
   font-size: 18px;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
   span {
     padding: 0 4px;
+  }
+  &:hover:not(:disabled) {
+    background-color: $hover_light;
+  }
+  &:active:not(:disabled) {
+    opacity: 0.7;
+  }
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
   }
 }
