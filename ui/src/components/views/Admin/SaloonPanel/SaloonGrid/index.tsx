@@ -17,6 +17,7 @@ export const SaloonGrid = () => {
   const { data: sectors } = useSectorsQuery();
   const squareSize = useAdminStore((store) => store.squareSize);
   const setTableDialogOpenState = useAdminStore((store) => store.setTableDialogOpenState);
+  const previewPosition = useAdminStore((store) => store.previewPosition);
 
   const currentLayout = company?.premises[0].layouts[0];
 
@@ -57,34 +58,42 @@ export const SaloonGrid = () => {
           }
         />
       ))}
-      {sectors.map((sector, i) => (
-        <Area key={`${sector.name} ${i}`} positionX={sector.positionX} positionY={sector.positionY}>
-          {sector.name && <SectorTag sector={sector} />}
-          {sector.surface.map((coord) => (
-            <Square key={[coord.x, coord.y].join(",")} position={coord} color={sector.color} />
-          ))}
-        </Area>
-      ))}
-      {tables?.map((table, i) => (
-        <Area key={`${table.layoutId} ${i}`} positionX={table.positionX} positionY={table.positionY}>
-          {table.surface.map((coord) => (
-            <Square
-              onClick={() => setTableDialogOpenState(table)}
-              key={[coord.x, coord.y].join(",")}
-              position={coord}
-              color={
-                {
-                  [TableStatus.Free]: colors.green,
-                  [TableStatus.Calling]: colors.orange,
-                  [TableStatus.Occupied]: colors.red,
-                }[table.status]
-              }
-              content={table.id}
-              filled
-            />
-          ))}
-        </Area>
-      ))}
+      {sectors.map((sector, i) => {
+        const posX = previewPosition?.sectorId === sector.id ? previewPosition.x : sector.positionX;
+        const posY = previewPosition?.sectorId === sector.id ? previewPosition.y : sector.positionY;
+        return (
+          <Area key={`${sector.name} ${i}`} positionX={posX} positionY={posY}>
+            {sector.name && <SectorTag sector={sector} />}
+            {sector.surface.map((coord) => (
+              <Square key={[coord.x, coord.y].join(",")} position={coord} color={sector.color} />
+            ))}
+          </Area>
+        );
+      })}
+      {tables?.map((table, i) => {
+        const posX = previewPosition?.tableId === table.id ? previewPosition.x : table.positionX;
+        const posY = previewPosition?.tableId === table.id ? previewPosition.y : table.positionY;
+        return (
+          <Area key={`${table.layoutId} ${i}`} positionX={posX} positionY={posY}>
+            {table.surface.map((coord) => (
+              <Square
+                onClick={() => setTableDialogOpenState(table)}
+                key={[coord.x, coord.y].join(",")}
+                position={coord}
+                color={
+                  {
+                    [TableStatus.Free]: colors.green,
+                    [TableStatus.Calling]: colors.orange,
+                    [TableStatus.Occupied]: colors.red,
+                  }[table.status]
+                }
+                content={table.id}
+                filled
+              />
+            ))}
+          </Area>
+        );
+      })}
     </div>
   );
 };

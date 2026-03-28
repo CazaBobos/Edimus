@@ -1,10 +1,24 @@
+@use "common/colors" as *;
+
 .container {
   width: fit-content;
   height: fit-content;
-  span {
-    margin-bottom: 2px;
+
+  > span {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 13px;
+    color: $light_grey;
   }
+
   .editor {
     position: relative;
+    user-select: none;
+  }
+
+  .actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
   }
 }

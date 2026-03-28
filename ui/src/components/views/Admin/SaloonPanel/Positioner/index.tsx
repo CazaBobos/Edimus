@@ -1,5 +1,5 @@
 import { Coords } from "@/types";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BiSolidUpArrow, BiSolidDownArrow, BiSolidRightArrow, BiSolidLeftArrow } from "react-icons/bi";
 
 import { Button } from "@/components/ui/Button";
@@ -21,10 +21,32 @@ export const Positioner = (props: PositionerProps) => {
   const right = () => handleChange({ x: currentCoords.x + 1, y: currentCoords.y });
   const down = () => handleChange({ x: currentCoords.x, y: currentCoords.y + 1 });
 
-  const handleChange = (coords: Coords) => {
-    setCurrentCoords(coords);
-    onChange(coords);
-  };
+  const handleChange = useCallback(
+    (coords: Coords) => {
+      setCurrentCoords(coords);
+      onChange(coords);
+    },
+    [onChange],
+  );
+
+  useEffect(() => {
+    const deltas: Partial<Record<string, Coords>> = {
+      ArrowUp: { x: 0, y: -1 },
+      ArrowDown: { x: 0, y: 1 },
+      ArrowLeft: { x: -1, y: 0 },
+      ArrowRight: { x: 1, y: 0 },
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      const delta = deltas[e.key];
+      if (!delta) return;
+      e.preventDefault();
+      handleChange({ x: currentCoords.x + delta.x, y: currentCoords.y + delta.y });
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [currentCoords, handleChange]);
 
   return (
     <div className={styles.positioner}>

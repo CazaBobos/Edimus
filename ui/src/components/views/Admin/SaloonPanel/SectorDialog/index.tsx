@@ -1,13 +1,13 @@
 import { useSectorMutations } from "@/hooks/mutations/useSectorMutations";
 import { useAdminStore } from "@/stores";
 import { Coords, CreateSectorRequest, UpdateSectorRequest } from "@/types";
+import { Drawer } from "@mantine/core";
 import { useState } from "react";
-import { BiSave, BiTrash, BiX } from "react-icons/bi";
+import { BiLock, BiSave, BiTrash } from "react-icons/bi";
 
 import { Button } from "@/components/ui/Button";
 import { ColorPicker } from "@/components/ui/ColorPicker";
 import { ControlState } from "@/components/ui/common";
-import { Dialog } from "@/components/ui/Dialog";
 import { Input } from "@/components/ui/Input";
 
 import { Positioner } from "../Positioner";
@@ -17,20 +17,22 @@ import styles from "./styles.module.scss";
 export const SectorDialog = () => {
   const sector = useAdminStore((store) => store.sectorDialogOpenState);
   const setSectorDialogOpenState = useAdminStore((store) => store.setSectorDialogOpenState);
+  const setPreviewPosition = useAdminStore((store) => store.setPreviewPosition);
 
   const handleClose = () => {
     setRequest({});
     setSectorDialogOpenState(undefined);
+    setPreviewPosition(null);
   };
 
   const [request, setRequest] = useState<UpdateSectorRequest>({});
   const handleSetRequest = (state: ControlState) => {
     const { name, value } = state;
-
     setRequest((prev) => ({ ...prev, [name]: value }));
   };
   const handleSetCoords = (coords: Coords) => {
     setRequest((prev) => ({ ...prev, positionX: coords.x, positionY: coords.y }));
+    if (sector) setPreviewPosition({ sectorId: sector.id, x: coords.x, y: coords.y });
   };
   const handleSetSurface = (surface: Coords[]) => {
     setRequest((prev) => ({ ...prev, surface }));
@@ -49,13 +51,15 @@ export const SectorDialog = () => {
   };
 
   return (
-    <Dialog open={sector !== undefined} onClose={handleClose}>
-      <div className={styles.header}>
-        <h2>
-          <span>{sector ? `Sector "${sector?.name}"` : "Nuevo Sector"}</span>
-          <BiX onClick={handleClose} />
-        </h2>
-      </div>
+    <Drawer
+      opened={sector !== undefined}
+      onClose={handleClose}
+      title={sector ? `Sector "${sector?.name}"` : "Nuevo Sector"}
+      position="right"
+      size="xl"
+      withOverlay={false}
+      shadow="xl"
+    >
       <div className={styles.content}>
         <div className={styles.column}>
           <Input title="Nombre" name="name" defaultValue={sector?.name} onChange={handleSetRequest} />
@@ -64,8 +68,14 @@ export const SectorDialog = () => {
           <Button label="Guardar Cambios" icon={<BiSave />} onClick={handleSave} />
           {sector && <Button label="Eliminar" icon={<BiTrash />} onClick={handleRemove} />}
         </div>
-        <SurfaceEditor content="X" height={15} width={15} defaultValue={sector?.surface} onChange={handleSetSurface} />
+        <SurfaceEditor
+          content={<BiLock size={14} />}
+          height={15}
+          width={15}
+          defaultValue={sector?.surface}
+          onChange={handleSetSurface}
+        />
       </div>
-    </Dialog>
+    </Drawer>
   );
 };

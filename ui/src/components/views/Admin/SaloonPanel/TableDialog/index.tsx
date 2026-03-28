@@ -9,14 +9,14 @@ import {
   tableStatusMap,
   UpdateTableRequest,
 } from "@/types";
+import { Drawer } from "@mantine/core";
 import { useState } from "react";
-import { BiSave, BiSolidCircle, BiTrash, BiX } from "react-icons/bi";
+import { BiLock, BiSave, BiSolidCircle, BiTrash } from "react-icons/bi";
 import QRCode from "react-qr-code";
 
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { ControlState } from "@/components/ui/common";
-import { Dialog } from "@/components/ui/Dialog";
 import { Select, SelectOption } from "@/components/ui/Select";
 import { Tabs } from "@/components/ui/Tabs";
 
@@ -28,10 +28,12 @@ import styles from "./styles.module.scss";
 export const TableDialog = () => {
   const table = useAdminStore((store) => store.tableDialogOpenState);
   const setTableDialogOpenState = useAdminStore((store) => store.setTableDialogOpenState);
+  const setPreviewPosition = useAdminStore((store) => store.setPreviewPosition);
 
   const handleClose = () => {
     setRequest({});
     setTableDialogOpenState(undefined);
+    setPreviewPosition(null);
   };
   const [request, setRequest] = useState<UpdateTableRequest>({});
 
@@ -43,6 +45,7 @@ export const TableDialog = () => {
   };
   const handleSetCoords = (coords: Coords) => {
     setRequest((prev) => ({ ...prev, positionX: coords.x, positionY: coords.y }));
+    if (table) setPreviewPosition({ tableId: table.id, x: coords.x, y: coords.y });
   };
   const handleSetSurface = (surface: Coords[]) => {
     setRequest((prev) => ({ ...prev, surface }));
@@ -62,19 +65,9 @@ export const TableDialog = () => {
   };
 
   const tableOptions: SelectOption[] = [
-    {
-      label: tableStatusMap[TableStatus.Free],
-      value: TableStatus.Free,
-    },
-    {
-      label: tableStatusMap[TableStatus.Calling],
-      value: TableStatus.Calling,
-      hidden: true,
-    },
-    {
-      label: tableStatusMap[TableStatus.Occupied],
-      value: TableStatus.Occupied,
-    },
+    { label: tableStatusMap[TableStatus.Free], value: TableStatus.Free },
+    { label: tableStatusMap[TableStatus.Calling], value: TableStatus.Calling, hidden: true },
+    { label: tableStatusMap[TableStatus.Occupied], value: TableStatus.Occupied },
   ];
 
   const statusColor = {
@@ -87,22 +80,26 @@ export const TableDialog = () => {
   const [activeTab, setActiveTab] = useState<number>(0);
 
   return (
-    <Dialog open={table !== undefined} onClose={handleClose}>
-      <div className={styles.header}>
-        <h2>
-          <div>
-            <BiSolidCircle size={28} fill={statusColor} />
-            <span>{table ? `Mesa #${table.id}"` : "Nueva Mesa"}</span>
-          </div>
-          <BiX onClick={handleClose} />
-        </h2>
-      </div>
+    <Drawer
+      opened={table !== undefined}
+      onClose={handleClose}
+      title={
+        <div className={styles.drawerTitle}>
+          <BiSolidCircle size={16} fill={statusColor} />
+          <span>{table ? `Mesa #${table.id}` : "Nueva Mesa"}</span>
+        </div>
+      }
+      position="right"
+      size="xl"
+      withOverlay={false}
+      shadow="xl"
+    >
       <div className={styles.row}>
         <div className={styles.content}>
           <div className={styles.row}>
             <Positioner positionX={table?.positionX} positionY={table?.positionY} onChange={handleSetCoords} />
             <SurfaceEditor
-              content={table?.id}
+              content={<BiLock size={14} />}
               offset={{ x: -1, y: -1 }}
               height={3}
               width={3}
@@ -133,7 +130,7 @@ export const TableDialog = () => {
           </div>
         )}
       </div>
-    </Dialog>
+    </Drawer>
   );
 };
 

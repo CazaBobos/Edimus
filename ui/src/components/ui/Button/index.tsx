@@ -18,7 +18,7 @@ export const Button = ({ label, icon, disabled, onClick }: ButtonProps) => {
   }
 
   return (
-    <MantineButton variant="default" radius="xl" rightSection={icon} disabled={disabled} onClick={onClick} fullWidth>
+    <MantineButton variant="filled" radius="xl" rightSection={icon} disabled={disabled} onClick={onClick} fullWidth>
       {label}
     </MantineButton>
   );

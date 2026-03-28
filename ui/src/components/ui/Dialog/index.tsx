@@ -18,7 +18,6 @@ export const Dialog = ({ open, onClose, children }: DialogProps) => (
     size="auto"
     padding={0}
     styles={{
-      content: { background: "transparent", boxShadow: "none" },
       overlay: { backdropFilter: "blur(4px)" },
     }}
   >

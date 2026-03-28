@@ -1,51 +1,29 @@
 @use "common/colors" as *;
 
-.container {
-  padding: 16px;
-  min-width: 500px;
-  .header {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 24px;
-    gap: 8px;
-    button {
-      cursor: pointer;
-      height: 40px;
-      width: 40px;
-      border-radius: 50%;
-      margin-left: 8px;
-    }
-    > h2 {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      svg {
-        border-radius: 50%;
-        background-color: transparent;
-        border: none;
-        &:hover {
-          background-color: $dark_text;
-        }
-      }
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 4px;
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+
+  > * {
+    flex: 1;
   }
-  .content {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    .row {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      justify-content: space-between;
-      > div {
-        flex-grow: 1;
-      }
-    }
-  }
+}
+
+.checkboxWrapper {
+  padding-bottom: 6px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
 }

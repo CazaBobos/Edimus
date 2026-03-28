@@ -6,6 +6,13 @@ type HeaderPanelState = {
   selectedTab: number;
 };
 
+type PreviewPosition = {
+  tableId?: number;
+  sectorId?: number;
+  x: number;
+  y: number;
+};
+
 type AdminStore = {
   squareSize: number;
   headerPanelState: HeaderPanelState;
@@ -18,6 +25,8 @@ type AdminStore = {
   setIngredientDialogOpenState: (ingredient: Nullable<Ingredient>) => void;
   sectorDialogOpenState: Nullable<Sector>;
   setSectorDialogOpenState: (sector: Nullable<Sector>) => void;
+  previewPosition: PreviewPosition | null;
+  setPreviewPosition: (pos: PreviewPosition | null) => void;
 };
 
 export const useAdminStore = create<AdminStore>()((set) => ({
@@ -49,5 +58,10 @@ export const useAdminStore = create<AdminStore>()((set) => ({
   setSectorDialogOpenState: (sector: Nullable<Sector>) =>
     set(() => ({
       sectorDialogOpenState: sector,
+    })),
+  previewPosition: null,
+  setPreviewPosition: (pos: PreviewPosition | null) =>
+    set(() => ({
+      previewPosition: pos,
     })),
 }));
