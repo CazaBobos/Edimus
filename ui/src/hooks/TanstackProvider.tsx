@@ -1,5 +1,6 @@
 "use client";
 
+import { COLOR_SCHEME } from "@/common/theme";
 import { MantineProvider, createTheme } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -23,7 +24,7 @@ export function TanstackProvider({ children }: { children: ReactNode }) {
   );
 
   return (
-    <MantineProvider theme={theme} defaultColorScheme="dark">
+    <MantineProvider theme={theme} defaultColorScheme={COLOR_SCHEME}>
       <Notifications position="bottom-right" autoClose={5000} />
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </MantineProvider>

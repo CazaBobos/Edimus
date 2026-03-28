@@ -1,13 +1,58 @@
+@use "common/colors" as *;
+
+/* ── Authenticated layout ───────────────────────────── */
+
 .page {
+  display: flex;
   height: 100vh;
-  .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 32px;
-    .mainCard {
-      padding: 32px;
-    }
+  overflow: hidden;
+}
+
+.main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px 40px;
+  scrollbar-width: thin;
+  scrollbar-color: $dark_grey transparent;
+  min-width: 0;
+}
+
+/* ── Login page ─────────────────────────────────────── */
+
+.loginPage {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at 50% 40%, $orange_glow 0%, transparent 65%);
+}
+
+.loginContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 440px;
+  padding: 0 16px;
+}
+
+.loginBrand {
+  text-align: center;
+
+  h1 {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin: 0 0 6px;
+  }
+
+  p {
+    font-size: 13px;
+    color: $grey;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-weight: 500;
   }
 }

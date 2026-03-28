@@ -1,3 +1,4 @@
+import { COLOR_SCHEME } from "@/common/theme";
 import { TanstackProvider } from "@/hooks/TanstackProvider";
 import { ColorSchemeScript } from "@mantine/core";
 import "@mantine/core/styles.css";
@@ -28,9 +29,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ColorSchemeScript defaultColorScheme="dark" />
+        <ColorSchemeScript defaultColorScheme={COLOR_SCHEME} />
         <TanstackProvider>
           <Suspense>{children}</Suspense>
         </TanstackProvider>

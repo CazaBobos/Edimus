@@ -1,0 +1,152 @@
+@use "common/colors" as *;
+
+.sidebar {
+  width: 220px;
+  min-width: 220px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid $border_light;
+  background: $surface_light;
+  flex-shrink: 0;
+}
+
+/* ── Brand ──────────────────────────────────────────── */
+
+.brand {
+  padding: 24px 20px 18px;
+  border-bottom: 1px solid $border_light;
+
+  h2 {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin: 0;
+  }
+}
+
+.brandLabel {
+  font-size: 10px;
+  color: $grey;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+}
+
+/* ── Navigation ─────────────────────────────────────── */
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 8px;
+  flex: 1;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: $light_grey;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 500;
+  text-align: left;
+  width: 100%;
+  transition:
+    background 0.15s,
+    color 0.15s;
+
+  &:hover {
+    background: $hover_light;
+    color: $light_text;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.navItemActive {
+  background: $orange_tint;
+  color: $orange;
+  font-weight: 600;
+
+  &:hover {
+    background: $orange_tint_hover;
+    color: $orange;
+  }
+}
+
+.navIcon {
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ── User area ──────────────────────────────────────── */
+
+.userArea {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 12px;
+  border-top: 1px solid $border_light;
+  gap: 8px;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: $border_light;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 14px;
+  color: $light_grey;
+}
+
+.username {
+  font-size: 13px;
+  color: $light_grey;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.logoutBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: $grey;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  transition:
+    color 0.15s,
+    background 0.15s;
+
+  &:hover {
+    color: $red;
+    background: $red_tint;
+  }
+}

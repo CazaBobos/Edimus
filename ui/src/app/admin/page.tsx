@@ -1,8 +1,9 @@
 "use client";
-import { useAdminStore, useAppUserStore } from "@/stores";
 
-import { Card } from "@/components/ui/Card";
-import { AdminHeader } from "@/components/views/Admin/AdminHeader";
+import { useAdminStore, useAppUserStore } from "@/stores";
+import { useEffect, useState } from "react";
+
+import { AdminSidebar } from "@/components/views/Admin/AdminSidebar";
 import { IngredientsManager } from "@/components/views/Admin/IngredientsManager";
 import { LoginCard } from "@/components/views/Admin/LoginCard";
 import { MenuEditor } from "@/components/views/Admin/MenuEditor";
@@ -15,24 +16,37 @@ export default function Admin() {
 
   const isLoggedIn = useAppUserStore((store) => store.isLoggedIn);
 
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+
+  if (!isLoggedIn()) {
+    return (
+      <div className={styles.loginPage}>
+        <div className={styles.loginContent}>
+          <div className={styles.loginBrand}>
+            <h1>Ēdimus</h1>
+            <p>Panel de Administración</p>
+          </div>
+          <LoginCard />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.page}>
-      <AdminHeader />
-      <div className={styles.content}>
-        {!isLoggedIn() ? (
-          <LoginCard />
-        ) : (
-          <Card className={styles.mainCard}>
-            {
-              {
-                0: <SaloonPanel />,
-                1: <MenuEditor />,
-                2: <IngredientsManager />,
-              }[selectedTab]
-            }
-          </Card>
-        )}
-      </div>
+      <AdminSidebar />
+      <main className={styles.main}>
+        {
+          {
+            0: <SaloonPanel />,
+            1: <MenuEditor />,
+            2: <IngredientsManager />,
+          }[selectedTab]
+        }
+      </main>
     </div>
   );
 }

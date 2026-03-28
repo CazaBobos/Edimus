@@ -3,45 +3,69 @@
 .page {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-items: center;
   height: 100vh;
-  width: 100vw;
-  gap: 8px;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
   font-family: var(--font-geist-sans);
+  position: relative;
+  overflow: hidden;
+}
 
-  .header {
-    width: 100%;
-    padding: 12px 16px;
-    border-bottom: 1px solid $light_text;
-    .title {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-    }
+/* ── Header ─────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid $border_light;
+  flex-shrink: 0;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  h1 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin: 0;
   }
+}
 
-  .main {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    min-width: 350px;
-    gap: 8px;
-    padding: 8px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: $grey transparent;
-  }
+.tagline {
+  font-size: 11px;
+  color: $grey;
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
 
-  .footer {
-    background-color: $dark_text;
-    padding: 12px 16px;
-    display: flex;
-    gap: 8px;
-    justify-content: space-between;
-    width: 100%;
-    border-top: 1px solid $light_text;
-    position: sticky;
-    bottom: 0;
+/* ── Main ───────────────────────────────────────────── */
+
+.main {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: $dark_grey transparent;
+  min-height: 0;
+}
+
+/* ── Floating action buttons ────────────────────────── */
+
+.fab {
+  position: absolute;
+  bottom: 24px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 50;
+
+  > * {
+    filter: drop-shadow(0 4px 12px $shadow_dark);
   }
 }

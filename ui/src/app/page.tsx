@@ -1,6 +1,7 @@
 "use client";
 
 import { useSingleTableQuery } from "@/hooks/queries/useSingleTableQuery";
+import { Badge } from "@mantine/core";
 
 import { FiltersDialog } from "@/components/views/Menu/FiltersDialog";
 import { MenuBar } from "@/components/views/Menu/MenuBar";
@@ -15,22 +16,26 @@ export default function Menu() {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <div className={styles.title}>
-          <div>
-            <h1>Ēdimus</h1>
-            <b>Nunc est Ēdimus</b>
-          </div>
-          {table && <span>Nº Mesa: {table.id}</span>}
+        <div className={styles.brand}>
+          <h1>Ēdimus</h1>
+          <span className={styles.tagline}>Nunc est Ēdimus</span>
         </div>
+        {table && (
+          <Badge size="lg" variant="light" color="orange">
+            Mesa {table.id}
+          </Badge>
+        )}
       </header>
+
       <main className={styles.main}>
         <MenuCards />
         <OrderDialog />
         <FiltersDialog />
       </main>
-      <footer className={styles.footer}>
+
+      <div className={styles.fab}>
         <MenuBar />
-      </footer>
+      </div>
     </div>
   );
 }
