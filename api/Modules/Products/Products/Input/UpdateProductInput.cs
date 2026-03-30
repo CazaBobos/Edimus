@@ -1,4 +1,6 @@
-﻿namespace Products.Input;
+﻿using Products.Core.Model;
+
+namespace Products.Input;
 
 public class UpdateProductInput
 {
@@ -9,4 +11,5 @@ public class UpdateProductInput
     public decimal? Price { get; set; }
     public byte[]? Image { get; set; }
     public List<int>? Tags { get; set; }
+    public List<ConsumptionModel>? Consumptions { get; set; }
 }

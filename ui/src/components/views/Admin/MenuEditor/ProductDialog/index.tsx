@@ -1,11 +1,12 @@
 import { useProductMutations } from "@/hooks/mutations/useProductMutations";
 import { useCategoriesQuery } from "@/hooks/queries/useCategoriesQuery";
+import { useIngredientsQuery } from "@/hooks/queries/useIngredientsQuery";
 import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
 import { useAdminStore } from "@/stores";
-import { ProductRequest } from "@/types";
+import { Consumption, measurementUnitsMap, ProductRequest } from "@/types";
 import { Drawer } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { BiSave, BiTrash, BiUpload } from "react-icons/bi";
+import { BiPlus, BiSave, BiTrash, BiUpload, BiX } from "react-icons/bi";
 
 import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
@@ -21,11 +22,15 @@ export const ProductDialog = () => {
 
   const handleClose = () => {
     setRequest({});
+    setConsumptions([]);
+    setNewIngredientId("");
+    setNewAmount("");
     setProductDialogOpenState(undefined);
   };
 
   const { data: products } = useProductsQuery();
   const { data: categories } = useCategoriesQuery();
+  const { data: ingredients, ingredientsMap } = useIngredientsQuery({ enabled: true });
 
   const parentableProducts = products.filter((p) => !!p.categoryId);
 
@@ -60,7 +65,10 @@ export const ProductDialog = () => {
       : { ...request, parentId: undefined };
 
     if (product) {
-      updateProductMutation.mutate({ id: product.id, request: filteredRequest }, { onSuccess: handleClose });
+      updateProductMutation.mutate(
+        { id: product.id, request: { ...filteredRequest, consumptions } },
+        { onSuccess: handleClose },
+      );
     } else if (isRequestValid()) {
       createProductMutation.mutate(filteredRequest as Required<ProductRequest>, { onSuccess: handleClose });
     }
@@ -70,6 +78,32 @@ export const ProductDialog = () => {
   useEffect(() => {
     setIsVariant(!!product?.parentId);
   }, [product?.parentId]);
+
+  // ─── Consumptions ───────────────────────────────────────────
+  const [consumptions, setConsumptions] = useState<Consumption[]>([]);
+  const [newIngredientId, setNewIngredientId] = useState<string>("");
+  const [newAmount, setNewAmount] = useState<string>("");
+
+  useEffect(() => {
+    setConsumptions(product?.consumptions ?? []);
+  }, [product?.consumptions]);
+
+  const handleAddConsumption = () => {
+    const ingredientId = Number(newIngredientId);
+    const amount = Number(newAmount);
+    if (!ingredientId || !amount || amount <= 0) return;
+    if (consumptions.some((c) => c.ingredientId === ingredientId)) return;
+
+    setConsumptions((prev) => [...prev, { ingredientId, amount }]);
+    setNewIngredientId("");
+    setNewAmount("");
+  };
+
+  const handleRemoveConsumption = (ingredientId: number) => {
+    setConsumptions((prev) => prev.filter((c) => c.ingredientId !== ingredientId));
+  };
+
+  const availableIngredients = ingredients.filter((i) => !consumptions.some((c) => c.ingredientId === i.id));
 
   const title = product
     ? product.parentId
@@ -120,6 +154,54 @@ export const ProductDialog = () => {
             disabled={!isVariant}
           />
         </div>
+
+        {product && (
+          <div className={styles.consumptionsSection}>
+            <p className={styles.sectionLabel}>Ingredientes</p>
+            {consumptions.length > 0 && (
+              <div className={styles.consumptionList}>
+                {consumptions.map((c) => {
+                  const ingredient = ingredientsMap?.get(c.ingredientId);
+
+                  return (
+                    <div key={c.ingredientId} className={styles.consumptionRow}>
+                      <span className={styles.consumptionName}>{ingredient?.name ?? `#${c.ingredientId}`}</span>
+                      <span className={styles.consumptionUnit}>{measurementUnitsMap[ingredient?.unit ?? 0]}</span>
+                      <span className={styles.consumptionAmount}>{c.amount}</span>
+                      <button
+                        className={styles.consumptionRemove}
+                        onClick={() => handleRemoveConsumption(c.ingredientId)}
+                      >
+                        <BiX size={14} />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+            <div className={styles.consumptionAdd}>
+              <div className={styles.consumptionAddSelects}>
+                <Select
+                  title=""
+                  name="newIngredient"
+                  options={availableIngredients.map((i) => ({ value: i.id, label: i.name }))}
+                  value={newIngredientId}
+                  onChange={(s) => setNewIngredientId(s.value)}
+                />
+                <Input
+                  title=""
+                  name="newAmount"
+                  type="number"
+                  value={newAmount}
+                  onChange={(s) => setNewAmount(s.value)}
+                  placeholder="Cant."
+                />
+              </div>
+              <Button variant="action" icon={<BiPlus size={15} />} onClick={handleAddConsumption} />
+            </div>
+          </div>
+        )}
+
         <div className={styles.actions}>
           <Button
             label="Guardar Cambios"

@@ -9,7 +9,7 @@ public class Ingredient : Entity<int>
     public int Stock { get; protected set; }
     public int Alert { get; protected set; }
     public MeasurementUnit Unit { get; protected set; }
-    public virtual List<Consumption>? Consumptions { get; protected set; }
+    public virtual List<Consumption> Consumptions { get; protected set; } = [];
 
     protected Ingredient() { }
     public Ingredient(string name, int stock, int alert, MeasurementUnit unit)
@@ -21,6 +21,11 @@ public class Ingredient : Entity<int>
         Alert = Guard.Argument(() => alert).Positive();
         Unit = unit;
         Enabled = true;
+    }
+
+    public void Deduct(int amount)
+    {
+        Stock = Math.Max(0, Stock - amount);
     }
 
     public void Update(string? name, int? stock, int? alert, MeasurementUnit? unit)

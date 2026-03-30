@@ -5,7 +5,7 @@ namespace Shared.Core.Entities;
 public class Tag : Entity<int>
 {
     public string Name { get; protected set; } = string.Empty;
-    public virtual List<Product>? Products { get; protected set; }
+    public virtual List<Product> Products { get; protected set; } = [];
 
     protected Tag() { }
     public Tag(string name)

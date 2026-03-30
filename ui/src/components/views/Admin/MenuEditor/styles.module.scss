@@ -22,25 +22,6 @@
   }
 }
 
-.newBtn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 14px;
-  background: $orange_tint;
-  border: 1px solid rgba(240, 160, 80, 0.25);
-  border-radius: 8px;
-  color: $orange;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.15s;
-
-  &:hover {
-    background: $orange_tint_hover;
-  }
-}
-
 .body {
   display: flex;
   flex: 1;
@@ -67,49 +48,6 @@
   letter-spacing: 0.8px;
   color: $grey;
   padding: 4px 8px 10px;
-}
-
-.categoryItem {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 8px 10px;
-  border-radius: 7px;
-  border: none;
-  background: transparent;
-  color: $light_grey;
-  font-size: 13px;
-  cursor: pointer;
-  transition: background 0.12s, color 0.12s;
-  text-align: left;
-
-  &:hover {
-    background: $hover_light;
-    color: $light_text;
-  }
-
-  &[data-active="true"] {
-    background: $orange_tint;
-    color: $orange;
-    font-weight: 500;
-
-    .categoryCount {
-      background: rgba(240, 160, 80, 0.2);
-      color: $orange;
-    }
-  }
-}
-
-.categoryCount {
-  font-size: 11px;
-  font-weight: 600;
-  padding: 1px 6px;
-  border-radius: 100px;
-  background: $hover_light;
-  color: $grey;
-  min-width: 20px;
-  text-align: center;
 }
 
 // ─── Product List ─────────────────────────────────────────────
@@ -224,7 +162,7 @@
   &:hover {
     background: $orange_tint;
     color: $orange;
-    border-color: rgba(240, 160, 80, 0.3);
+    border-color: $orange_border_hover;
   }
 
   &[data-enabled="false"] {

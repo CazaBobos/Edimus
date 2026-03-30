@@ -44,53 +44,6 @@
   flex: 1;
 }
 
-.navItem {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: none;
-  background: transparent;
-  color: $light_grey;
-  cursor: pointer;
-  font-size: 13px;
-  font-family: inherit;
-  font-weight: 500;
-  text-align: left;
-  width: 100%;
-  transition:
-    background 0.15s,
-    color 0.15s;
-
-  &:hover {
-    background: $hover_light;
-    color: $light_text;
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
-}
-
-.navItemActive {
-  background: $orange_tint;
-  color: $orange;
-  font-weight: 600;
-
-  &:hover {
-    background: $orange_tint_hover;
-    color: $orange;
-  }
-}
-
-.navIcon {
-  font-size: 17px;
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-}
-
 /* ── User area ──────────────────────────────────────── */
 
 .userArea {
@@ -130,23 +83,3 @@
   white-space: nowrap;
 }
 
-.logoutBtn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: $grey;
-  font-size: 17px;
-  display: flex;
-  align-items: center;
-  padding: 5px;
-  border-radius: 6px;
-  flex-shrink: 0;
-  transition:
-    color 0.15s,
-    background 0.15s;
-
-  &:hover {
-    color: $red;
-    background: $red_tint;
-  }
-}

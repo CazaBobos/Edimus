@@ -12,8 +12,8 @@ public class Table : AggregateRoot<int>
     public string QrId { get; protected set; } = string.Empty;
     public int PositionX { get; protected set; }
     public int PositionY { get; protected set; }
-    public virtual List<TableCoord>? Surface { get; protected set; }
-    public virtual List<Order>? Orders { get; protected set; }
+    public virtual List<TableCoord> Surface { get; protected set; } = [];
+    public virtual List<Order> Orders { get; protected set; } = [];
 
     protected Table() { }
     public Table(int layoutId, int positionX, int positionY, List<(int, int)>? surface = null, TableStatus status = TableStatus.Free)
@@ -47,10 +47,7 @@ public class Table : AggregateRoot<int>
         {
             Status = (TableStatus)status;
 
-            if (status == TableStatus.Free) {
-                Orders ??= new();
-                Orders.Clear();
-            };
+            if (status == TableStatus.Free) Orders.Clear();
 
             affectedMembers.Add(nameof(Status));
         }
@@ -67,20 +64,17 @@ public class Table : AggregateRoot<int>
         if (surface is not null)
         {
             Guard.Argument(() => surface).Require(surface => surface.Any(s => s.Item1 == 0 && s.Item2 == 0));
-            
-            if (Surface is null) Surface = new();
-            else Surface.Clear();
-            
+            Surface.Clear();
             var newSurface = surface.Select(s => new TableCoord(s.Item1, s.Item2, Id)).ToList();
             Surface.AddRange(newSurface);
             affectedMembers.Add(nameof(Surface));
         }
         if (orders is not null && status != TableStatus.Free)
         {
-            Guard.Argument(() => orders).Require(orders => orders.All(s => s.Item1 > 0 && s.Item2 > 0));
-            Orders?.Clear();
-            var newOrdersList = orders.Select(r => new Order(productId: r.Item1, tableId: Id, amount: r.Item2)).ToList();
-            Orders?.AddRange(newOrdersList);
+            Guard.Argument(() => orders).Require(x => x.All(s => s.Item1 > 0 && s.Item2 > 0));
+            Orders.Clear();
+            var newOrders = orders.Select(r => new Order(productId: r.Item1, tableId: Id, amount: r.Item2));
+            Orders.AddRange(newOrders);
             affectedMembers.Add(nameof(Orders));
         }
         //if (affectedMembers.Count != 0) AddHistory(user, AuditOperation.Updated, affectedMembers);

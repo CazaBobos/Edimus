@@ -1,0 +1,156 @@
+@use "common/colors" as *;
+
+// ─── Ingredient Row ───────────────────────────────────────────
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 11px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.12s;
+
+  &:hover {
+    background: $hover_light;
+
+    .chevron {
+      opacity: 1;
+      transform: translateX(3px);
+    }
+  }
+
+  &[data-health="inactive"] {
+    opacity: 0.4;
+  }
+}
+
+.healthDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: $grey;
+
+  &[data-health="ok"] {
+    background: $green;
+  }
+
+  &[data-health="low"] {
+    background: $orange;
+  }
+
+  &[data-health="critical"] {
+    background: $red;
+  }
+}
+
+.rowName {
+  font-size: 14px;
+  font-weight: 500;
+  color: $light_text;
+  width: 200px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.unitBadge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: $hover_light;
+  border: 1px solid $border_subtle;
+  color: $light_grey;
+  flex-shrink: 0;
+  width: 76px;
+  text-align: center;
+}
+
+.stockInfo {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.stockBar {
+  flex: 1;
+  max-width: 180px;
+  height: 4px;
+  background: $hover_light;
+  border-radius: 2px;
+  position: relative;
+}
+
+.stockBarFill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.35s ease;
+  background: $green;
+
+  &[data-health="low"] {
+    background: $orange;
+  }
+
+  &[data-health="critical"] {
+    background: $red;
+  }
+
+  &[data-health="inactive"] {
+    background: $grey;
+  }
+}
+
+.alertLine {
+  position: absolute;
+  left: 50%;
+  top: -3px;
+  width: 1px;
+  height: 10px;
+  background: $border_subtle;
+  border-radius: 1px;
+}
+
+.stockNumbers {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-size: 13px;
+  flex-shrink: 0;
+  width: 110px;
+
+  > span[data-health="ok"] {
+    color: $green;
+    font-weight: 600;
+  }
+
+  > span[data-health="low"] {
+    color: $orange;
+    font-weight: 600;
+  }
+
+  > span[data-health="critical"] {
+    color: $red;
+    font-weight: 600;
+  }
+
+  > span[data-health="inactive"] {
+    color: $grey;
+  }
+}
+
+.alertRef {
+  font-size: 12px;
+  color: $grey;
+}
+
+.chevron {
+  color: $grey;
+  opacity: 0;
+  flex-shrink: 0;
+  transition: opacity 0.12s, transform 0.15s;
+}
+

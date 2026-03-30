@@ -9,7 +9,7 @@ public class Category : Entity<int>
     public string Name { get; protected set; } = string.Empty;
     public int CompanyId { get; protected set; }
     public virtual Company? Company { get; protected set; }
-    public virtual List<Product>? Products { get; protected set; }
+    public virtual List<Product> Products { get; protected set; } = [];
 
     protected Category() { }
     public Category(int companyId, string name)

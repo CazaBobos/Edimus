@@ -1,0 +1,180 @@
+@use "common/colors" as *;
+
+// ─── Brand: orange tinted primary action ──────────────────────
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: $orange_tint;
+  border: 1px solid $orange_border;
+  border-radius: 8px;
+  color: $orange;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+
+  &:hover {
+    background: $orange_tint_hover;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// ─── Nav: sidebar navigation item ─────────────────────────────
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: $light_grey;
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
+
+  &:hover {
+    background: $hover_light;
+    color: $light_text;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &[data-active="true"] {
+    background: $orange_tint;
+    color: $orange;
+    font-weight: 600;
+
+    &:hover {
+      background: $orange_tint_hover;
+    }
+
+    .count {
+      background: $orange_badge;
+      color: $orange;
+    }
+  }
+
+  .icon {
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+}
+
+// ─── Tab: underline filter tab ────────────────────────────────
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: $grey;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: color 0.12s, border-color 0.12s;
+  margin-bottom: -1px;
+
+  &:hover {
+    color: $light_text;
+  }
+
+  &[data-active="true"] {
+    color: $orange;
+    border-bottom-color: $orange;
+  }
+}
+
+// ─── Action: small bordered icon button ───────────────────────
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid $border_light;
+  background: transparent;
+  color: $light_grey;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+
+  &:hover {
+    background: $hover_light;
+    color: $light_text;
+    border-color: $border_subtle;
+  }
+
+  &[data-danger="true"]:hover {
+    background: $red_tint;
+    color: $red;
+    border-color: $red_border;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// ─── Subtle: borderless icon button ───────────────────────────
+
+.subtle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: $grey;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+
+  &:hover {
+    color: $light_text;
+    background: $hover_light;
+  }
+
+  &[data-danger="true"]:hover {
+    color: $red;
+    background: $red_tint;
+  }
+}
+
+// ─── Count badge (used in nav / tab) ──────────────────────────
+
+.count {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 100px;
+  background: $hover_light;
+  color: inherit;
+  min-width: 18px;
+  text-align: center;
+}

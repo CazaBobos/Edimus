@@ -1,19 +1,17 @@
-.header {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
-  gap: 8px;
-}
+@use "common/colors" as *;
+
 .content {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  .row {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    justify-content: space-between;
+  padding-top: 4px;
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+
+  > * {
+    flex: 1;
   }
 }

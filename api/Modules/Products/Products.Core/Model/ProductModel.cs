@@ -1,6 +1,4 @@
-﻿using Shared.Core.Domain;
-
-namespace Products.Core.Model;
+﻿namespace Products.Core.Model;
 
 public class ProductModel
 {
@@ -11,6 +9,6 @@ public class ProductModel
     public string Description { get; set; } = string.Empty;
     public decimal Price { get; set; }
     public int? ImageId { get; set; }
-    public List<AuditRecord> History { get; set; } = new();
     public bool Enabled { get; set; }
+    public List<ConsumptionModel> Consumptions { get; set; } = new();
 }

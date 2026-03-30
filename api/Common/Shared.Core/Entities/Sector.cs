@@ -11,7 +11,7 @@ public class Sector : AggregateRoot<int>
     public string Color { get; protected set; } = string.Empty;
     public int PositionX { get; protected set; }
     public int PositionY { get; protected set; }
-    public virtual List<SectorCoord>? Surface { get; protected set; }
+    public virtual List<SectorCoord> Surface { get; protected set; } = [];
 
     protected Sector() { }
     public Sector(int layoutId, int positionX, int positionY, string name, string color, List<(int, int)>? surface = null)
@@ -58,11 +58,9 @@ public class Sector : AggregateRoot<int>
         {
             Guard.Argument(() => surface).Require(surface => surface.Any(s => s.Item1 == 0 && s.Item2 == 0));
 
-            if (Surface is null) Surface = new();
-            else Surface.Clear();
-
-            var newSurface = surface.Select(s => new SectorCoord(s.Item1, s.Item2, Id)).ToList();
-            Surface?.AddRange(newSurface);
+            Surface.Clear();
+            var newSurface = surface.Select(s => new SectorCoord(s.Item1, s.Item2, Id));
+            Surface.AddRange(newSurface);
             affectedMembers.Add(nameof(Surface));
         }
         //if (affectedMembers.Count != 0) AddHistory(user, AuditOperation.Updated, affectedMembers);

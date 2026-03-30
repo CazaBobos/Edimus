@@ -13,8 +13,8 @@ public class Product : AggregateRoot<int>
     public decimal Price { get; protected set; }
     public int? ImageId { get; protected set; }
     public virtual Image? Image { get; protected set; }
-    public virtual List<Tag>? Tags { get; protected set; }
-    public virtual List<Consumption>? Consumptions { get; protected set; }
+    public virtual List<Tag> Tags { get; protected set; } = [];
+    public virtual List<Consumption> Consumptions { get; protected set; } = [];
 
     protected Product() { }
     public Product(int? parentId, int? categoryId, decimal price, string name, string description = "")
@@ -31,7 +31,7 @@ public class Product : AggregateRoot<int>
         Enabled = true;
     }
 
-    public void Update(int? parentId, int? categoryId, decimal? price, string? name, string? description)
+    public void Update(int? parentId, int? categoryId, decimal? price, string? name, string? description, List<(int,int)>? consumptions)
     {
         Guard.Operation(Enabled == true, "A product cannot be modified when it's not active. Restore it and try again.");
         Guard.Operation(parentId != null ^ categoryId != null, "A product can either have a parent, or a category");
@@ -66,6 +66,14 @@ public class Product : AggregateRoot<int>
         {
             Price = Guard.Argument(() => (decimal)price).NotNegative();
             affectedMembers.Add(nameof(Price));
+        }
+        if(consumptions is not null)
+        {
+            Guard.Argument(() => consumptions).Require(x => x.All(s => s.Item1 > 0 && s.Item2 > 0));
+            Consumptions.Clear();
+            var newConsumptions = consumptions.Select(c => new Consumption(productId: Id, ingredientId: c.Item1, amount: c.Item2));
+            Consumptions.AddRange(newConsumptions);
+            affectedMembers.Add(nameof(Consumptions));
         }
 
         //if (affectedMembers.Count != 0) AddHistory(user, AuditOperation.Updated, affectedMembers);

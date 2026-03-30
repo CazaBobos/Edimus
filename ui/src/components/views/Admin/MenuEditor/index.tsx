@@ -5,6 +5,8 @@ import { Product } from "@/types";
 import { MouseEvent, useMemo, useState } from "react";
 import { BiChevronRight, BiPlus, BiSolidCircle } from "react-icons/bi";
 
+import { Button } from "@/components/ui/Button";
+
 import { ProductDialog } from "./ProductDialog";
 import styles from "./styles.module.scss";
 
@@ -43,33 +45,33 @@ export const MenuEditor = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <h2>Menú</h2>
-        <button className={styles.newBtn} onClick={() => setProductDialogOpenState(null)}>
-          <BiPlus size={15} />
-          Nuevo Producto
-        </button>
+        <Button
+          variant="brand"
+          label="Nuevo Producto"
+          icon={<BiPlus size={15} />}
+          onClick={() => setProductDialogOpenState(null)}
+        />
       </div>
 
       <div className={styles.body}>
         <aside className={styles.sidebar}>
           <div className={styles.sidebarLabel}>Categorías</div>
-          <button
-            className={styles.categoryItem}
-            data-active={selectedCategoryId === null}
+          <Button
+            variant="nav"
+            label="Todas"
+            active={selectedCategoryId === null}
+            count={rootProducts.length}
             onClick={() => setSelectedCategoryId(null)}
-          >
-            <span>Todas</span>
-            <span className={styles.categoryCount}>{rootProducts.length}</span>
-          </button>
+          />
           {categories.map((cat) => (
-            <button
+            <Button
               key={cat.id}
-              className={styles.categoryItem}
-              data-active={selectedCategoryId === cat.id}
+              variant="nav"
+              label={cat.name}
+              active={selectedCategoryId === cat.id}
+              count={productsByCategory[cat.id]?.length ?? 0}
               onClick={() => setSelectedCategoryId(cat.id)}
-            >
-              <span>{cat.name}</span>
-              <span className={styles.categoryCount}>{productsByCategory[cat.id]?.length ?? 0}</span>
-            </button>
+            />
           ))}
         </aside>
         <div className={styles.productList}>

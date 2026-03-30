@@ -1,4 +1,6 @@
-﻿namespace Products.Input;
+﻿using Products.Core.Model;
+
+namespace Products.Input;
 
 public class CreateProductInput
 {

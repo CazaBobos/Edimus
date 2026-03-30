@@ -27,3 +27,100 @@
   gap: 8px;
   margin-top: 8px;
 }
+
+// ─── Consumptions ──────────────────────────────────────────────
+
+.consumptionsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid $border_light;
+  padding-top: 16px;
+}
+
+.sectionLabel {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: $grey;
+}
+
+.consumptionList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.consumptionRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: $hover_light;
+  border: 1px solid $border_subtle;
+}
+
+.consumptionName {
+  flex: 1;
+  font-size: 13px;
+  color: $light_text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.consumptionUnit {
+  font-size: 11px;
+  color: $grey;
+  flex-shrink: 0;
+}
+
+.consumptionAmount {
+  font-size: 13px;
+  font-weight: 600;
+  color: $orange;
+  flex-shrink: 0;
+  min-width: 28px;
+  text-align: right;
+}
+
+.consumptionRemove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $grey;
+  padding: 2px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  transition: color 0.12s;
+
+  &:hover {
+    color: $red;
+  }
+}
+
+.consumptionAdd {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.consumptionAddSelects {
+  flex: 1;
+  display: flex;
+  gap: 8px;
+
+  > *:first-child {
+    flex: 1;
+  }
+
+  > *:last-child {
+    width: 72px;
+    flex-shrink: 0;
+  }
+}

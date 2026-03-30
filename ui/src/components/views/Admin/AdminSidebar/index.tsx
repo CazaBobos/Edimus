@@ -2,7 +2,9 @@
 
 import { useAdminStore, useAppUserStore } from "@/stores";
 import { useRouter } from "next/navigation";
-import { BiGrid, BiBook, BiBox, BiUser, BiLogOut } from "react-icons/bi";
+import { BiBook, BiBox, BiGrid, BiLogOut, BiUser } from "react-icons/bi";
+
+import { Button } from "@/components/ui/Button";
 
 import styles from "./styles.module.scss";
 
@@ -37,14 +39,14 @@ export const AdminSidebar = () => {
 
       <nav className={styles.nav}>
         {NAV_ITEMS.map((item) => (
-          <button
+          <Button
             key={item.tab}
-            className={`${styles.navItem} ${selectedTab === item.tab ? styles.navItemActive : ""}`}
+            variant="nav"
+            label={item.label}
+            icon={item.icon}
+            active={selectedTab === item.tab}
             onClick={() => handleTabChange(item.tab)}
-          >
-            <span className={styles.navIcon}>{item.icon}</span>
-            <span>{item.label}</span>
-          </button>
+          />
         ))}
       </nav>
 
@@ -55,9 +57,7 @@ export const AdminSidebar = () => {
           </div>
           <span className={styles.username}>{user?.username}</span>
         </div>
-        <button className={styles.logoutBtn} onClick={handleLogout} title="Cerrar sesión">
-          <BiLogOut />
-        </button>
+        <Button variant="subtle" danger icon={<BiLogOut size={17} />} onClick={handleLogout} title="Cerrar sesión" />
       </div>
     </aside>
   );

@@ -3,6 +3,7 @@ using Mediator;
 using Microsoft.EntityFrameworkCore;
 using Products.Core.Abstractions;
 using Products.Core.Model;
+using Shared.Core.Exceptions;
 
 namespace Products.Core.Features.CreateProduct;
 public class UpdateProductRequestHandler : IRequestHandler<UpdateProductRequest, UpdateProductResponse>
@@ -18,12 +19,7 @@ public class UpdateProductRequestHandler : IRequestHandler<UpdateProductRequest,
     {
         var product = await _productsRepository.GetById(request.Id, cancellationToken);
 
-        product.Update(
-            request.ParentId,
-            request.CategoryId,
-            request.Price,
-            request.Name,
-            request.Description);
+        if (product is null) throw new HttpNotFoundException();
 
         var existingProduct = await _productsRepository.AsQueryable()
             .Where(x => x.Id != product.Id && x.Name == product.Name)
@@ -31,6 +27,14 @@ public class UpdateProductRequestHandler : IRequestHandler<UpdateProductRequest,
 
         if (existingProduct is not null)
             throw new InvalidOperationException("The product name already exists");
+
+        product.Update(
+            request.ParentId,
+            request.CategoryId,
+            request.Price,
+            request.Name,
+            request.Description, 
+            request.Consumptions?.Select(c => (c.IngredientId, c.Amount)).ToList());
 
         await _productsRepository.Update(product, cancellationToken);
 

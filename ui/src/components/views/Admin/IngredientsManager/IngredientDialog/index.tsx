@@ -1,12 +1,12 @@
 import { useIngredientMutations } from "@/hooks/mutations/useIngredientMutations";
 import { useAdminStore } from "@/stores";
 import { IngredientRequest, measurementUnitsMap } from "@/types";
+import { Drawer } from "@mantine/core";
 import { useState } from "react";
-import { BiX } from "react-icons/bi";
+import { BiSave, BiTrash, BiUpload } from "react-icons/bi";
 
 import { Button } from "@/components/ui/Button";
 import { ControlState } from "@/components/ui/common";
-import { Dialog } from "@/components/ui/Dialog";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 
@@ -21,7 +21,14 @@ export const IngredientDialog = () => {
     setIngredientDialogOpenState(undefined);
   };
 
-  const { createIngredientMutation, updateIngredientMutation } = useIngredientMutations();
+  const { createIngredientMutation, updateIngredientMutation, removeIngredientMutation, restoreIngredientMutation } =
+    useIngredientMutations();
+
+  const handleToggle = () => {
+    if (!ingredient) return;
+    if (ingredient.enabled) removeIngredientMutation.mutate(ingredient.id, { onSuccess: handleClose });
+    else restoreIngredientMutation.mutate(ingredient.id, { onSuccess: handleClose });
+  };
 
   const [request, setRequest] = useState<IngredientRequest>({});
   const handleSetRequest = (state: ControlState) => {
@@ -31,48 +38,68 @@ export const IngredientDialog = () => {
   };
 
   const isRequestValid = () => {
-    return ![request.name, request.stock, request.stock, request.unit].includes(undefined);
+    return ![request.name, request.stock, request.unit].includes(undefined);
   };
 
   const handleSave = () => {
-    if (!!ingredient) {
-      updateIngredientMutation.mutate(
-        { id: ingredient.id, request },
-        {
-          onSuccess: handleClose,
-        },
-      );
+    if (ingredient) {
+      updateIngredientMutation.mutate({ id: ingredient.id, request }, { onSuccess: handleClose });
     } else if (isRequestValid()) {
-      createIngredientMutation.mutate(request as Required<IngredientRequest>, {
-        onSuccess: handleClose,
-      });
+      createIngredientMutation.mutate(request as Required<IngredientRequest>, { onSuccess: handleClose });
     }
   };
 
+  const title = ingredient ? `Ingrediente: ${ingredient.name}` : "Nuevo Ingrediente";
+
   return (
-    <Dialog open={ingredient !== undefined} onClose={handleClose}>
-      <h2 className={styles.header}>
-        {ingredient ? `Editar Ingrediente #${ingredient.id}` : "Nuevo Ingrediente"}
-        <BiX size={28} onClick={handleClose} />
-      </h2>
+    <Drawer
+      opened={ingredient !== undefined}
+      onClose={handleClose}
+      title={title}
+      position="right"
+      size="md"
+      withOverlay={false}
+      shadow="xl"
+    >
       <div className={styles.content}>
         <Input title="Nombre" name="name" defaultValue={ingredient?.name} onChange={handleSetRequest} />
+        <Select
+          title="Unidad de medida"
+          name="unit"
+          onChange={handleSetRequest}
+          defaultValue={ingredient?.unit.toString()}
+          options={Object.entries(measurementUnitsMap).map(([value, label]) => ({ value, label }))}
+        />
         <div className={styles.row}>
-          <Select
-            title="Unidad"
-            name="unit"
+          <Input
+            title="Cantidad en stock"
+            name="stock"
+            type="number"
+            defaultValue={ingredient?.stock}
             onChange={handleSetRequest}
-            defaultValue={ingredient?.unit.toString()}
-            options={Object.entries(measurementUnitsMap).map(([value, label]) => ({ value, label }))}
           />
-          <Input title="Cant. Stock" name="stock" defaultValue={ingredient?.stock} onChange={handleSetRequest} />
-          <Input title="Cant. Alerta" name="alert" defaultValue={ingredient?.alert} onChange={handleSetRequest} />
+          <Input
+            title="Alerta mínima"
+            name="alert"
+            type="number"
+            defaultValue={ingredient?.alert}
+            onChange={handleSetRequest}
+          />
         </div>
-        <div className={styles.row}>
-          <Button label="Cancelar" onClick={handleClose} />
-          <Button label="Guardar" disabled={!ingredient && !isRequestValid()} onClick={handleSave} />
-        </div>
+        <Button
+          label="Guardar Cambios"
+          icon={<BiSave />}
+          disabled={!ingredient && !isRequestValid()}
+          onClick={handleSave}
+        />
+        {ingredient && (
+          <Button
+            label={ingredient.enabled ? "Deshabilitar" : "Restaurar"}
+            icon={ingredient.enabled ? <BiTrash /> : <BiUpload />}
+            onClick={handleToggle}
+          />
+        )}
       </div>
-    </Dialog>
+    </Drawer>
   );
 };

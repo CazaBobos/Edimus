@@ -11,9 +11,9 @@ public class Layout : Entity<int>
     public int Width { get; protected set; }
     public int PremiseId { get; protected set; }
     public virtual Premise? Premise { get; protected set; }
-    public virtual List<Table>? Tables { get; protected set; }
-    public virtual List<Sector>? Sectors { get; protected set; }
-    public virtual List<LayoutCoord>? Boundaries { get; protected set; }
+    public virtual List<Table> Tables { get; protected set; } = [];
+    public virtual List<Sector> Sectors { get; protected set; } = [];
+    public virtual List<LayoutCoord> Boundaries { get; protected set; } = [];
 
     protected Layout() { }
     public Layout(int premiseId, string name, int height, int width)

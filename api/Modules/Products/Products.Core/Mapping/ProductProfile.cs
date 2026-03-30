@@ -9,5 +9,6 @@ public class ProductProfile : IRegister
     public void Register(TypeAdapterConfig config)
     {
         config.NewConfig<Product, ProductModel>().TwoWays();
+        config.NewConfig<Consumption, ConsumptionModel>();
     }
 }
