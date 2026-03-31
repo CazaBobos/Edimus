@@ -91,11 +91,11 @@ export const OrdersList = (props: OrdersListProps) => {
           />
         </li>
         {!orders?.length && <strong>La mesa no registra pedidos</strong>}
-        {orders.map((o) => {
+        {orders.map((o, i) => {
           const product = productsMap.get(o.productId);
 
           return (
-            <li key={product?.name}>
+            <li key={`order_${i}`}>
               <div className={styles.row}>
                 {o.amount}x {product?.name}
               </div>

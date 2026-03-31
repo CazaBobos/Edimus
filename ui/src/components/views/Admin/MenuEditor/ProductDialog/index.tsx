@@ -3,7 +3,7 @@ import { useCategoriesQuery } from "@/hooks/queries/useCategoriesQuery";
 import { useIngredientsQuery } from "@/hooks/queries/useIngredientsQuery";
 import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
 import { useAdminStore } from "@/stores";
-import { Consumption, measurementUnitsMap, ProductRequest } from "@/types";
+import { measurementUnitsMap, ProductRequest } from "@/types";
 import { Drawer } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { BiPlus, BiSave, BiTrash, BiUpload, BiX } from "react-icons/bi";
@@ -22,8 +22,7 @@ export const ProductDialog = () => {
 
   const handleClose = () => {
     setRequest({});
-    setConsumptions([]);
-    setNewIngredientId("");
+    setNewIngredientId("-1");
     setNewAmount("");
     setProductDialogOpenState(undefined);
   };
@@ -65,10 +64,7 @@ export const ProductDialog = () => {
       : { ...request, parentId: undefined };
 
     if (product) {
-      updateProductMutation.mutate(
-        { id: product.id, request: { ...filteredRequest, consumptions } },
-        { onSuccess: handleClose },
-      );
+      updateProductMutation.mutate({ id: product.id, request: filteredRequest }, { onSuccess: handleClose });
     } else if (isRequestValid()) {
       createProductMutation.mutate(filteredRequest as Required<ProductRequest>, { onSuccess: handleClose });
     }
@@ -77,33 +73,33 @@ export const ProductDialog = () => {
   const [isVariant, setIsVariant] = useState<boolean>(false);
   useEffect(() => {
     setIsVariant(!!product?.parentId);
-  }, [product?.parentId]);
+    setRequest((prev) => ({ ...prev, consumptions: product?.consumptions ?? [] }));
+  }, [product]);
 
   // ─── Consumptions ───────────────────────────────────────────
-  const [consumptions, setConsumptions] = useState<Consumption[]>([]);
-  const [newIngredientId, setNewIngredientId] = useState<string>("");
+  const [newIngredientId, setNewIngredientId] = useState<string>("-1");
   const [newAmount, setNewAmount] = useState<string>("");
-
-  useEffect(() => {
-    setConsumptions(product?.consumptions ?? []);
-  }, [product?.consumptions]);
 
   const handleAddConsumption = () => {
     const ingredientId = Number(newIngredientId);
     const amount = Number(newAmount);
     if (!ingredientId || !amount || amount <= 0) return;
-    if (consumptions.some((c) => c.ingredientId === ingredientId)) return;
+    if (request.consumptions?.some((c) => c.ingredientId === ingredientId)) return;
 
-    setConsumptions((prev) => [...prev, { ingredientId, amount }]);
-    setNewIngredientId("");
+    setRequest((prev) => ({ ...prev, consumptions: [...(prev.consumptions ?? []), { ingredientId, amount }] }));
+    setNewIngredientId("-1");
     setNewAmount("");
   };
 
   const handleRemoveConsumption = (ingredientId: number) => {
-    setConsumptions((prev) => prev.filter((c) => c.ingredientId !== ingredientId));
+    setRequest((prev) => ({
+      ...prev,
+      consumptions: prev.consumptions?.filter((c) => c.ingredientId !== ingredientId),
+    }));
   };
 
-  const availableIngredients = ingredients.filter((i) => !consumptions.some((c) => c.ingredientId === i.id));
+  const availableIngredients = ingredients.filter((i) => !request.consumptions?.some((c) => c.ingredientId === i.id));
+  const hasIncompleteConsumption = (newIngredientId !== "-1") !== (newAmount !== "");
 
   const title = product
     ? product.parentId
@@ -158,9 +154,9 @@ export const ProductDialog = () => {
         {product && (
           <div className={styles.consumptionsSection}>
             <p className={styles.sectionLabel}>Ingredientes</p>
-            {consumptions.length > 0 && (
+            {(request.consumptions?.length ?? 0) > 0 && (
               <div className={styles.consumptionList}>
-                {consumptions.map((c) => {
+                {request.consumptions?.map((c) => {
                   const ingredient = ingredientsMap?.get(c.ingredientId);
 
                   return (
@@ -206,7 +202,7 @@ export const ProductDialog = () => {
           <Button
             label="Guardar Cambios"
             icon={<BiSave />}
-            disabled={!product && !isRequestValid()}
+            disabled={(!product && !isRequestValid()) || hasIncompleteConsumption}
             onClick={handleSave}
           />
           {product && (

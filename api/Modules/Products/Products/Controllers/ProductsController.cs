@@ -60,7 +60,6 @@ public class ProductsController : ControllerBase
             Name = input.Name,
             Description = input.Description,
             Price = input.Price,
-            Consumptions = input.Consumptions,
             User = User.GetUser(),
         }, cancellationToken);
 

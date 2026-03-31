@@ -1,5 +1,6 @@
-﻿using Dawn;
+using Dawn;
 using Shared.Core.Domain;
+using Shared.Core.Events;
 using Shared.Core.Services;
 namespace Shared.Core.Entities;
 
@@ -65,16 +66,27 @@ public class Table : AggregateRoot<int>
         {
             Guard.Argument(() => surface).Require(surface => surface.Any(s => s.Item1 == 0 && s.Item2 == 0));
             Surface.Clear();
-            var newSurface = surface.Select(s => new TableCoord(s.Item1, s.Item2, Id)).ToList();
-            Surface.AddRange(newSurface);
+            Surface.AddRange(surface.Select(s => new TableCoord(s.Item1, s.Item2, Id)));
             affectedMembers.Add(nameof(Surface));
         }
         if (orders is not null && status != TableStatus.Free)
         {
             Guard.Argument(() => orders).Require(x => x.All(s => s.Item1 > 0 && s.Item2 > 0));
+
+            var oldOrders = Orders.ToDictionary(o => o.ProductId, o => o.Amount);
+
             Orders.Clear();
-            var newOrders = orders.Select(r => new Order(productId: r.Item1, tableId: Id, amount: r.Item2));
-            Orders.AddRange(newOrders);
+            Orders.AddRange(orders.Select(r => new Order(productId: r.Item1, tableId: Id, amount: r.Item2)));
+
+            var delta = orders
+                .Select(o => (o.Item1, Amount: o.Item2 - oldOrders.GetValueOrDefault(o.Item1, 0)))
+                .Where(d => d.Amount > 0)
+                .Select(d => (ProductId: d.Item1, d.Amount))
+                .ToList();
+
+            if (delta.Count > 0)
+                AddDomainEvent(new OrdersUpdatedEvent { Delta = delta });
+
             affectedMembers.Add(nameof(Orders));
         }
         //if (affectedMembers.Count != 0) AddHistory(user, AuditOperation.Updated, affectedMembers);

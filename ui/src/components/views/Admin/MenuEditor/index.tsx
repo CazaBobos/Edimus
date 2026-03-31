@@ -161,7 +161,6 @@ const ProductRow = ({ product, variants, onClick, onVariantClick }: ProductRowPr
         )}
       </div>
       <div className={styles.productMeta}>
-        {product.price !== undefined && <span className={styles.price}>${product.price.toFixed(2)}</span>}
         <BiChevronRight className={styles.chevron} size={18} />
       </div>
     </div>

@@ -34,8 +34,8 @@ public class Product : AggregateRoot<int>
     public void Update(int? parentId, int? categoryId, decimal? price, string? name, string? description, List<(int,int)>? consumptions)
     {
         Guard.Operation(Enabled == true, "A product cannot be modified when it's not active. Restore it and try again.");
-        Guard.Operation(parentId != null ^ categoryId != null, "A product can either have a parent, or a category");
-        
+        Guard.Operation(parentId == null || categoryId == null, "A product can either have a parent, or a category"); 
+
         var affectedMembers = new List<string>();
 
         if (parentId is not null && parentId != ParentId)

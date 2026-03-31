@@ -1,11 +1,11 @@
 using Ingredients.Core.Abstractions;
 using Mediator;
 using Microsoft.EntityFrameworkCore;
-using Shared.Core.Notifications;
+using Shared.Core.Events;
 
 namespace Ingredients.Core.Features.DeductStock;
 
-public class DeductStockOnOrderHandler : INotificationHandler<OrdersConfirmedNotification>
+public class DeductStockOnOrderHandler : INotificationHandler<OrdersUpdatedEvent>
 {
     private readonly IIngredientsRepository _ingredientsRepository;
 
@@ -14,7 +14,7 @@ public class DeductStockOnOrderHandler : INotificationHandler<OrdersConfirmedNot
         _ingredientsRepository = ingredientsRepository;
     }
 
-    public async ValueTask Handle(OrdersConfirmedNotification notification, CancellationToken cancellationToken)
+    public async ValueTask Handle(OrdersUpdatedEvent notification, CancellationToken cancellationToken)
     {
         if (notification.Delta.Count == 0) return;
 

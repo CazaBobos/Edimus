@@ -10,8 +10,8 @@ import {
   UpdateTableRequest,
 } from "@/types";
 import { Drawer } from "@mantine/core";
-import { useState } from "react";
-import { BiLock, BiSave, BiSolidCircle, BiTrash } from "react-icons/bi";
+import { useRef, useState } from "react";
+import { BiDownload, BiLock, BiSave, BiSolidCircle, BiTrash } from "react-icons/bi";
 import QRCode from "react-qr-code";
 
 import { Button } from "@/components/ui/Button";
@@ -138,10 +138,40 @@ type QRLinkProps = { table: Table };
 const QRLink = ({ table }: QRLinkProps) => {
   const { protocol, hostname, port } = window.location;
   const link = `${protocol}//${hostname}:${port}?tableId=${table.qrId}`;
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const handleDownload = () => {
+    const svg = wrapperRef.current?.querySelector("svg");
+    if (!svg) return;
+
+    const serialized = new XMLSerializer().serializeToString(svg);
+    const blob = new Blob([serialized], { type: "image/svg+xml" });
+    const url = URL.createObjectURL(blob);
+
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      canvas.getContext("2d")!.drawImage(img, 0, 0);
+      URL.revokeObjectURL(url);
+
+      const a = document.createElement("a");
+      a.download = `mesa-${table.id}.png`;
+      a.href = canvas.toDataURL("image/png");
+      a.click();
+    };
+    img.src = url;
+  };
 
   return (
-    <a target="_blank" href={link}>
-      <QRCode value={link} />
-    </a>
+    <>
+      <div ref={wrapperRef}>
+        <a target="_blank" href={link}>
+          <QRCode value={link} />
+        </a>
+      </div>
+      <Button label="Descargar" icon={<BiDownload />} onClick={handleDownload} />
+    </>
   );
 };
