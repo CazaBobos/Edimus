@@ -34,6 +34,13 @@ public class Table : AggregateRoot<int>
         Enabled = true;
     }
 
+    public void Arrive()
+    {
+        if (Status == TableStatus.Free) {
+            Status = TableStatus.Arrived;
+        }
+    }
+
     public void Update(
         TableStatus? status = null,
         int? positionX = null,
@@ -46,6 +53,7 @@ public class Table : AggregateRoot<int>
 
         if (status is not null && status != Status)
         {
+            Guard.Operation(status != TableStatus.Arrived, "Cannot manually set a table to Arrived. Use the link endpoint instead.");
             Status = (TableStatus)status;
 
             if (status == TableStatus.Free) Orders.Clear();

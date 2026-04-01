@@ -10,6 +10,7 @@ const statusMap: Record<string, TableStatus> = {
   Free: TableStatus.Free,
   Calling: TableStatus.Calling,
   Occupied: TableStatus.Occupied,
+  Arrived: TableStatus.Arrived,
 };
 
 export const useTablesHub = (layoutId: number | undefined) => {

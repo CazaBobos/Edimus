@@ -3,6 +3,11 @@ import { CreateTableRequest, GetTablesParams, Table, UpdateTableRequest } from "
 import { axiosClient } from "./axios";
 
 export const tablesApi = {
+  findOne: async (id: number) => {
+    const response = await axiosClient.get<Table>(`tables/${id}`);
+
+    return response.data;
+  },
   findMany: async (params: GetTablesParams) => {
     const response = await axiosClient.get<Table[]>("tables", { params });
 
@@ -23,9 +28,8 @@ export const tablesApi = {
 
     return response.data;
   },
-
-  link: async (tableId: string) => {
-    const response = await axiosClient.get<Table>(`tables/${tableId}`);
+  link: async (qrId: string) => {
+    const response = await axiosClient.post<Table>(`tables/${qrId}/link`);
 
     return response.data;
   },

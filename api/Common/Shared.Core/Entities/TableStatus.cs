@@ -4,4 +4,5 @@ public enum TableStatus {
     Free,
     Calling,
     Occupied,
+    Arrived,
 }

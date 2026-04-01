@@ -1,3 +1,5 @@
+import { colors } from "@/common/colors";
+
 import { Coords } from ".";
 
 export type Table = {
@@ -43,10 +45,19 @@ export enum TableStatus {
   Free,
   Calling,
   Occupied,
+  Arrived,
 }
 
-export const tableStatusMap = {
+export const tableStatusNameMap = {
   [TableStatus.Free]: "Libre",
   [TableStatus.Calling]: "Llamando",
   [TableStatus.Occupied]: "Ocupada",
+  [TableStatus.Arrived]: "Ingresado",
+};
+
+export const tableStatusColorMap = {
+  [TableStatus.Free]: colors.green,
+  [TableStatus.Calling]: colors.yellow,
+  [TableStatus.Occupied]: colors.red,
+  [TableStatus.Arrived]: colors.blue,
 };

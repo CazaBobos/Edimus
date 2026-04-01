@@ -4,7 +4,7 @@ import { useSectorsQuery } from "@/hooks/queries/useSectorsQuery";
 import { useTablesQuery } from "@/hooks/queries/useTablesQuery";
 import { useTablesHub } from "@/hooks/useTablesHub";
 import { useAdminStore } from "@/stores";
-import { TableStatus, BoundaryType } from "@/types";
+import { BoundaryType, tableStatusColorMap } from "@/types";
 import React from "react";
 
 import { Area } from "./Area";
@@ -83,13 +83,7 @@ export const SaloonGrid = ({ layoutId }: { layoutId: number | undefined }) => {
                 onClick={() => setTableDialogOpenState(table)}
                 key={[coord.x, coord.y].join(",")}
                 position={coord}
-                color={
-                  {
-                    [TableStatus.Free]: colors.green,
-                    [TableStatus.Calling]: colors.orange,
-                    [TableStatus.Occupied]: colors.red,
-                  }[table.status]
-                }
+                color={tableStatusColorMap[table.status]}
                 content={table.id}
                 filled
               />

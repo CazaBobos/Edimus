@@ -1,6 +1,5 @@
 using Mapster;
 using Mediator;
-using Shared.Core.Entities;
 using Shared.Core.Exceptions;
 using Tables.Core.Abstractions;
 using Tables.Core.Model;
@@ -24,7 +23,7 @@ public class LinkTableRequestHandler : IRequestHandler<LinkTableRequest, LinkTab
 
         if (table is null) throw new HttpNotFoundException();
 
-        table.Update(status: TableStatus.Occupied);
+        table.Arrive();
 
         await _tablesRepository.Update(table, cancellationToken);
 

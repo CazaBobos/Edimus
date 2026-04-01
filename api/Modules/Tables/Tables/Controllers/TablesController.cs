@@ -6,6 +6,7 @@ using Shared.Core.Entities;
 using Shared.Infrastructure.Extensions;
 using Tables.Core.Features.CreateTable;
 using Tables.Core.Features.GetManyTables;
+using Tables.Core.Features.GetTable;
 using Tables.Core.Features.LinkTable;
 using Tables.Core.Features.RemoveTable;
 using Tables.Core.Features.UpdateTable;
@@ -88,15 +89,29 @@ public class TablesController : ControllerBase
     }
 
     /// <summary>
-    /// Sets a table status to Occupied and returns it.
+    /// Returns a table by its numeric ID.
+    /// </summary>
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new GetTableRequest
+        {
+            Id = id,
+        }, cancellationToken);
+
+        return Ok(response.Table);
+    }
+
+    /// <summary>
+    /// Links a table via QR scan, setting its status to Arrived if the table is Free.
     /// </summary>
     [AllowAnonymous]
-    [HttpGet("{tableId}")]
-    public async Task<IActionResult> Link(string tableId, CancellationToken cancellationToken)
+    [HttpPost("{qrId}/link")]
+    public async Task<IActionResult> Link(string qrId, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new LinkTableRequest
         {
-            TableId = tableId,
+            TableId = qrId,
         }, cancellationToken);
 
         return Ok(response.Table);

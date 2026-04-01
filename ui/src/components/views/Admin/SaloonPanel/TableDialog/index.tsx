@@ -6,7 +6,8 @@ import {
   Table,
   TableOrder,
   TableStatus,
-  tableStatusMap,
+  tableStatusColorMap,
+  tableStatusNameMap,
   UpdateTableRequest,
 } from "@/types";
 import { Drawer } from "@mantine/core";
@@ -65,16 +66,10 @@ export const TableDialog = () => {
   };
 
   const tableOptions: SelectOption[] = [
-    { label: tableStatusMap[TableStatus.Free], value: TableStatus.Free },
-    { label: tableStatusMap[TableStatus.Calling], value: TableStatus.Calling, hidden: true },
-    { label: tableStatusMap[TableStatus.Occupied], value: TableStatus.Occupied },
+    { label: tableStatusNameMap[TableStatus.Free], value: TableStatus.Free },
+    { label: tableStatusNameMap[TableStatus.Calling], value: TableStatus.Calling, hidden: true },
+    { label: tableStatusNameMap[TableStatus.Occupied], value: TableStatus.Occupied },
   ];
-
-  const statusColor = {
-    [TableStatus.Free]: "green",
-    [TableStatus.Calling]: "orange",
-    [TableStatus.Occupied]: "red",
-  }[table?.status ?? 0];
 
   const tabs = ["Pedidos", "Código QR"];
   const [activeTab, setActiveTab] = useState<number>(0);
@@ -85,7 +80,7 @@ export const TableDialog = () => {
       onClose={handleClose}
       title={
         <div className={styles.drawerTitle}>
-          <BiSolidCircle size={16} fill={statusColor} />
+          {table && <BiSolidCircle size={16} fill={tableStatusColorMap[table.status]} />}
           <span>{table ? `Mesa #${table.id}` : "Nueva Mesa"}</span>
         </div>
       }
