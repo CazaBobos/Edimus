@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shared.Infrastructure.Extensions;
 using Tables.Controllers;
+using Tables.Core.Abstractions;
 using Tables.Core.Extensions;
+using Tables.Hubs;
 using Tables.Infrastructure.Extensions;
 
 namespace Tables.Extensions;
@@ -13,6 +15,7 @@ public static class ServiceCollectionExtensions
         services.AddTablesCore();
         services.AddTablesInfrastructure();
         services.AddSwaggerComments<TablesController>();
+        services.AddScoped<ITableNotifier, TableHubNotifier>();
         return services;
     }
 }

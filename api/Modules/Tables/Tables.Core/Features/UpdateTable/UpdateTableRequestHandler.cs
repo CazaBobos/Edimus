@@ -7,10 +7,12 @@ namespace Tables.Core.Features.UpdateTable;
 public class UpdateTableRequestHandler : IRequestHandler<UpdateTableRequest, UpdateTableResponse>
 {
     private readonly ITablesRepository _tablesRepository;
+    private readonly ITableNotifier _notifier;
 
-    public UpdateTableRequestHandler(ITablesRepository tablesRepository)
+    public UpdateTableRequestHandler(ITablesRepository tablesRepository, ITableNotifier notifier)
     {
         _tablesRepository = tablesRepository;
+        _notifier = notifier;
     }
 
     public async ValueTask<UpdateTableResponse> Handle(UpdateTableRequest request, CancellationToken cancellationToken)
@@ -28,6 +30,9 @@ public class UpdateTableRequestHandler : IRequestHandler<UpdateTableRequest, Upd
         );
 
         await _tablesRepository.Update(table, cancellationToken);
+
+        if (request.Status is not null)
+            await _notifier.NotifyStatusChanged(table.Id, table.LayoutId, table.Status, cancellationToken);
 
         return new UpdateTableResponse();
     }

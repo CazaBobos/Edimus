@@ -2,6 +2,7 @@ import { colors } from "@/common/colors";
 import { useCompanyQuery } from "@/hooks/queries/useCompanyQuery";
 import { useSectorsQuery } from "@/hooks/queries/useSectorsQuery";
 import { useTablesQuery } from "@/hooks/queries/useTablesQuery";
+import { useTablesHub } from "@/hooks/useTablesHub";
 import { useAdminStore } from "@/stores";
 import { TableStatus, BoundaryType } from "@/types";
 import React from "react";
@@ -11,7 +12,7 @@ import { SectorTag } from "./SectorTag";
 import { Square } from "./Square";
 import styles from "./styles.module.scss";
 
-export const SaloonGrid = () => {
+export const SaloonGrid = ({ layoutId }: { layoutId: number | undefined }) => {
   const { data: company } = useCompanyQuery(1);
   const { data: tables } = useTablesQuery();
   const { data: sectors } = useSectorsQuery();
@@ -19,7 +20,9 @@ export const SaloonGrid = () => {
   const setTableDialogOpenState = useAdminStore((store) => store.setTableDialogOpenState);
   const previewPosition = useAdminStore((store) => store.previewPosition);
 
-  const currentLayout = company?.premises[0].layouts[0];
+  const currentLayout = company?.premises[0].layouts.find((l) => l.id === layoutId);
+
+  useTablesHub(currentLayout?.id);
 
   if (!currentLayout) return null;
 

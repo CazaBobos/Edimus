@@ -9,7 +9,7 @@ import { ReactNode, useState } from "react";
 const theme = createTheme({
   fontFamily: "var(--font-geist-sans), sans-serif",
   fontFamilyMonospace: "var(--font-geist-mono), monospace",
-  primaryColor: "blue",
+  primaryColor: "orange",
   defaultRadius: "md",
 });
 

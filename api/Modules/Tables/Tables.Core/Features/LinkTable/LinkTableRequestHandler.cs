@@ -1,6 +1,5 @@
 using Mapster;
 using Mediator;
-using Microsoft.EntityFrameworkCore;
 using Shared.Core.Entities;
 using Shared.Core.Exceptions;
 using Tables.Core.Abstractions;
@@ -11,10 +10,12 @@ namespace Tables.Core.Features.LinkTable;
 public class LinkTableRequestHandler : IRequestHandler<LinkTableRequest, LinkTableResponse>
 {
     private readonly ITablesRepository _tablesRepository;
+    private readonly ITableNotifier _notifier;
 
-    public LinkTableRequestHandler(ITablesRepository tablesRepository)
+    public LinkTableRequestHandler(ITablesRepository tablesRepository, ITableNotifier notifier)
     {
         _tablesRepository = tablesRepository;
+        _notifier = notifier;
     }
 
     public async ValueTask<LinkTableResponse> Handle(LinkTableRequest request, CancellationToken cancellationToken)
@@ -26,6 +27,8 @@ public class LinkTableRequestHandler : IRequestHandler<LinkTableRequest, LinkTab
         table.Update(status: TableStatus.Occupied);
 
         await _tablesRepository.Update(table, cancellationToken);
+
+        await _notifier.NotifyStatusChanged(table.Id, table.LayoutId, table.Status, cancellationToken);
 
         return new LinkTableResponse
         {

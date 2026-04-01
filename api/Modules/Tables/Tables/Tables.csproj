@@ -12,6 +12,10 @@
 	</PropertyGroup>
 	
 	<ItemGroup>
+	  <FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <ProjectReference Include="..\Tables.Core\Tables.Core.csproj" />
 	  <ProjectReference Include="..\Tables.Infrastructure\Tables.Infrastructure.csproj" />
 	</ItemGroup>

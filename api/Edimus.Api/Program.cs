@@ -11,6 +11,7 @@ using Products.Extensions;
 using Sectors.Extensions;
 using Shared.Infrastructure.Extensions;
 using Tables.Extensions;
+using Tables.Hubs;
 using Users.Extensions;
 
 var options = new WebApplicationOptions
@@ -37,6 +38,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerWithAuth();
 builder.Services.AddJWTAuthentication();
 
+builder.Services.AddSignalR();
 builder.Services.AddMediator(options => options.ServiceLifetime = ServiceLifetime.Scoped);
 builder.Services.AddDatabaseContext();
 builder.Services.AddJwtService();
@@ -64,9 +66,10 @@ app.UseSwaggerUI(options => options.InjectStylesheet("/swagger-dark.css"));
 
 app.UseCors(options =>
 {
-    options.WithOrigins("*");
-    options.WithHeaders("*");
-    options.WithMethods("*");
+    options.SetIsOriginAllowed(_ => true);
+    options.AllowAnyHeader();
+    options.AllowAnyMethod();
+    options.AllowCredentials();
 });
 
 if (app.Environment.IsDevelopment()) app.UseHttpsRedirection();
@@ -79,5 +82,6 @@ app.UseAuthentication(); //<= JWT Auth
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<TablesHub>("/hubs/tables");
 
 app.Run();
