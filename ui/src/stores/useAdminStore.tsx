@@ -29,39 +29,46 @@ type AdminStore = {
   setPreviewPosition: (pos: PreviewPosition | null) => void;
 };
 
-export const useAdminStore = create<AdminStore>()((set) => ({
-  squareSize: 32,
-  headerPanelState: {
-    open: false,
-    selectedTab: 0,
-  },
-  setHeaderPanelState: (state: Partial<HeaderPanelState>) =>
-    set((store) => ({
-      headerPanelState: { ...store.headerPanelState, ...state },
-    })),
-  tableDialogOpenState: undefined,
-  setTableDialogOpenState: (table: Nullable<Table>) =>
-    set(() => ({
-      tableDialogOpenState: table,
-    })),
-  productDialogOpenState: undefined,
-  setProductDialogOpenState: (product: Nullable<Product>) =>
-    set(() => ({
-      productDialogOpenState: product,
-    })),
-  ingredientDialogOpenState: undefined,
-  setIngredientDialogOpenState: (ingredient: Nullable<Ingredient>) =>
-    set(() => ({
-      ingredientDialogOpenState: ingredient,
-    })),
-  sectorDialogOpenState: undefined,
-  setSectorDialogOpenState: (sector: Nullable<Sector>) =>
-    set(() => ({
-      sectorDialogOpenState: sector,
-    })),
-  previewPosition: null,
-  setPreviewPosition: (pos: PreviewPosition | null) =>
-    set(() => ({
-      previewPosition: pos,
-    })),
-}));
+const params = new URLSearchParams(document.location.search);
+
+export const useAdminStore = create<AdminStore>()((set) => {
+  const tab = params.get("tab");
+
+  return {
+    squareSize: 32,
+    headerPanelState: {
+      open: false,
+      selectedTab: tab ? parseInt(tab) : 0,
+    },
+
+    setHeaderPanelState: (state: Partial<HeaderPanelState>) =>
+      set((store) => ({
+        headerPanelState: { ...store.headerPanelState, ...state },
+      })),
+    tableDialogOpenState: undefined,
+    setTableDialogOpenState: (table: Nullable<Table>) =>
+      set(() => ({
+        tableDialogOpenState: table,
+      })),
+    productDialogOpenState: undefined,
+    setProductDialogOpenState: (product: Nullable<Product>) =>
+      set(() => ({
+        productDialogOpenState: product,
+      })),
+    ingredientDialogOpenState: undefined,
+    setIngredientDialogOpenState: (ingredient: Nullable<Ingredient>) =>
+      set(() => ({
+        ingredientDialogOpenState: ingredient,
+      })),
+    sectorDialogOpenState: undefined,
+    setSectorDialogOpenState: (sector: Nullable<Sector>) =>
+      set(() => ({
+        sectorDialogOpenState: sector,
+      })),
+    previewPosition: null,
+    setPreviewPosition: (pos: PreviewPosition | null) =>
+      set(() => ({
+        previewPosition: pos,
+      })),
+  };
+});

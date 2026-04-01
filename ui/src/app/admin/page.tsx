@@ -1,5 +1,6 @@
 "use client";
 
+import { useUrlSync } from "@/hooks/useUrlSync";
 import { useAdminStore, useAppUserStore } from "@/stores";
 import { useEffect, useState } from "react";
 
@@ -12,6 +13,8 @@ import { SaloonPanel } from "@/components/views/Admin/SaloonPanel";
 import styles from "./styles.module.scss";
 
 export default function Admin() {
+  useUrlSync();
+
   const selectedTab = useAdminStore((store) => store.headerPanelState.selectedTab);
 
   const isLoggedIn = useAppUserStore((store) => store.isLoggedIn);
