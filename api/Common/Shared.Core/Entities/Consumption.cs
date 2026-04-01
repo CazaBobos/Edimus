@@ -5,10 +5,10 @@ public class Consumption
     public virtual Product? Product { get; protected set; }
     public int IngredientId { get; protected set; }
     public virtual Ingredient? Ingredient { get; protected set; }
-    public int Amount { get; protected set; }
+    public decimal Amount { get; protected set; }
 
     protected Consumption() { }
-    public Consumption(int productId, int ingredientId, int amount)
+    public Consumption(int productId, int ingredientId, decimal amount)
     {
         ProductId = productId;
         IngredientId = ingredientId;

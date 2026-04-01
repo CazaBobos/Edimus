@@ -1,4 +1,4 @@
-﻿using Dawn;
+using Dawn;
 using Shared.Core.Domain;
 
 namespace Shared.Core.Entities;
@@ -6,13 +6,13 @@ public class Ingredient : Entity<int>
 {
     public override int Id { get; protected set; }
     public string Name { get; protected set; } = string.Empty;
-    public int Stock { get; protected set; }
+    public decimal Stock { get; protected set; }
     public int Alert { get; protected set; }
     public MeasurementUnit Unit { get; protected set; }
     public virtual List<Consumption> Consumptions { get; protected set; } = [];
 
     protected Ingredient() { }
-    public Ingredient(string name, int stock, int alert, MeasurementUnit unit)
+    public Ingredient(string name, decimal stock, int alert, MeasurementUnit unit)
     {
         Name = Guard.Argument(() => name)
             .NotNull()
@@ -23,12 +23,12 @@ public class Ingredient : Entity<int>
         Enabled = true;
     }
 
-    public void Deduct(int amount)
+    public void Deduct(decimal amount)
     {
         Stock = Math.Max(0, Stock - amount);
     }
 
-    public void Update(string? name, int? stock, int? alert, MeasurementUnit? unit)
+    public void Update(string? name, decimal? stock, int? alert, MeasurementUnit? unit)
     {
         Guard.Operation(Enabled == true, "An ingredient cannot be modified when it's not active. Restore it and try again.");
 
@@ -43,7 +43,7 @@ public class Ingredient : Entity<int>
         }
         if (stock is not null && stock != Stock)
         {
-            Stock = Guard.Argument(() => (int)stock).Positive();
+            Stock = Guard.Argument(() => (decimal)stock).Positive();
             affectedMembers.Add(nameof(Stock));
         }
         if (alert is not null && alert != Alert)
