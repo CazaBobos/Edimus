@@ -84,7 +84,8 @@
     {
       "id": "migrationName",
       "type": "promptString",
-      "description": "Migration name"
+      "description": "Migration name",
+      "default": "Migration000_description"
     },
     {
       "id": "targetMigration",

@@ -1,7 +1,7 @@
 export type LoginResponse = {
   username: string;
   email: string;
-  companyIds: number[];
+  companyIds?: number[];
   token: string;
   refreshToken: string;
   role: number;

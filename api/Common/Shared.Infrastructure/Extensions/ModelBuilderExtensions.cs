@@ -40,7 +40,7 @@ public static class ModelBuilderExtensions
     {
         entity.WithId(id);
 
-        entity.GetType().GetProperty("QrId")?.SetValue(entity, HashService.CreateHash(id.ToString()));
+        entity.GetType().GetProperty("QrId")?.SetValue(entity, HashService.CreateDeterministicHash(id.ToString()));
 
         return entity;
     }
@@ -48,9 +48,16 @@ public static class ModelBuilderExtensions
     public static void SeedTables(this ModelBuilder modelBuilder)
     {
 
-        modelBuilder.Entity<User>().HasData(
-            new User(username: "DbSeeder", email: "root@edimus.com", password: "T3s7P@ssw0rd", role: UserRole.Root).WithId(1)
-        );
+        modelBuilder.Entity<User>().HasData(new
+        {
+            Id = 1,
+            Username = "DbSeeder",
+            Email = "root@edimus.com",
+            Password = "$2a$11$RKOjo9jGUALtqDkaX52cj.7x8kcEj4mG4ESnP6i6Da9zc9DLE8wx.",
+            Role = UserRole.Root,
+            Enabled = true,
+            CompanyIds = (List<int>?)null,
+        });
 
         modelBuilder.Entity<Company>().HasData(
             new Company(name: "Maria Antonieta", slogan: "Universo Deli", acronym: "MA").WithId(1)

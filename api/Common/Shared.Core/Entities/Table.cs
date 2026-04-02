@@ -22,7 +22,7 @@ public class Table : AggregateRoot<int>
         LayoutId = Guard.Argument(() => layoutId).Positive();
         PositionX = Guard.Argument(() => positionX).NotNegative();
         PositionY = Guard.Argument(() => positionY).NotNegative();
-        QrId = HashService.CreateHash(Id.ToString());
+        QrId = HashService.CreateDeterministicHash(Id.ToString());
 
         if (surface is not null)
         {

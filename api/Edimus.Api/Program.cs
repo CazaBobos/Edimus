@@ -36,7 +36,8 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerWithAuth();
-builder.Services.AddJWTAuthentication();
+builder.Services.AddJWTAuthentication(builder.Environment);
+builder.Services.AddGlobalRateLimiter();
 
 builder.Services.AddSignalR();
 builder.Services.AddMediator(options => options.ServiceLifetime = ServiceLifetime.Scoped);
@@ -74,6 +75,7 @@ app.UseCors(options =>
 
 if (app.Environment.IsDevelopment()) app.UseHttpsRedirection();
 
+app.UseRateLimiter();
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 app.UseMiddleware<ParamBracketRemoverMiddleware>();
 

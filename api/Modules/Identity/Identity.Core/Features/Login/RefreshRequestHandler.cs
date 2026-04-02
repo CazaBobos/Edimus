@@ -7,12 +7,13 @@ using Shared.Core.Services;
 using Shared.Core.Settings;
 
 namespace Identity.Core.Features.Login;
-public class LoginRequestHandler : IRequestHandler<LoginRequest, LoginResponse>
+public class RefreshRequestHandler : IRequestHandler<RefreshRequest, LoginResponse>
 {
     private readonly IUsersRepository _usersRepository;
     private readonly IJwtSettings _jwtSettings;
     private readonly IJwtService _jwtService;
-    public LoginRequestHandler(
+
+    public RefreshRequestHandler(
         IUsersRepository usersRepository,
         IJwtSettings jwtSettings,
         IJwtService jwtService)
@@ -21,13 +22,15 @@ public class LoginRequestHandler : IRequestHandler<LoginRequest, LoginResponse>
         _jwtSettings = jwtSettings;
         _jwtService = jwtService;
     }
-    public async ValueTask<LoginResponse> Handle(LoginRequest request, CancellationToken cancellationToken)
-    {
-        var user = await _usersRepository.AsQueryable()
-            .Where(u => u.Username == request.UserOrEmail || u.Email == request.UserOrEmail)
-            .SingleAsync(cancellationToken);
 
-        Guard.Operation(HashService.Verify(request.Password, user.Password), "Invalid credentials.");
+    public async ValueTask<LoginResponse> Handle(RefreshRequest request, CancellationToken cancellationToken)
+    {
+        var userId = _jwtService.ValidateRefreshToken(request.RefreshToken);
+        Guard.Operation(userId.HasValue, "Invalid or expired refresh token.");
+
+        var user = await _usersRepository.AsQueryable()
+            .Where(u => u.Id == userId!.Value)
+            .SingleAsync(cancellationToken);
 
         var userRecord = (IUserRecord)user;
 

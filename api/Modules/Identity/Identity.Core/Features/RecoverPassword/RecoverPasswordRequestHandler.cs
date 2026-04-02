@@ -24,7 +24,7 @@ public class RecoverPasswordRequestHandler : IRequestHandler<RecoverPasswordRequ
             .Where(u => u.Enabled)
             .SingleAsync(cancellationToken);
 
-        user.SetRandomPassword();
+        var plainPassword = user.SetRandomPassword();
 
         await _usersRepository.Update(user, cancellationToken);
 
@@ -33,7 +33,7 @@ public class RecoverPasswordRequestHandler : IRequestHandler<RecoverPasswordRequ
             From = _mailSettings.From,
             To = user.Email,
             Subject = "Password Recovery",
-            Body = user.Password,
+            Body = plainPassword,
         });
 
         return new RecoverPasswordResponse();

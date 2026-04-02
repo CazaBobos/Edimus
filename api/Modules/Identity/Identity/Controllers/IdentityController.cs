@@ -3,6 +3,7 @@ using Identity.Input;
 using Mediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace Identity.Controllers;
 
@@ -19,6 +20,7 @@ public class IdentityController : ControllerBase
     /// </summary>
     [HttpPost]
     [Route("login")]
+    [EnableRateLimiting("login")]
     public async Task<LoginResponse> Login([FromBody] LoginInput input, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new LoginRequest
@@ -40,25 +42,7 @@ public class IdentityController : ControllerBase
     {
         var command = new RefreshRequest
         {
-            ExpiredToken = input.ExpiredToken,
             RefreshToken = input.RefreshToken,
-            Ip = GenerateIpAddress()
-        };
-        var response = await _mediator.Send(command, cancellationToken);
-
-        return response;
-    }
-
-    /// <summary>
-    /// Exchanges a user's token.
-    /// </summary>
-    [HttpPost]
-    [Route("exchange")]
-    public async Task<LoginResponse> ExchangeToken([FromBody] ExchangeInput input, CancellationToken cancellationToken)
-    {
-        var command = new ExchangeRequest
-        {
-            AlternateToken = input.AlternateToken,
             Ip = GenerateIpAddress()
         };
         var response = await _mediator.Send(command, cancellationToken);

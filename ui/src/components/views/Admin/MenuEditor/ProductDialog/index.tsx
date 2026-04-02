@@ -137,7 +137,7 @@ export const ProductDialog = () => {
             title="Categoría"
             name="categoryId"
             options={categories.map((c) => ({ value: c.id, label: c.name }))}
-            defaultValue={product?.categoryId?.toString()}
+            value={(request.categoryId ?? product?.categoryId)?.toString()}
             onChange={handleChange}
             disabled={isVariant}
           />
@@ -145,7 +145,7 @@ export const ProductDialog = () => {
             title="Producto padre"
             name="parentId"
             options={parentableProducts.map((c) => ({ value: c.id, label: c.name }))}
-            defaultValue={product?.parentId?.toString()}
+            value={(request.parentId ?? product?.parentId)?.toString()}
             onChange={handleChange}
             disabled={!isVariant}
           />

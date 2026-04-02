@@ -5,7 +5,7 @@ using System.Text;
 namespace Edimus.Api.Extensions;
 public static class AuthenticationExtensions
 {
-    public static IServiceCollection AddJWTAuthentication(this IServiceCollection services)
+    public static IServiceCollection AddJWTAuthentication(this IServiceCollection services, IWebHostEnvironment environment)
     {
         var jwtSection = services
             .BuildServiceProvider()
@@ -22,20 +22,23 @@ public static class AuthenticationExtensions
             })
             .AddJwtBearer(d =>
             {
-                d.RequireHttpsMetadata = false;
+                d.RequireHttpsMetadata = !environment.IsDevelopment();
                 d.SaveToken = true;
                 d.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
+                    ValidateIssuer = true,
+                    ValidIssuer = jwtSection["Issuer"],
+                    ValidateAudience = true,
+                    ValidAudience = jwtSection["Audience"],
                     ClockSkew = TimeSpan.Zero,
                     ValidateLifetime = true
                     //ClockSkew defaults to 5 minutes, so when setting up expiration,
                     //it just adds to those 5 minutes. For that it's set to TimeSpan.Zero
                 };
             });
+
         return services;
     }
 }

@@ -12,7 +12,7 @@ using Shared.Infrastructure.Persistence;
 namespace Shared.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20251124055025_Migration001_init")]
+    [Migration("20260402191022_Migration001_init")]
     partial class Migration001_init
     {
         /// <inheritdoc />
@@ -171,8 +171,8 @@ namespace Shared.Infrastructure.Migrations
                     b.Property<int>("IngredientId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Amount")
-                        .HasColumnType("integer");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
 
                     b.HasKey("ProductId", "IngredientId");
 
@@ -227,8 +227,8 @@ namespace Shared.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Stock")
-                        .HasColumnType("integer");
+                    b.Property<decimal>("Stock")
+                        .HasColumnType("numeric");
 
                     b.Property<int>("Unit")
                         .HasColumnType("integer");
@@ -244,7 +244,7 @@ namespace Shared.Infrastructure.Migrations
                             Alert = 10,
                             Enabled = true,
                             Name = "Harina 000",
-                            Stock = 50,
+                            Stock = 50m,
                             Unit = 0
                         },
                         new
@@ -253,7 +253,7 @@ namespace Shared.Infrastructure.Migrations
                             Alert = 5,
                             Enabled = true,
                             Name = "Tomate fresco",
-                            Stock = 30,
+                            Stock = 30m,
                             Unit = 0
                         },
                         new
@@ -262,7 +262,7 @@ namespace Shared.Infrastructure.Migrations
                             Alert = 3,
                             Enabled = true,
                             Name = "Queso mozzarela",
-                            Stock = 20,
+                            Stock = 20m,
                             Unit = 0
                         },
                         new
@@ -271,7 +271,7 @@ namespace Shared.Infrastructure.Migrations
                             Alert = 2,
                             Enabled = true,
                             Name = "Aceite de oliva",
-                            Stock = 15,
+                            Stock = 15m,
                             Unit = 4
                         },
                         new
@@ -280,7 +280,7 @@ namespace Shared.Infrastructure.Migrations
                             Alert = 4,
                             Enabled = true,
                             Name = "Cebolla",
-                            Stock = 3,
+                            Stock = 3m,
                             Unit = 0
                         },
                         new
@@ -289,7 +289,7 @@ namespace Shared.Infrastructure.Migrations
                             Alert = 2,
                             Enabled = true,
                             Name = "Pollo",
-                            Stock = 10,
+                            Stock = 10m,
                             Unit = 0
                         },
                         new
@@ -298,7 +298,7 @@ namespace Shared.Infrastructure.Migrations
                             Alert = 8,
                             Enabled = true,
                             Name = "Pasta seca",
-                            Stock = 40,
+                            Stock = 40m,
                             Unit = 0
                         },
                         new
@@ -307,7 +307,7 @@ namespace Shared.Infrastructure.Migrations
                             Alert = 2,
                             Enabled = true,
                             Name = "Salsa de tom ",
-                            Stock = 12,
+                            Stock = 12m,
                             Unit = 4
                         },
                         new
@@ -316,7 +316,7 @@ namespace Shared.Infrastructure.Migrations
                             Alert = 50,
                             Enabled = true,
                             Name = "Albaca",
-                            Stock = 200,
+                            Stock = 200m,
                             Unit = 1
                         },
                         new
@@ -325,7 +325,7 @@ namespace Shared.Infrastructure.Migrations
                             Alert = 1,
                             Enabled = true,
                             Name = "Vino tinto",
-                            Stock = 8,
+                            Stock = 8m,
                             Unit = 4
                         });
                 });
@@ -818,7 +818,7 @@ namespace Shared.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Requests");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Shared.Core.Entities.Premise", b =>
@@ -3720,7 +3720,7 @@ namespace Shared.Infrastructure.Migrations
                             Id = 1,
                             Email = "root@edimus.com",
                             Enabled = true,
-                            Password = "19f3ffa7404ebe44ed28b3504275b240dcf293c0e111ae710d85d390ae6ada99",
+                            Password = "$2a$11$RKOjo9jGUALtqDkaX52cj.7x8kcEj4mG4ESnP6i6Da9zc9DLE8wx.",
                             Role = 4,
                             Username = "DbSeeder"
                         });

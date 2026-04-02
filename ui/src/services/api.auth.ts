@@ -9,4 +9,10 @@ export const authApi = {
 
     return response.data;
   },
+
+  refresh: async (refreshToken: string) => {
+    const response: AxiosResponse<LoginResponse> = await axiosClient.post(`auth/refresh`, { refreshToken });
+
+    return response.data;
+  },
 };

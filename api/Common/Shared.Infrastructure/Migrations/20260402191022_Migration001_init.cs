@@ -37,7 +37,7 @@ namespace Shared.Infrastructure.Migrations
                     IngredientId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Stock = table.Column<int>(type: "integer", nullable: false),
+                    Stock = table.Column<decimal>(type: "numeric", nullable: false),
                     Alert = table.Column<int>(type: "integer", nullable: false),
                     Unit = table.Column<int>(type: "integer", nullable: false),
                     Enabled = table.Column<bool>(type: "boolean", nullable: false)
@@ -174,7 +174,7 @@ namespace Shared.Infrastructure.Migrations
                 {
                     ProductId = table.Column<int>(type: "integer", nullable: false),
                     IngredientId = table.Column<int>(type: "integer", nullable: false),
-                    Amount = table.Column<int>(type: "integer", nullable: false)
+                    Amount = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -326,7 +326,7 @@ namespace Shared.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Requests",
+                name: "Orders",
                 columns: table => new
                 {
                     ProductId = table.Column<int>(type: "integer", nullable: false),
@@ -335,15 +335,15 @@ namespace Shared.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Requests", x => new { x.TableId, x.ProductId });
+                    table.PrimaryKey("PK_Orders", x => new { x.TableId, x.ProductId });
                     table.ForeignKey(
-                        name: "FK_Requests_Products_ProductId",
+                        name: "FK_Orders_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Requests_Tables_TableId",
+                        name: "FK_Orders_Tables_TableId",
                         column: x => x.TableId,
                         principalTable: "Tables",
                         principalColumn: "TableId",
@@ -379,16 +379,16 @@ namespace Shared.Infrastructure.Migrations
                 columns: new[] { "IngredientId", "Alert", "Enabled", "Name", "Stock", "Unit" },
                 values: new object[,]
                 {
-                    { 1, 10, true, "Harina 000", 50, 0 },
-                    { 2, 5, true, "Tomate fresco", 30, 0 },
-                    { 3, 3, true, "Queso mozzarela", 20, 0 },
-                    { 4, 2, true, "Aceite de oliva", 15, 4 },
-                    { 5, 4, true, "Cebolla", 3, 0 },
-                    { 6, 2, true, "Pollo", 10, 0 },
-                    { 7, 8, true, "Pasta seca", 40, 0 },
-                    { 8, 2, true, "Salsa de tom ", 12, 4 },
-                    { 9, 50, true, "Albaca", 200, 1 },
-                    { 10, 1, true, "Vino tinto", 8, 4 }
+                    { 1, 10, true, "Harina 000", 50m, 0 },
+                    { 2, 5, true, "Tomate fresco", 30m, 0 },
+                    { 3, 3, true, "Queso mozzarela", 20m, 0 },
+                    { 4, 2, true, "Aceite de oliva", 15m, 4 },
+                    { 5, 4, true, "Cebolla", 3m, 0 },
+                    { 6, 2, true, "Pollo", 10m, 0 },
+                    { 7, 8, true, "Pasta seca", 40m, 0 },
+                    { 8, 2, true, "Salsa de tom ", 12m, 4 },
+                    { 9, 50, true, "Albaca", 200m, 1 },
+                    { 10, 1, true, "Vino tinto", 8m, 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -478,7 +478,7 @@ namespace Shared.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "UserId", "CompanyIds", "Email", "Enabled", "Password", "Role", "Username" },
-                values: new object[] { 1, null, "root@edimus.com", true, "19f3ffa7404ebe44ed28b3504275b240dcf293c0e111ae710d85d390ae6ada99", 4, "DbSeeder" });
+                values: new object[] { 1, null, "root@edimus.com", true, "$2a$11$RKOjo9jGUALtqDkaX52cj.7x8kcEj4mG4ESnP6i6Da9zc9DLE8wx.", 4, "DbSeeder" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -936,6 +936,11 @@ namespace Shared.Infrastructure.Migrations
                 column: "PremiseId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_ProductId",
+                table: "Orders",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Premises_CompanyId",
                 table: "Premises",
                 column: "CompanyId");
@@ -949,11 +954,6 @@ namespace Shared.Infrastructure.Migrations
                 name: "IX_ProductTag_TagsId",
                 table: "ProductTag",
                 column: "TagsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Requests_ProductId",
-                table: "Requests",
-                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SectorCoords_SectorId",
@@ -1001,10 +1001,10 @@ namespace Shared.Infrastructure.Migrations
                 name: "LayoutCoords");
 
             migrationBuilder.DropTable(
-                name: "ProductTag");
+                name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Requests");
+                name: "ProductTag");
 
             migrationBuilder.DropTable(
                 name: "SectorCoords");
@@ -1019,10 +1019,10 @@ namespace Shared.Infrastructure.Migrations
                 name: "Ingredients");
 
             migrationBuilder.DropTable(
-                name: "Tags");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Tags");
 
             migrationBuilder.DropTable(
                 name: "Sectors");

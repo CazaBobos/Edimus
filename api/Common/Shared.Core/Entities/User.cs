@@ -69,17 +69,14 @@ public class User : Entity<int>, IUserRecord
         }
         if (currentPassword is not null || newPassword is not null)
         {
-            var hashedCurrentPassword = HashService.CreateHash(currentPassword!);
-            var hashedNewPassword = HashService.CreateHash(newPassword!);
-
-            Guard.Operation(hashedCurrentPassword == Password, "User password is incorrect.");
-            Guard.Operation(hashedCurrentPassword != hashedNewPassword, "The new password must be different than the previous one.");
+            Guard.Operation(HashService.Verify(currentPassword!, Password), "User password is incorrect.");
+            Guard.Operation(currentPassword != newPassword, "The new password must be different than the previous one.");
 
             Guard.Argument(() => newPassword)
                 .MinLength(8)
                 .MaxLength(64)
                 .ValidPasswordFormat();
-            Password = hashedNewPassword;
+            Password = HashService.CreateHash(newPassword!);
 
             affectedMembers.Add(nameof(Password));
         }
@@ -116,7 +113,7 @@ public class User : Entity<int>, IUserRecord
         };
     }
 
-    public void SetRandomPassword()
+    public string SetRandomPassword()
     {
         string allowedSymbols = "@#$~%&=_!¡*^";
         string allowedNumbers = "0123456789";
@@ -133,7 +130,6 @@ public class User : Entity<int>, IUserRecord
         for (int i = 4; i < 8; i++)
         {
             string allCharacters = allowedUppercase + allowedLowercase + allowedNumbers + allowedSymbols;
-
             passwordChars[i] = allCharacters[random.Next(allCharacters.Length)];
         }
 
@@ -145,7 +141,9 @@ public class User : Entity<int>, IUserRecord
             passwordChars[j] = temp;
         }
 
-        Password = new string(passwordChars);
+        var plainPassword = new string(passwordChars);
+        Password = HashService.CreateHash(plainPassword);
+        return plainPassword;
     }
 
 }

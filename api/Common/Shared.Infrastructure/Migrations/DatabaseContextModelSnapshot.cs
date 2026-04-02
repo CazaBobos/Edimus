@@ -3717,7 +3717,7 @@ namespace Shared.Infrastructure.Migrations
                             Id = 1,
                             Email = "root@edimus.com",
                             Enabled = true,
-                            Password = "19f3ffa7404ebe44ed28b3504275b240dcf293c0e111ae710d85d390ae6ada99",
+                            Password = "$2a$11$RKOjo9jGUALtqDkaX52cj.7x8kcEj4mG4ESnP6i6Da9zc9DLE8wx.",
                             Role = 4,
                             Username = "DbSeeder"
                         });

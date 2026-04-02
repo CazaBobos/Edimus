@@ -67,7 +67,7 @@ export const IngredientDialog = () => {
           title="Unidad de medida"
           name="unit"
           onChange={handleSetRequest}
-          defaultValue={ingredient?.unit.toString()}
+          value={(request.unit ?? ingredient?.unit)?.toString()}
           options={Object.entries(measurementUnitsMap).map(([value, label]) => ({ value, label }))}
         />
         <div className={styles.row}>
