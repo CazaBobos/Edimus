@@ -7,10 +7,10 @@
   align-items: center;
   gap: 6px;
   padding: 7px 14px;
-  background: $orange_tint;
-  border: 1px solid $orange_border;
+  background: var(--mantine-primary-color-light);
+  border: 1px solid color-mix(in srgb, var(--mantine-primary-color-filled) 25%, transparent);
   border-radius: 8px;
-  color: $orange;
+  color: var(--mantine-primary-color-filled);
   font-size: 13px;
   font-weight: 500;
   font-family: inherit;
@@ -19,7 +19,7 @@
   white-space: nowrap;
 
   &:hover {
-    background: $orange_tint_hover;
+    background: var(--mantine-primary-color-light-hover);
   }
 
   &:disabled {
@@ -57,17 +57,17 @@
   }
 
   &[data-active="true"] {
-    background: $orange_tint;
-    color: $orange;
+    background: var(--mantine-primary-color-light);
+    color: var(--mantine-primary-color-filled);
     font-weight: 600;
 
     &:hover {
-      background: $orange_tint_hover;
+      background: var(--mantine-primary-color-light-hover);
     }
 
     .count {
-      background: $orange_badge;
-      color: $orange;
+      background: color-mix(in srgb, var(--mantine-primary-color-filled) 20%, transparent);
+      color: var(--mantine-primary-color-filled);
     }
   }
 
@@ -101,8 +101,8 @@
   }
 
   &[data-active="true"] {
-    color: $orange;
-    border-bottom-color: $orange;
+    color: var(--mantine-primary-color-filled);
+    border-bottom-color: var(--mantine-primary-color-filled);
   }
 }
 

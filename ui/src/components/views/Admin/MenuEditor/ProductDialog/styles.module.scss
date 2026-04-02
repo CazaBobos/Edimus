@@ -80,7 +80,7 @@
 .consumptionAmount {
   font-size: 13px;
   font-weight: 600;
-  color: $orange;
+  color: var(--mantine-primary-color-filled);
   flex-shrink: 0;
   min-width: 28px;
   text-align: right;

@@ -18,13 +18,38 @@ import QRCode from "react-qr-code";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { ControlState } from "@/components/ui/common";
-import { Select, SelectOption } from "@/components/ui/Select";
+import { Select } from "@/components/ui/Select";
 import { Tabs } from "@/components/ui/Tabs";
 
 import { Positioner } from "../Positioner";
 import { SurfaceEditor } from "../SurfaceEditor";
 import { OrdersList } from "./OrdersList";
 import styles from "./styles.module.scss";
+
+const statusOptions = [
+  {
+    value: String(TableStatus.Free),
+    label: tableStatusNameMap[TableStatus.Free],
+    icon: <BiSolidCircle size={12} fill={tableStatusColorMap[TableStatus.Free]} />,
+  },
+  {
+    value: String(TableStatus.Occupied),
+    label: tableStatusNameMap[TableStatus.Occupied],
+    icon: <BiSolidCircle size={12} fill={tableStatusColorMap[TableStatus.Occupied]} />,
+  },
+  {
+    value: String(TableStatus.Calling),
+    label: tableStatusNameMap[TableStatus.Calling],
+    icon: <BiSolidCircle size={12} fill={tableStatusColorMap[TableStatus.Calling]} />,
+    disabled: true,
+  },
+  {
+    value: String(TableStatus.Arrived),
+    label: tableStatusNameMap[TableStatus.Arrived],
+    icon: <BiSolidCircle size={12} fill={tableStatusColorMap[TableStatus.Arrived]} />,
+    disabled: true,
+  },
+];
 
 export const TableDialog = () => {
   const table = useAdminStore((store) => store.tableDialogOpenState);
@@ -42,7 +67,7 @@ export const TableDialog = () => {
     setRequest((prev) => ({ ...prev, orders }));
   };
   const handleSetStatus = (state: ControlState) => {
-    setRequest((prev) => ({ ...prev, status: Number(state.value) }));
+    if (!!state) setRequest((prev) => ({ ...prev, status: Number(state.value) }));
   };
   const handleSetCoords = (coords: Coords) => {
     setRequest((prev) => ({ ...prev, positionX: coords.x, positionY: coords.y }));
@@ -65,12 +90,6 @@ export const TableDialog = () => {
     if (table) removeTableMutation.mutate(table.id, mutationOptions);
   };
 
-  const tableOptions: SelectOption[] = [
-    { label: tableStatusNameMap[TableStatus.Free], value: TableStatus.Free },
-    { label: tableStatusNameMap[TableStatus.Calling], value: TableStatus.Calling, hidden: true },
-    { label: tableStatusNameMap[TableStatus.Occupied], value: TableStatus.Occupied },
-  ];
-
   const tabs = ["Pedidos", "Código QR"];
   const [activeTab, setActiveTab] = useState<number>(0);
 
@@ -80,8 +99,10 @@ export const TableDialog = () => {
       onClose={handleClose}
       title={
         <div className={styles.drawerTitle}>
-          {table && <BiSolidCircle size={16} fill={tableStatusColorMap[table.status]} />}
           <span>{table ? `Mesa #${table.id}` : "Nueva Mesa"}</span>
+          {table && (
+            <Select options={statusOptions} value={String(request.status ?? table.status)} onChange={handleSetStatus} />
+          )}
         </div>
       }
       position="right"
@@ -102,12 +123,6 @@ export const TableDialog = () => {
               onChange={handleSetSurface}
             />
           </div>
-          <Select
-            title="Estado"
-            options={tableOptions}
-            defaultValue={table?.status.toString()}
-            onChange={handleSetStatus}
-          />
           <Button label="Guardar Cambios" icon={<BiSave />} onClick={handleSave} />
           {table && <Button label="Eliminar Mesa" icon={<BiTrash />} onClick={handleRemove} />}
         </div>

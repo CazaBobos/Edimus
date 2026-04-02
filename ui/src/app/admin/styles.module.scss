@@ -23,7 +23,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(ellipse at 50% 40%, $orange_glow 0%, transparent 65%);
+  background: radial-gradient(ellipse at 50% 40%, color-mix(in srgb, var(--mantine-primary-color-filled) 6%, transparent) 0%, transparent 65%);
 }
 
 .loginContent {

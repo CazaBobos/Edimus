@@ -44,8 +44,8 @@
     transform 0.1s;
 
   &:hover {
-    border-color: $orange;
-    color: $orange;
+    border-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-filled);
   }
 
   &:active {
@@ -54,8 +54,8 @@
 }
 
 .pillActive {
-  background: $orange;
-  border-color: $orange;
+  background: var(--mantine-primary-color-filled);
+  border-color: var(--mantine-primary-color-filled);
   color: $dark_text;
   font-weight: 700;
 }
@@ -128,7 +128,7 @@
 .price {
   font-weight: 700;
   font-size: 15px;
-  color: $orange;
+  color: var(--mantine-primary-color-filled);
   white-space: nowrap;
   padding-top: 1px;
 }
@@ -167,7 +167,7 @@
 
 .variantPrice {
   font-size: 13px;
-  color: $orange;
+  color: var(--mantine-primary-color-filled);
   opacity: 0.75;
   white-space: nowrap;
 }

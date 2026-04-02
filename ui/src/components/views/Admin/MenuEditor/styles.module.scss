@@ -160,9 +160,9 @@
   transition: background 0.12s, color 0.12s, border-color 0.12s;
 
   &:hover {
-    background: $orange_tint;
-    color: $orange;
-    border-color: $orange_border_hover;
+    background: var(--mantine-primary-color-light);
+    color: var(--mantine-primary-color-filled);
+    border-color: color-mix(in srgb, var(--mantine-primary-color-filled) 30%, transparent);
   }
 
   &[data-enabled="false"] {

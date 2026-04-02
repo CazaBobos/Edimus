@@ -47,9 +47,9 @@
   }
 
   &[data-type="low"] {
-    background: $orange_tint;
-    color: $orange;
-    border: 1px solid $orange_border;
+    background: var(--mantine-primary-color-light);
+    color: var(--mantine-primary-color-filled);
+    border: 1px solid color-mix(in srgb, var(--mantine-primary-color-filled) 25%, transparent);
   }
 
   &[data-type="inactive"] {
@@ -97,7 +97,7 @@
   }
 
   &:focus {
-    border-color: $orange_focus;
+    border-color: color-mix(in srgb, var(--mantine-primary-color-filled) 40%, transparent);
   }
 }
 
