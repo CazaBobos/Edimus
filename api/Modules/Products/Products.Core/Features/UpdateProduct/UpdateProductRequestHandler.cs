@@ -33,7 +33,7 @@ public class UpdateProductRequestHandler : IRequestHandler<UpdateProductRequest,
             request.CategoryId,
             request.Price,
             request.Name,
-            request.Description, 
+            request.Description,
             request.Consumptions?.Select(c => (c.IngredientId, c.Amount)).ToList());
 
         await _productsRepository.Update(product, cancellationToken);

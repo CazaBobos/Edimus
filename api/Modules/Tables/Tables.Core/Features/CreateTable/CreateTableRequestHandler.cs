@@ -26,7 +26,7 @@ public class CreateTableRequestHandler : IRequestHandler<CreateTableRequest, Cre
         table.Update(surface: request.Surface.Select(c => (c.X, c.Y)).ToList());
 
         await _tablesRepository.Update(table, cancellationToken);
-        
+
         return new CreateTableResponse
         {
             Id = table.Id,

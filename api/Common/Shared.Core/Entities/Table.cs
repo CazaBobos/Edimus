@@ -36,7 +36,8 @@ public class Table : AggregateRoot<int>
 
     public void Arrive()
     {
-        if (Status == TableStatus.Free) {
+        if (Status == TableStatus.Free)
+        {
             Status = TableStatus.Arrived;
         }
     }

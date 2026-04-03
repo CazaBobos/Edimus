@@ -1,6 +1,7 @@
 ﻿namespace Shared.Core.Entities;
 
-public enum TableStatus {
+public enum TableStatus
+{
     Free,
     Calling,
     Occupied,

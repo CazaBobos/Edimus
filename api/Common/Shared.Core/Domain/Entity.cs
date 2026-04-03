@@ -1,7 +1,4 @@
-﻿using Shared.Core.Abstractions;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Shared.Core.Domain;
+﻿namespace Shared.Core.Domain;
 public class Entity<TIdentity> : IEquatable<Entity<TIdentity>>
 {
     public virtual TIdentity Id { get; protected set; } = default!;
@@ -9,7 +6,8 @@ public class Entity<TIdentity> : IEquatable<Entity<TIdentity>>
 
     #region Constructors
     protected Entity(TIdentity id) => Id = id;
-    protected Entity() {
+    protected Entity()
+    {
     }
     #endregion
 
@@ -38,7 +36,7 @@ public class Entity<TIdentity> : IEquatable<Entity<TIdentity>>
     #region Object Overrides
     public override string ToString() => $"{GetType().Name}#[Identity={Id}]";
     #endregion
-    
+
     public static bool operator ==(Entity<TIdentity> a, Entity<TIdentity> b)
     {
         if (ReferenceEquals(a, null) && ReferenceEquals(b, null)) return true;

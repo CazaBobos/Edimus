@@ -18,12 +18,12 @@ public class JwtSettings : IJwtSettings
 
         Issuer = config.GetSection("JWT:Issuer").Value
             ?? throw new InvalidOperationException("Issuer not found in app settings file");
-        
-        var secret = config.GetSection("JWT:Secret").Value 
+
+        var secret = config.GetSection("JWT:Secret").Value
             ?? throw new InvalidOperationException("Secret not found in app settings file");
         Secret = secret;
-        
-        var expiration = config.GetSection("JWT:Expiration").Value 
+
+        var expiration = config.GetSection("JWT:Expiration").Value
             ?? throw new InvalidOperationException("Expiration not found in app settings file");
         ExpirationInMinutes = int.Parse(expiration);
 

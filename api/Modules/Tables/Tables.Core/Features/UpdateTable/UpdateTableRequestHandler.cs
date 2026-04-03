@@ -19,7 +19,7 @@ public class UpdateTableRequestHandler : IRequestHandler<UpdateTableRequest, Upd
     {
         var table = await _tablesRepository.GetById(request.Id, cancellationToken);
 
-        if(table is null) throw new HttpNotFoundException();
+        if (table is null) throw new HttpNotFoundException();
 
         table.Update(
             request.Status,

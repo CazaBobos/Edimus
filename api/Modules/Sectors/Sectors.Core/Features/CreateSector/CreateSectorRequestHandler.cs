@@ -24,11 +24,11 @@ public class CreateSectorRequestHandler : IRequestHandler<CreateSectorRequest, C
         );
 
         await _sectorsRepository.Add(sector, cancellationToken);
-        
+
         sector.Update(surface: request.Surface.Select(c => (c.X, c.Y)).ToList());
 
         await _sectorsRepository.Update(sector, cancellationToken);
-        
+
         return new CreateSectorResponse
         {
             Id = sector.Id
