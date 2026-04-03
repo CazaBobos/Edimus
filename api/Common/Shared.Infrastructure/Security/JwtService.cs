@@ -89,7 +89,7 @@ public class JwtService : IJwtService
         yield return new Claim(UserClaims.Id, user.Id.ToString());
         yield return new Claim(UserClaims.Username, user.Username.ToString());
         yield return new Claim(UserClaims.Role, ((int)user.Role).ToString());
-        yield return new Claim(UserClaims.Companies, user.CompanyIds?.ToString() ?? "[]");
+        yield return new Claim(UserClaims.Companies, string.Join(",", user.CompanyIds));
     }
 
     private SigningCredentials GetSigningCredentials()

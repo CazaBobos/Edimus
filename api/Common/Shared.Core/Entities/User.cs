@@ -13,7 +13,7 @@ public class User : Entity<int>, IUserRecord
     public string Email { get; protected set; } = string.Empty;
     public string Password { get; protected set; } = string.Empty;
     public UserRole Role { get; protected set; }
-    public List<int>? CompanyIds { get; protected set; }
+    public List<int> CompanyIds { get; protected set; } = [];
     public string? PasswordResetToken { get; protected set; }
     public DateTime? PasswordResetExpiresAt { get; protected set; }
 
