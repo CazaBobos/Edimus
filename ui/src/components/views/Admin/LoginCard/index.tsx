@@ -11,8 +11,8 @@ import styles from "./styles.module.scss";
 
 export const LoginCard = () => {
   const [request, setRequest] = useState<LoginRequest>({
-    userOrEmail: "DbSeeder",
-    password: "T3s7P@ssw0rd",
+    userOrEmail: process.env.NEXT_PUBLIC_DEV_USER ?? "",
+    password: process.env.NEXT_PUBLIC_DEV_PASS ?? "",
   });
   const handleSetRequest = (state: ControlState) => {
     const { name, value } = state;

@@ -1,4 +1,5 @@
 using Identity.Core.Features.Login;
+using Identity.Core.Features.ResetPassword;
 using Identity.Input;
 using Mediator;
 using Microsoft.AspNetCore.Authorization;
@@ -48,6 +49,21 @@ public class IdentityController : ControllerBase
         var response = await _mediator.Send(command, cancellationToken);
 
         return response;
+    }
+
+    /// <summary>
+    /// Resets a user's password via a reset token.
+    /// </summary>
+    [HttpPost]
+    [Route("reset-password")]
+    public async Task<ResetPasswordResponse> ResetPassword([FromBody] ResetPasswordInput input, CancellationToken cancellationToken)
+    {
+        return await _mediator.Send(new ResetPasswordRequest
+        {
+            UserId = input.UserId,
+            Token = input.Token,
+            NewPassword = input.NewPassword,
+        }, cancellationToken);
     }
 
     private string GenerateIpAddress()

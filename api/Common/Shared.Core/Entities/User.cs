@@ -3,6 +3,7 @@ using Shared.Core.Abstractions;
 using Shared.Core.Domain;
 using Shared.Core.Extensions;
 using Shared.Core.Services;
+using System.Security.Cryptography;
 namespace Shared.Core.Entities;
 
 public class User : Entity<int>, IUserRecord
@@ -13,6 +14,8 @@ public class User : Entity<int>, IUserRecord
     public string Password { get; protected set; } = string.Empty;
     public UserRole Role { get; protected set; }
     public List<int>? CompanyIds { get; protected set; }
+    public string? PasswordResetToken { get; protected set; }
+    public DateTime? PasswordResetExpiresAt { get; protected set; }
 
     protected User() { }
 
@@ -111,6 +114,30 @@ public class User : Entity<int>, IUserRecord
             Role = role,
             CompanyIds = companies,
         };
+    }
+
+    public string GenerateResetToken()
+    {
+        var token = Convert.ToHexString(RandomNumberGenerator.GetBytes(32));
+        PasswordResetToken = HashService.CreateDeterministicHash(token);
+        PasswordResetExpiresAt = DateTime.UtcNow.AddMinutes(15);
+        return token;
+    }
+
+    public void ResetPassword(string token, string newPassword)
+    {
+        Guard.Operation(PasswordResetToken is not null, "No reset token has been requested.");
+        Guard.Operation(PasswordResetExpiresAt > DateTime.UtcNow, "Reset link has expired.");
+        Guard.Operation(HashService.CreateDeterministicHash(token) == PasswordResetToken, "Invalid reset token.");
+
+        Guard.Argument(() => newPassword)
+            .NotNull()
+            .MinLength(8)
+            .MaxLength(64)
+            .ValidPasswordFormat();
+        Password = HashService.CreateHash(newPassword);
+        PasswordResetToken = null;
+        PasswordResetExpiresAt = null;
     }
 
     public string SetRandomPassword()

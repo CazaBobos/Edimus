@@ -1,4 +1,6 @@
 using Categories.Extensions;
+using Microsoft.EntityFrameworkCore;
+using Shared.Infrastructure.Persistence;
 using Companies.Extensions;
 using Edimus.Api.Extensions;
 using Edimus.Api.FeatureProviders;
@@ -57,6 +59,12 @@ builder.Services.AddIdentity();
 builder.Services.AddNextjsStaticHosting(options => options.RootPath = "StaticFiles");
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+    dbContext.Database.Migrate();
+}
 
 app.MapNextjsStaticHtmls(); // <= Serves Static HTMLs
 app.UseNextjsStaticHosting(); // <= For other required files (i.e. css and js files)

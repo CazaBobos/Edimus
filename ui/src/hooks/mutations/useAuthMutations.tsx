@@ -1,7 +1,7 @@
 import { useToast } from "@/hooks/useToast";
 import { authApi } from "@/services/api.auth";
 import { useAppUserStore } from "@/stores";
-import { LoginRequest } from "@/types";
+import { LoginRequest, ResetPasswordRequest } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
@@ -25,5 +25,19 @@ export const useAuthMutations = () => {
     },
   });
 
-  return { loginMutation };
+  const resetPasswordMutation = useMutation({
+    mutationFn: async (request: ResetPasswordRequest) => await authApi.resetPassword(request),
+    onMutate: () => {
+      showInfo("Por favor, espere...");
+    },
+    onError: () => {
+      showError("El enlace es inválido o ha expirado.");
+    },
+    onSuccess: () => {
+      clearToast();
+      router.push("/admin");
+    },
+  });
+
+  return { loginMutation, resetPasswordMutation };
 };

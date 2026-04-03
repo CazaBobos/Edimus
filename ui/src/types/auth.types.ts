@@ -12,3 +12,9 @@ export type LoginRequest = {
   userOrEmail: string;
   password: string;
 };
+
+export type ResetPasswordRequest = {
+  userId: number;
+  token: string;
+  newPassword: string;
+};

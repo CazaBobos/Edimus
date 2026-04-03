@@ -12,11 +12,6 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddDatabaseContext(this IServiceCollection services)
     {
         services.AddDbContext<DatabaseContext>();
-        using (var scope = services.BuildServiceProvider().CreateScope())
-        {
-            var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
-            dbContext.Database.Migrate();
-        }
 
         return services;
     }

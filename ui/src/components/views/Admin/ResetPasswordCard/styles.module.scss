@@ -1,0 +1,18 @@
+@use "common/colors" as *;
+
+.reset {
+  width: 100%;
+  padding: 28px 24px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  strong {
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    color: $light_text;
+    padding-bottom: 4px;
+    border-bottom: 1px solid $border_light;
+  }
+}

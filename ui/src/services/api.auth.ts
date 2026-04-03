@@ -1,3 +1,4 @@
+import type { ResetPasswordRequest } from "@/types";
 import { LoginRequest, LoginResponse } from "@/types";
 import { AxiosResponse } from "axios";
 
@@ -14,5 +15,9 @@ export const authApi = {
     const response: AxiosResponse<LoginResponse> = await axiosClient.post(`auth/refresh`, { refreshToken });
 
     return response.data;
+  },
+
+  resetPassword: async (request: ResetPasswordRequest) => {
+    await axiosClient.post(`auth/reset-password`, request);
   },
 };
