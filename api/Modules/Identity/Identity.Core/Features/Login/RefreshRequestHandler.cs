@@ -40,7 +40,8 @@ public class RefreshRequestHandler : IRequestHandler<RefreshRequest, LoginRespon
             Email = user.Email,
             CompanyIds = user.CompanyIds,
             Role = user.Role,
-            ExpiresIn = _jwtSettings.ExpirationInMinutes,
+            TokenExpiresAt = DateTimeOffset.UtcNow.AddMinutes(_jwtSettings.ExpirationInMinutes).ToUnixTimeMilliseconds(),
+            RefreshTokenExpiresAt = DateTimeOffset.UtcNow.AddDays(_jwtSettings.RefreshExpirationInDays).ToUnixTimeMilliseconds(),
             Token = _jwtService.GenerateToken(userRecord),
             RefreshToken = _jwtService.GenerateRefreshToken(userRecord),
         };

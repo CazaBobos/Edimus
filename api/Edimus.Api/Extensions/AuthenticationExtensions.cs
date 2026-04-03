@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -24,6 +25,14 @@ public static class AuthenticationExtensions
             {
                 d.RequireHttpsMetadata = !environment.IsDevelopment();
                 d.SaveToken = true;
+                d.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        context.Token = context.Request.Cookies["token"];
+                        return Task.CompletedTask;
+                    }
+                };
                 d.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,

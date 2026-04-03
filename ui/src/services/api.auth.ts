@@ -7,14 +7,16 @@ import { axiosClient } from "./axios";
 export const authApi = {
   login: async (request: LoginRequest) => {
     const response: AxiosResponse<LoginResponse> = await axiosClient.post(`auth/login`, request);
-
     return response.data;
   },
 
-  refresh: async (refreshToken: string) => {
-    const response: AxiosResponse<LoginResponse> = await axiosClient.post(`auth/refresh`, { refreshToken });
-
+  refresh: async () => {
+    const response: AxiosResponse<LoginResponse> = await axiosClient.post(`auth/refresh`);
     return response.data;
+  },
+
+  logout: async () => {
+    await axiosClient.post(`auth/logout`);
   },
 
   resetPassword: async (request: ResetPasswordRequest) => {

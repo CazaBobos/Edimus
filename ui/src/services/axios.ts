@@ -7,6 +7,7 @@ const API_URI: string = process.env.NEXT_PUBLIC_API_BASE_URL!;
 export const axiosClient: AxiosInstance = axios.create({
   baseURL: API_URI,
   timeout: 30000,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
@@ -15,17 +16,16 @@ export const axiosClient: AxiosInstance = axios.create({
   },
 });
 
-axiosClient.interceptors.request.use((requestConfig) => {
-  const token = useAppUserStore.getState().user?.token;
-  requestConfig.headers.Authorization = `Bearer ${token}`;
-  return requestConfig;
-});
-
+// Tracks whether a token refresh is already in progress.
 let isRefreshing = false;
-let pendingQueue: Array<{ resolve: (token: string) => void; reject: (err: unknown) => void }> = [];
 
-const drainQueue = (error: unknown, token: string | null = null) => {
-  pendingQueue.forEach((p) => (error ? p.reject(error) : p.resolve(token!)));
+// Requests that arrived while a refresh was in progress are held here.
+// Once the refresh settles, they are either retried or rejected in bulk.
+let pendingQueue: Array<{ resolve: (value?: unknown) => void; reject: (err: unknown) => void }> = [];
+
+// Resolves or rejects every queued request depending on whether the refresh succeeded.
+const drainQueue = (error: unknown) => {
+  pendingQueue.forEach((p) => (error ? p.reject(error) : p.resolve()));
   pendingQueue = [];
 };
 
@@ -34,40 +34,32 @@ axiosClient.interceptors.response.use(
   async (error) => {
     const original: InternalAxiosRequestConfig & { _retry?: boolean } = error.config;
 
+    // Only handle 401s. The _retry flag prevents infinite loops if the
+    // retried request itself comes back with another 401.
     if (error.response?.status !== 401 || original._retry) {
       return Promise.reject(error);
     }
 
-    const refreshToken = useAppUserStore.getState().user?.refreshToken;
-    if (!refreshToken) {
-      useAppUserStore.getState().endSession();
-      return Promise.reject(error);
-    }
-
     if (isRefreshing) {
+      // A refresh is already underway — park this request in the queue.
+      // It will be retried automatically once the refresh completes.
       return new Promise((resolve, reject) => {
         pendingQueue.push({ resolve, reject });
-      }).then((token) => {
-        original.headers.Authorization = `Bearer ${token}`;
-        return axiosClient(original);
-      });
+      }).then(() => axiosClient(original));
     }
 
     original._retry = true;
     isRefreshing = true;
 
     try {
-      const response = await axiosClient.post<LoginResponse>(`auth/refresh`, {
-        refreshToken,
-      });
-      const { token, refreshToken: newRefreshToken } = response.data;
-
-      useAppUserStore.getState().updateTokens(token, newRefreshToken);
-      original.headers.Authorization = `Bearer ${token}`;
-      drainQueue(null, token);
-
-      return axiosClient(original);
+      // The browser sends the refreshToken HTTP-only cookie automatically.
+      // On success the server sets fresh token + refreshToken cookies in the response.
+      const response = await axiosClient.post<LoginResponse>(`auth/refresh`);
+      useAppUserStore.getState().renewSession(response.data.refreshTokenExpiresAt);
+      drainQueue(null);
+      return axiosClient(original); // retry the original request with the new cookie
     } catch (refreshError) {
+      // Refresh failed (expired / invalid) — reject all queued requests and log the user out.
       drainQueue(refreshError);
       useAppUserStore.getState().endSession();
       return Promise.reject(refreshError);

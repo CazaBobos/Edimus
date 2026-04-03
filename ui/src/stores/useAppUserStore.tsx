@@ -2,17 +2,12 @@ import { LoginResponse } from "@/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-const REFRESH_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000; // = 7 Days
-
-type AppUser = LoginResponse & {
-  created: Date;
-  refreshTokenExpiresAt: number;
-};
+type AppUser = LoginResponse & { created: Date };
 
 type AppUserStore = {
   user: AppUser | null;
   setUser: (user: LoginResponse) => void;
-  updateTokens: (token: string, refreshToken: string) => void;
+  renewSession: (expiresAt: number) => void;
   endSession: () => void;
   isLoggedIn: () => boolean;
 };
@@ -23,21 +18,15 @@ export const useAppUserStore = create<AppUserStore>()(
       user: null,
       setUser: (user: LoginResponse) =>
         set(() => ({
-          user: {
-            ...user,
-            created: new Date(),
-            refreshTokenExpiresAt: Date.now() + REFRESH_EXPIRY_MS,
-          },
+          user: { ...user, created: new Date() },
         })),
-      updateTokens: (token: string, refreshToken: string) =>
+      renewSession: (expiresAt: number) =>
         set((state) => ({
           user: state.user
             ? {
                 ...state.user,
-                token,
-                refreshToken,
                 created: new Date(),
-                refreshTokenExpiresAt: Date.now() + REFRESH_EXPIRY_MS,
+                refreshTokenExpiresAt: expiresAt,
               }
             : null,
         })),

@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 export const useAuthMutations = () => {
   const router = useRouter();
-  const setUser = useAppUserStore((store) => store.setUser);
+  const { setUser, endSession } = useAppUserStore();
   const { showInfo, showError, clearToast } = useToast();
 
   const loginMutation = useMutation({
@@ -21,6 +21,14 @@ export const useAuthMutations = () => {
     onSuccess: (response) => {
       clearToast();
       setUser(response);
+      router.refresh();
+    },
+  });
+
+  const logoutMutation = useMutation({
+    mutationFn: async () => await authApi.logout(),
+    onSuccess: () => {
+      endSession();
       router.refresh();
     },
   });
@@ -39,5 +47,5 @@ export const useAuthMutations = () => {
     },
   });
 
-  return { loginMutation, resetPasswordMutation };
+  return { loginMutation, logoutMutation, resetPasswordMutation };
 };

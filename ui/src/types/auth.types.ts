@@ -2,10 +2,9 @@ export type LoginResponse = {
   username: string;
   email: string;
   companyIds: number[];
-  token: string;
-  refreshToken: string;
   role: number;
-  expiresIn: number;
+  tokenExpiresAt: number;
+  refreshTokenExpiresAt: number;
 };
 
 export type LoginRequest = {

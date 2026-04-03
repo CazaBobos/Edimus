@@ -3,8 +3,12 @@ using Identity.Core.Features.ResetPassword;
 using Identity.Input;
 using Mediator;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using Shared.Core.Settings;
 
 namespace Identity.Controllers;
 
@@ -14,7 +18,15 @@ namespace Identity.Controllers;
 public class IdentityController : ControllerBase
 {
     public readonly IMediator _mediator;
-    public IdentityController(IMediator mediator) => _mediator = mediator;
+    private readonly IJwtSettings _jwtSettings;
+    private readonly IWebHostEnvironment _environment;
+
+    public IdentityController(IMediator mediator, IJwtSettings jwtSettings, IWebHostEnvironment environment)
+    {
+        _mediator = mediator;
+        _jwtSettings = jwtSettings;
+        _environment = environment;
+    }
 
     /// <summary>
     /// Authenticates a user.
@@ -31,6 +43,7 @@ public class IdentityController : ControllerBase
             Ip = GenerateIpAddress()
         }, cancellationToken);
 
+        SetAuthCookies(response.Token, response.RefreshToken);
         return response;
     }
 
@@ -39,16 +52,30 @@ public class IdentityController : ControllerBase
     /// </summary>
     [HttpPost]
     [Route("refresh")]
-    public async Task<LoginResponse> Refresh([FromBody] RefreshInput input, CancellationToken cancellationToken)
+    public async Task<LoginResponse> Refresh(CancellationToken cancellationToken)
     {
-        var command = new RefreshRequest
-        {
-            RefreshToken = input.RefreshToken,
-            Ip = GenerateIpAddress()
-        };
-        var response = await _mediator.Send(command, cancellationToken);
+        var refreshToken = Request.Cookies["refreshToken"] ?? string.Empty;
 
+        var response = await _mediator.Send(new RefreshRequest
+        {
+            RefreshToken = refreshToken,
+            Ip = GenerateIpAddress()
+        }, cancellationToken);
+
+        SetAuthCookies(response.Token, response.RefreshToken);
         return response;
+    }
+
+    /// <summary>
+    /// Ends a user's session.
+    /// </summary>
+    [HttpPost]
+    [Route("logout")]
+    public IActionResult Logout()
+    {
+        Response.Cookies.Delete("token");
+        Response.Cookies.Delete("refreshToken");
+        return Ok();
     }
 
     /// <summary>
@@ -64,6 +91,27 @@ public class IdentityController : ControllerBase
             Token = input.Token,
             NewPassword = input.NewPassword,
         }, cancellationToken);
+    }
+
+    private void SetAuthCookies(string token, string refreshToken)
+    {
+        var secure = !_environment.IsDevelopment();
+
+        Response.Cookies.Append("token", token, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = secure,
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTimeOffset.UtcNow.AddMinutes(_jwtSettings.ExpirationInMinutes)
+        });
+
+        Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = secure,
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTimeOffset.UtcNow.AddDays(_jwtSettings.RefreshExpirationInDays)
+        });
     }
 
     private string GenerateIpAddress()
