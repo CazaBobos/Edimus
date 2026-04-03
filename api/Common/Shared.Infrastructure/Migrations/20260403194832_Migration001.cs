@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -9,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Shared.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Migration001_init : Migration
+    public partial class Migration001 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,6 +24,9 @@ namespace Shared.Infrastructure.Migrations
                     Name = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
                     Slogan = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
                     Acronym = table.Column<string>(type: "character varying(8)", maxLength: 8, nullable: false),
+                    ReactiveStock = table.Column<bool>(type: "boolean", nullable: false),
+                    PublicPrices = table.Column<bool>(type: "boolean", nullable: false),
+                    PublicOrders = table.Column<bool>(type: "boolean", nullable: false),
                     Enabled = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -72,6 +76,8 @@ namespace Shared.Infrastructure.Migrations
                     Password = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     Role = table.Column<int>(type: "integer", nullable: false),
                     CompanyIds = table.Column<List<int>>(type: "integer[]", nullable: true),
+                    PasswordResetToken = table.Column<string>(type: "text", nullable: true),
+                    PasswordResetExpiresAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Enabled = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -371,8 +377,8 @@ namespace Shared.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Companies",
-                columns: new[] { "CompanyId", "Acronym", "Enabled", "Name", "Slogan" },
-                values: new object[] { 1, "MA", true, "Maria Antonieta", "Universo Deli" });
+                columns: new[] { "CompanyId", "Acronym", "Enabled", "Name", "PublicOrders", "PublicPrices", "ReactiveStock", "Slogan" },
+                values: new object[] { 1, "MA", true, "Maria Antonieta", true, true, true, "Universo Deli" });
 
             migrationBuilder.InsertData(
                 table: "Ingredients",
@@ -477,8 +483,8 @@ namespace Shared.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "CompanyIds", "Email", "Enabled", "Password", "Role", "Username" },
-                values: new object[] { 1, null, "root@edimus.com", true, "$2a$11$RKOjo9jGUALtqDkaX52cj.7x8kcEj4mG4ESnP6i6Da9zc9DLE8wx.", 4, "DbSeeder" });
+                columns: new[] { "UserId", "CompanyIds", "Email", "Enabled", "Password", "PasswordResetExpiresAt", "PasswordResetToken", "Role", "Username" },
+                values: new object[] { 1, null, "root@edimus.com", true, "$2a$11$RKOjo9jGUALtqDkaX52cj.7x8kcEj4mG4ESnP6i6Da9zc9DLE8wx.", null, null, 4, "DbSeeder" });
 
             migrationBuilder.InsertData(
                 table: "Categories",

@@ -141,6 +141,15 @@ namespace Shared.Infrastructure.Migrations
                         .HasMaxLength(32)
                         .HasColumnType("character varying(32)");
 
+                    b.Property<bool>("PublicOrders")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("PublicPrices")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("ReactiveStock")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Slogan")
                         .IsRequired()
                         .HasMaxLength(64)
@@ -157,6 +166,9 @@ namespace Shared.Infrastructure.Migrations
                             Acronym = "MA",
                             Enabled = true,
                             Name = "Maria Antonieta",
+                            PublicOrders = true,
+                            PublicPrices = true,
+                            ReactiveStock = true,
                             Slogan = "Universo Deli"
                         });
                 });
@@ -3679,7 +3691,6 @@ namespace Shared.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.PrimitiveCollection<List<int>>("CompanyIds")
-                        .IsRequired()
                         .HasColumnType("integer[]");
 
                     b.Property<string>("Email")
@@ -3723,7 +3734,6 @@ namespace Shared.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CompanyIds = new List<int>(),
                             Email = "root@edimus.com",
                             Enabled = true,
                             Password = "$2a$11$RKOjo9jGUALtqDkaX52cj.7x8kcEj4mG4ESnP6i6Da9zc9DLE8wx.",

@@ -7,6 +7,17 @@ export type Company = {
   acronym: string;
   premises: Premise[];
   enabled: boolean;
+  reactiveStock: boolean;
+  publicPrices: boolean;
+  publicOrders: boolean;
+};
+
+export type UpdateCompanyRequest = {
+  name?: string;
+  slogan?: string;
+  reactiveStock?: boolean;
+  publicPrices?: boolean;
+  publicOrders?: boolean;
 };
 
 export type Premise = {

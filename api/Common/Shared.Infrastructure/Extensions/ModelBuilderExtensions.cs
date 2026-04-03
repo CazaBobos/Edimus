@@ -56,7 +56,6 @@ public static class ModelBuilderExtensions
             Password = "$2a$11$RKOjo9jGUALtqDkaX52cj.7x8kcEj4mG4ESnP6i6Da9zc9DLE8wx.",
             Role = UserRole.Root,
             Enabled = true,
-            CompanyIds = new List<int>(),
         });
 
         modelBuilder.Entity<Company>().HasData(

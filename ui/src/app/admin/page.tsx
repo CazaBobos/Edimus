@@ -9,6 +9,7 @@ import { IngredientsManager } from "@/components/views/Admin/IngredientsManager"
 import { LoginCard } from "@/components/views/Admin/LoginCard";
 import { MenuEditor } from "@/components/views/Admin/MenuEditor";
 import { SaloonPanel } from "@/components/views/Admin/SaloonPanel";
+import { SettingsPanel } from "@/components/views/Admin/SettingsPanel";
 
 import styles from "./styles.module.scss";
 
@@ -47,6 +48,7 @@ export default function Admin() {
             0: <SaloonPanel />,
             1: <MenuEditor />,
             2: <IngredientsManager />,
+            3: <SettingsPanel />,
           }[selectedTab]
         }
       </main>

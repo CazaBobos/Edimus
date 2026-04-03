@@ -76,16 +76,19 @@ public class CompaniesController : ControllerBase
     }
 
     /// <summary>
-    /// Updates a company's name
+    /// Updates a company
     /// </summary>
     [HttpPut("{companyId}")]
-    public async Task<IActionResult> Update(int companyId, [FromBody] CreateCompanyInput input, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update(int companyId, [FromBody] UpdateCompanyInput input, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new UpdateCompanyRequest
         {
             Id = companyId,
             Name = input.Name,
             Slogan = input.Slogan,
+            ReactiveStock = input.ReactiveStock,
+            PublicPrices = input.PublicPrices,
+            PublicOrders = input.PublicOrders,
             User = User.GetUser(),
         }, cancellationToken);
 
@@ -121,4 +124,5 @@ public class CompaniesController : ControllerBase
 
         return Ok(response);
     }
+
 }

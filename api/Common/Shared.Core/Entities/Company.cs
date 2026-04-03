@@ -12,6 +12,11 @@ public class Company : AggregateRoot<int>
     public virtual List<Premise> Premises { get; protected set; } = [];
     public virtual List<Category> Categories { get; protected set; } = [];
 
+    // Configurable company-level settings
+    public bool ReactiveStock { get; protected set; } = true;
+    public bool PublicPrices { get; protected set; } = true;
+    public bool PublicOrders { get; protected set; } = true;
+
     protected Company() { }
     public Company(string name, string slogan, string? acronym = null)
     {
@@ -23,7 +28,10 @@ public class Company : AggregateRoot<int>
     public void Update(
         string? name = null,
         string? slogan = null,
-        string? acronym = null)
+        string? acronym = null,
+        bool? reactiveStock = null,
+        bool? publicPrices = null,
+        bool? publicOrders = null)
     {
         var affectedMembers = new List<string>();
 
@@ -43,6 +51,9 @@ public class Company : AggregateRoot<int>
             Acronym = Guard.Argument(() => acronym).NotNull().NotEmpty().MaxLength(8);
             affectedMembers.Add(nameof(Acronym));
         }
+        if (reactiveStock is not null && reactiveStock != ReactiveStock) ReactiveStock = reactiveStock.Value;
+        if (publicPrices is not null && publicPrices != PublicPrices) PublicPrices = publicPrices.Value;
+        if (publicOrders is not null && publicOrders != PublicOrders) PublicOrders = publicOrders.Value;
         //if (affectedMembers.Count != 0) AddHistory(user, AuditOperation.Updated, affectedMembers);
     }
 

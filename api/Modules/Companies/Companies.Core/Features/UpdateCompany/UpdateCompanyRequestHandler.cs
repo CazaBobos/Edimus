@@ -20,7 +20,14 @@ public class UpdateCompanyRequestHandler : IRequestHandler<UpdateCompanyRequest,
 
         if (company is null) throw new HttpNotFoundException();
 
-        company.Update(request.Name, request.Slogan);
+        company.Update(
+            request.Name,
+            request.Slogan,
+            null,
+            request.ReactiveStock,
+            request.PublicPrices,
+            request.PublicOrders
+        );
 
         var existingCompany = await _companiesRepository.AsQueryable()
             .Where(x => x.Id != company.Id && x.Name == company.Name)
