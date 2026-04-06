@@ -29,14 +29,32 @@ const drainQueue = (error: unknown) => {
   pendingQueue = [];
 };
 
+const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
+
+const parseDates = (value: unknown): unknown => {
+  if (typeof value === "string" && ISO_DATE_REGEX.test(value)) return new Date(value);
+  if (Array.isArray(value)) return value.map(parseDates);
+  if (value !== null && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, parseDates(v)]));
+  }
+  return value;
+};
+
 axiosClient.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    response.data = parseDates(response.data);
+    return response;
+  },
   async (error) => {
-    const original: InternalAxiosRequestConfig & { _retry?: boolean } = error.config;
+    const axiosError = error as {
+      config: InternalAxiosRequestConfig & { _retry?: boolean };
+      response?: { status: number };
+    };
+    const original = axiosError.config;
 
     // Only handle 401s. The _retry flag prevents infinite loops if the
     // retried request itself comes back with another 401.
-    if (error.response?.status !== 401 || original._retry) {
+    if (axiosError.response?.status !== 401 || original._retry) {
       return Promise.reject(error);
     }
 

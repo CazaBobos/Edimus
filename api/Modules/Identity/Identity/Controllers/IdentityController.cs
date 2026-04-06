@@ -95,21 +95,24 @@ public class IdentityController : ControllerBase
 
     private void SetAuthCookies(string token, string refreshToken)
     {
-        var secure = !_environment.IsDevelopment();
+        // In development the UI and API run on different ports (different origins),
+        // so SameSite=None + Secure=true is required for the browser to send the cookie.
+        // In production both are on the same domain, so Strict is safe and preferred.
+        var sameSite = _environment.IsDevelopment() ? SameSiteMode.None : SameSiteMode.Strict;
 
         Response.Cookies.Append("token", token, new CookieOptions
         {
             HttpOnly = true,
-            Secure = secure,
-            SameSite = SameSiteMode.Strict,
+            Secure = true,
+            SameSite = sameSite,
             Expires = DateTimeOffset.UtcNow.AddMinutes(_jwtSettings.ExpirationInMinutes)
         });
 
         Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions
         {
             HttpOnly = true,
-            Secure = secure,
-            SameSite = SameSiteMode.Strict,
+            Secure = true,
+            SameSite = sameSite,
             Expires = DateTimeOffset.UtcNow.AddDays(_jwtSettings.RefreshExpirationInDays)
         });
     }
