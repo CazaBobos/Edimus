@@ -54,7 +54,6 @@ public class Company : AggregateRoot<int>
         if (reactiveStock is not null && reactiveStock != ReactiveStock) ReactiveStock = reactiveStock.Value;
         if (publicPrices is not null && publicPrices != PublicPrices) PublicPrices = publicPrices.Value;
         if (publicOrders is not null && publicOrders != PublicOrders) PublicOrders = publicOrders.Value;
-        //if (affectedMembers.Count != 0) AddHistory(user, AuditOperation.Updated, affectedMembers);
     }
 
     private string GenerateAcronym(string name) => name.Replace(' ', '-').ToLower().Substring(0, 7);

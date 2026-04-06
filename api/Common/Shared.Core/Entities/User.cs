@@ -101,7 +101,6 @@ public class User : Entity<int>, IUserRecord
             Role = (UserRole)role;
         }
 
-        //if (affectedMembers.Count != 0) AddHistory(user, AuditOperation.Updated, affectedMembers);
     }
 
     private List<int> ValidateCompanies(List<int> companies) =>

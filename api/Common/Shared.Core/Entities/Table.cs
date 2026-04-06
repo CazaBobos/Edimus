@@ -98,6 +98,5 @@ public class Table : AggregateRoot<int>
 
             affectedMembers.Add(nameof(Orders));
         }
-        //if (affectedMembers.Count != 0) AddHistory(user, AuditOperation.Updated, affectedMembers);
     }
 }

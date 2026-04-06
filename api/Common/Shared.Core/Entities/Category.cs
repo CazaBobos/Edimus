@@ -29,7 +29,6 @@ public class Category : Entity<int>
             affectedMembers.Add(nameof(Name));
         }
 
-        //if (affectedMembers.Count != 0) AddHistory(user, AuditOperation.Updated, affectedMembers);
     }
 
     private string ValidateName(string name) => Guard.Argument(() => name).NotNull().NotEmpty().NotWhiteSpace().MaxLength(32);

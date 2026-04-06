@@ -11,6 +11,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddDatabaseContext(this IServiceCollection services)
     {
+        services.AddHttpContextAccessor();
         services.AddDbContext<DatabaseContext>();
 
         return services;

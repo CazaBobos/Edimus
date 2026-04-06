@@ -9,6 +9,8 @@ public static class ModelBuilderExtensions
 {
     public static void ConfigureTables(this ModelBuilder modelBuilder)
     {
+        modelBuilder.ApplyConfiguration(new AuditLogConfiguration());
+        modelBuilder.ApplyConfiguration(new AuditLogChangeConfiguration());
         modelBuilder.ApplyConfiguration(new CategoryConfiguration());
         modelBuilder.ApplyConfiguration(new CompanyConfiguration());
         modelBuilder.ApplyConfiguration(new ConsumptionConfiguration());

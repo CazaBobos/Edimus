@@ -63,7 +63,6 @@ public class Sector : AggregateRoot<int>
             Surface.AddRange(newSurface);
             affectedMembers.Add(nameof(Surface));
         }
-        //if (affectedMembers.Count != 0) AddHistory(user, AuditOperation.Updated, affectedMembers);
     }
 
     private string ValidateName(string name) => Guard.Argument(() => name).NotNull().NotEmpty().NotWhiteSpace().DoesNotContain("  ");

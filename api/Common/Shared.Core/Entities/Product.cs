@@ -76,7 +76,6 @@ public class Product : AggregateRoot<int>
             affectedMembers.Add(nameof(Consumptions));
         }
 
-        //if (affectedMembers.Count != 0) AddHistory(user, AuditOperation.Updated, affectedMembers);
     }
 
     private string ValidateName(string name) => Guard.Argument(() => name).NotNull().NotEmpty().NotWhiteSpace().DoesNotContain("  ");
