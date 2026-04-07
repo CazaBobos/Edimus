@@ -19,6 +19,10 @@ export const authApi = {
     await axiosClient.post(`auth/logout`);
   },
 
+  recoverPassword: async (email: string) => {
+    await axiosClient.post(`auth/recover-password`, { email });
+  },
+
   resetPassword: async (request: ResetPasswordRequest) => {
     await axiosClient.post(`auth/reset-password`, request);
   },

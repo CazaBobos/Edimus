@@ -33,6 +33,20 @@ export const useAuthMutations = () => {
     },
   });
 
+  const recoverPasswordMutation = useMutation({
+    mutationFn: async (email: string) => await authApi.recoverPassword(email),
+    onMutate: () => {
+      showInfo("Por favor, espere...");
+    },
+    onError: () => {
+      showError("No se encontró una cuenta con ese email.");
+    },
+    onSuccess: () => {
+      clearToast();
+      showInfo("Si el email existe, recibirás un enlace para restablecer tu contraseña.");
+    },
+  });
+
   const resetPasswordMutation = useMutation({
     mutationFn: async (request: ResetPasswordRequest) => await authApi.resetPassword(request),
     onMutate: () => {
@@ -47,5 +61,5 @@ export const useAuthMutations = () => {
     },
   });
 
-  return { loginMutation, logoutMutation, resetPasswordMutation };
+  return { loginMutation, logoutMutation, recoverPasswordMutation, resetPasswordMutation };
 };

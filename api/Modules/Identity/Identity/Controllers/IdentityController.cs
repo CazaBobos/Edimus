@@ -1,6 +1,7 @@
 using Identity.Core.Features.Login;
 using Identity.Core.Features.ResetPassword;
 using Identity.Input;
+using Users.Core.Features.RecoverPassword;
 using Mediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -75,6 +76,17 @@ public class IdentityController : ControllerBase
     {
         Response.Cookies.Delete("token");
         Response.Cookies.Delete("refreshToken");
+        return Ok();
+    }
+
+    /// <summary>
+    /// Sends a password recovery email.
+    /// </summary>
+    [HttpPost]
+    [Route("recover-password")]
+    public async Task<IActionResult> RecoverPassword([FromBody] RecoverPasswordInput input, CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new RecoverPasswordRequest { Email = input.Email }, cancellationToken);
         return Ok();
     }
 
