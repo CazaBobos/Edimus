@@ -65,7 +65,11 @@ export const LoginCard = () => {
         value={request.password}
         onChange={handleSetRequest}
       />
-      <Button label="Ingresar" onClick={() => loginMutation.mutate(request)} disabled={!request.userOrEmail || !request.password} />
+      <Button
+        label="Ingresar"
+        onClick={() => loginMutation.mutate(request)}
+        disabled={!request.userOrEmail || !request.password}
+      />
       <span className={styles.forgotLink} onClick={() => setShowRecover(true)}>
         ¿Olvidaste tu contraseña?
       </span>
