@@ -5,8 +5,10 @@ using Shared.Core.Settings;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 
 namespace Shared.Infrastructure.Security;
+
 public class JwtService : IJwtService
 {
     public IJwtSettings _jwtSettings { get; set; }
@@ -89,7 +91,7 @@ public class JwtService : IJwtService
         yield return new Claim(UserClaims.Id, user.Id.ToString());
         yield return new Claim(UserClaims.Username, user.Username.ToString());
         yield return new Claim(UserClaims.Role, ((int)user.Role).ToString());
-        yield return new Claim(UserClaims.Companies, string.Join(",", user.CompanyIds));
+        yield return new Claim(UserClaims.Companies, JsonSerializer.Serialize(user.CompanyIds));
     }
 
     private SigningCredentials GetSigningCredentials()

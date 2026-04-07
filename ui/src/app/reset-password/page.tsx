@@ -1,8 +1,9 @@
 "use client";
 
-import { ResetPasswordCard } from "@/components/views/Admin/ResetPasswordCard";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+
+import { ResetPasswordCard } from "@/components/views/Admin/ResetPasswordCard";
 
 import styles from "../admin/styles.module.scss";
 
