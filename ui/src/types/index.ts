@@ -5,6 +5,7 @@ export * from "./consumption.types";
 export * from "./ingredient.types";
 export * from "./product.types";
 export * from "./sector.types";
+export * from "./stats.types";
 export * from "./table.types";
 
 export type Nullable<T> = T | null | undefined;

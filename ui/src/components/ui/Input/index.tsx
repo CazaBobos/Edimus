@@ -5,7 +5,9 @@ import { ControlState } from "../common";
 
 type InputProps = {
   width?: string;
-  type?: "text" | "password" | "number";
+  type?: "text" | "password" | "number" | "date";
+  min?: string;
+  max?: string;
   multiline?: boolean;
   name?: string;
   title?: string;
@@ -16,7 +18,7 @@ type InputProps = {
 };
 
 export const Input = (props: InputProps) => {
-  const { width, type = "text", multiline, name, title, value, defaultValue, placeholder, onChange } = props;
+  const { width, type = "text", multiline, name, title, value, defaultValue, placeholder, min, max, onChange } = props;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -40,5 +42,5 @@ export const Input = (props: InputProps) => {
     return <Textarea {...commonProps} autosize minRows={2} />;
   }
 
-  return <TextInput {...commonProps} type={type} />;
+  return <TextInput {...commonProps} type={type} min={min} max={max} />;
 };

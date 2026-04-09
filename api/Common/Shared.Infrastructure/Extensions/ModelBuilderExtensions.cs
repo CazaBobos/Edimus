@@ -25,6 +25,8 @@ public static class ModelBuilderExtensions
         modelBuilder.ApplyConfiguration(new SectorCoordConfiguration());
         modelBuilder.ApplyConfiguration(new TableConfiguration());
         modelBuilder.ApplyConfiguration(new TableCoordConfiguration());
+        modelBuilder.ApplyConfiguration(new TableSessionConfiguration());
+        modelBuilder.ApplyConfiguration(new SessionOrderConfiguration());
         modelBuilder.ApplyConfiguration(new TagConfiguration());
         modelBuilder.ApplyConfiguration(new UserConfiguration());
     }

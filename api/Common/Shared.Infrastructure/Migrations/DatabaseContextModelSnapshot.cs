@@ -3540,6 +3540,39 @@ namespace Shared.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Shared.Core.Entities.SessionOrder", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<long>("SessionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SessionId");
+
+                    b.ToTable("SessionOrders");
+                });
+
             modelBuilder.Entity("Shared.Core.Entities.Table", b =>
                 {
                     b.Property<int>("Id")
@@ -3548,6 +3581,12 @@ namespace Shared.Infrastructure.Migrations
                         .HasColumnName("TableId");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("ArrivedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("CalledAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("Enabled")
                         .HasColumnType("boolean");
@@ -3725,6 +3764,42 @@ namespace Shared.Infrastructure.Migrations
                             Y = 0,
                             TableId = 7
                         });
+                });
+
+            modelBuilder.Entity("Shared.Core.Entities.TableSession", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<int?>("ArrivalAttentionSeconds")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("ArrivedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("CallingCount")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("ClosedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("OpenedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("TableId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TotalCallingSeconds")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TableId");
+
+                    b.ToTable("TableSessions");
                 });
 
             modelBuilder.Entity("Shared.Core.Entities.Tag", b =>
@@ -3958,6 +4033,17 @@ namespace Shared.Infrastructure.Migrations
                     b.Navigation("Sector");
                 });
 
+            modelBuilder.Entity("Shared.Core.Entities.SessionOrder", b =>
+                {
+                    b.HasOne("Shared.Core.Entities.TableSession", "Session")
+                        .WithMany("Orders")
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Session");
+                });
+
             modelBuilder.Entity("Shared.Core.Entities.Table", b =>
                 {
                     b.HasOne("Shared.Core.Entities.Layout", "Layout")
@@ -3973,6 +4059,17 @@ namespace Shared.Infrastructure.Migrations
                 {
                     b.HasOne("Shared.Core.Entities.Table", "Table")
                         .WithMany("Surface")
+                        .HasForeignKey("TableId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Table");
+                });
+
+            modelBuilder.Entity("Shared.Core.Entities.TableSession", b =>
+                {
+                    b.HasOne("Shared.Core.Entities.Table", "Table")
+                        .WithMany()
                         .HasForeignKey("TableId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -4033,6 +4130,11 @@ namespace Shared.Infrastructure.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("Surface");
+                });
+
+            modelBuilder.Entity("Shared.Core.Entities.TableSession", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

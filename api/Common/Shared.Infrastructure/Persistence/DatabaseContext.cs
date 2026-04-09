@@ -31,10 +31,12 @@ public class DatabaseContext : DbContext
     public DbSet<LayoutCoord> LayoutCoords { get; set; } = null!;
     public DbSet<Product> Products { get; set; } = null!;
     public DbSet<Order> Orders { get; set; } = null!;
+    public DbSet<SessionOrder> SessionOrders { get; set; } = null!;
     public DbSet<Sector> Sectors { get; set; } = null!;
     public DbSet<SectorCoord> SectorCoords { get; set; } = null!;
     public DbSet<Table> Tables { get; set; } = null!;
     public DbSet<TableCoord> TableCoords { get; set; } = null!;
+    public DbSet<TableSession> TableSessions { get; set; } = null!;
     public DbSet<Tag> Tags { get; set; } = null!;
     public DbSet<User> Users { get; set; } = null!;
     #endregion

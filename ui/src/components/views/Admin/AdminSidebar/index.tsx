@@ -2,7 +2,7 @@
 
 import { useAdminStore, useAppUserStore } from "@/stores";
 import { useRouter } from "next/navigation";
-import { BiBook, BiBox, BiCog, BiGrid, BiLogOut, BiUser } from "react-icons/bi";
+import { BiBarChartAlt2, BiBook, BiBox, BiCog, BiGrid, BiLogOut, BiUser } from "react-icons/bi";
 
 import { Button } from "@/components/ui/Button";
 
@@ -12,7 +12,8 @@ const NAV_ITEMS = [
   { label: "Plano de Salón", icon: <BiGrid />, tab: 0 },
   { label: "Menú", icon: <BiBook />, tab: 1 },
   { label: "Ingredientes", icon: <BiBox />, tab: 2 },
-  { label: "Configuración", icon: <BiCog />, tab: 3 },
+  { label: "Estadísticas", icon: <BiBarChartAlt2 />, tab: 3 },
+  { label: "Configuración", icon: <BiCog />, tab: 4 },
 ];
 
 export const AdminSidebar = () => {

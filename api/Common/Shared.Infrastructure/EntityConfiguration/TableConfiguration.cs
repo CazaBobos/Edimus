@@ -35,6 +35,9 @@ public class TableConfiguration : IEntityTypeConfiguration<Table>
             .WithOne(e => e.Table)
             .HasForeignKey(e => e.TableId);
 
+        entity.Property(e => e.ArrivedAt);
+        entity.Property(e => e.CalledAt);
+
         entity.Property(e => e.Enabled)
             .IsRequired();
     }

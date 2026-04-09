@@ -13,6 +13,8 @@ public class Table : AggregateRoot<int>
     public string QrId { get; protected set; } = string.Empty;
     public int PositionX { get; protected set; }
     public int PositionY { get; protected set; }
+    public DateTime? ArrivedAt { get; protected set; }
+    public DateTime? CalledAt { get; protected set; }
     public virtual List<TableCoord> Surface { get; protected set; } = [];
     public virtual List<Order> Orders { get; protected set; } = [];
 
@@ -39,6 +41,7 @@ public class Table : AggregateRoot<int>
         if (Status == TableStatus.Free)
         {
             Status = TableStatus.Arrived;
+            ArrivedAt = DateTime.UtcNow;
         }
     }
 
@@ -57,7 +60,15 @@ public class Table : AggregateRoot<int>
             Guard.Operation(status != TableStatus.Arrived, "Cannot manually set a table to Arrived. Use the link endpoint instead.");
             Status = (TableStatus)status;
 
-            if (status == TableStatus.Free) Orders.Clear();
+            if (status == TableStatus.Calling)
+                CalledAt = DateTime.UtcNow;
+
+            if (status == TableStatus.Free)
+            {
+                ArrivedAt = null;
+                CalledAt = null;
+                Orders.Clear();
+            }
 
             affectedMembers.Add(nameof(Status));
         }
