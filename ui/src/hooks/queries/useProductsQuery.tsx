@@ -1,9 +1,10 @@
 import { productsApi } from "@/services";
 import { GetProductsParams } from "@/types";
-import { useQuery } from "@tanstack/react-query";
+
+import { useAxiosQuery } from "../axiosHooks";
 
 export const useProductsQuery = (params: GetProductsParams = {}) => {
-  const query = useQuery({
+  const query = useAxiosQuery({
     queryKey: ["products", params],
     queryFn: () => productsApi.findMany(params),
   });

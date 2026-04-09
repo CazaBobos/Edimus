@@ -1,13 +1,15 @@
 import { useToast } from "@/hooks/useToast";
 import { tablesApi } from "@/services";
 import { CreateTableRequest, Table, TableStatus, UpdateTableRequest } from "@/types";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
+
+import { useAxiosMutation } from "../axiosHooks";
 
 export const useTableMutations = () => {
   const queryClient = useQueryClient();
   const { showSuccess, showError, showInfo } = useToast();
 
-  const createTableMutation = useMutation({
+  const createTableMutation = useAxiosMutation({
     mutationFn: async (request: CreateTableRequest) => await tablesApi.create(request),
     onMutate: () => showInfo("Por favor, espere..."),
     onError: () => showError("Ha ocurrido un error."),
@@ -31,7 +33,7 @@ export const useTableMutations = () => {
     },
   });
 
-  const updateTableMutation = useMutation({
+  const updateTableMutation = useAxiosMutation({
     mutationFn: async ({ id, request }: { id: number; request: UpdateTableRequest }) =>
       await tablesApi.update(id, request),
     onMutate: () => showInfo("Por favor, espere..."),
@@ -57,7 +59,7 @@ export const useTableMutations = () => {
     },
   });
 
-  const removeTableMutation = useMutation({
+  const removeTableMutation = useAxiosMutation({
     mutationFn: async (id: number) => await tablesApi.remove(id),
     onMutate: () => showInfo("Por favor, espere..."),
     onError: () => showError("Ha ocurrido un error."),

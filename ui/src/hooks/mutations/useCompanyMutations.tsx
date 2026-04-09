@@ -1,13 +1,15 @@
 import { useToast } from "@/hooks/useToast";
 import { companiesApi } from "@/services";
 import { Company, UpdateCompanyRequest } from "@/types";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
+
+import { useAxiosMutation } from "../axiosHooks";
 
 export const useCompanyMutations = () => {
   const queryClient = useQueryClient();
   const { showSuccess, showError } = useToast();
 
-  const updateSettingsMutation = useMutation({
+  const updateSettingsMutation = useAxiosMutation({
     mutationFn: async ({ id, request }: { id: number; request: UpdateCompanyRequest }) =>
       await companiesApi.update(id, request),
     onError: () => {

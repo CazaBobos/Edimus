@@ -1,8 +1,9 @@
 import { useToast } from "@/hooks/useToast";
 import { tablesApi } from "@/services";
 import { Table, TableStatus } from "@/types";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
+import { useAxiosMutation } from "../axiosHooks";
 import { useSingleTableQuery } from "../queries/useSingleTableQuery";
 
 export const useMenuMutations = () => {
@@ -10,7 +11,7 @@ export const useMenuMutations = () => {
   const { data: table } = useSingleTableQuery();
   const { showSuccess, showError } = useToast();
 
-  const callTableMutation = useMutation({
+  const callTableMutation = useAxiosMutation({
     mutationFn: async (id: number) => await tablesApi.call(id),
     onError: () => showError("Ha ocurrido un error. Intente nuevamente."),
     onSuccess: () => {

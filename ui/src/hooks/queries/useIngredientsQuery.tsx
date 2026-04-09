@@ -1,10 +1,11 @@
 import { ingredientsApi } from "@/services";
 import { GetIngredientsParams, Ingredient } from "@/types";
-import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
+import { useAxiosQuery } from "../axiosHooks";
+
 export const useIngredientsQuery = (params: GetIngredientsParams = {}) => {
-  const query = useQuery({
+  const query = useAxiosQuery({
     queryKey: ["ingredients", params],
     queryFn: () => ingredientsApi.findMany(params),
   });

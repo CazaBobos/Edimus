@@ -2,15 +2,16 @@ import { useToast } from "@/hooks/useToast";
 import { authApi } from "@/services/api.auth";
 import { useAppUserStore } from "@/stores";
 import { LoginRequest, ResetPasswordRequest } from "@/types";
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+
+import { useAxiosMutation } from "../axiosHooks";
 
 export const useAuthMutations = () => {
   const router = useRouter();
   const { setUser, endSession } = useAppUserStore();
   const { showInfo, showError, clearToast } = useToast();
 
-  const loginMutation = useMutation({
+  const loginMutation = useAxiosMutation({
     mutationFn: async (request: LoginRequest) => await authApi.login(request),
     onMutate: () => {
       showInfo("Por favor, espere...");
@@ -25,7 +26,7 @@ export const useAuthMutations = () => {
     },
   });
 
-  const logoutMutation = useMutation({
+  const logoutMutation = useAxiosMutation({
     mutationFn: async () => await authApi.logout(),
     onSuccess: () => {
       endSession();
@@ -33,7 +34,7 @@ export const useAuthMutations = () => {
     },
   });
 
-  const recoverPasswordMutation = useMutation({
+  const recoverPasswordMutation = useAxiosMutation({
     mutationFn: async (email: string) => await authApi.recoverPassword(email),
     onMutate: () => {
       showInfo("Por favor, espere...");
@@ -47,7 +48,7 @@ export const useAuthMutations = () => {
     },
   });
 
-  const resetPasswordMutation = useMutation({
+  const resetPasswordMutation = useAxiosMutation({
     mutationFn: async (request: ResetPasswordRequest) => await authApi.resetPassword(request),
     onMutate: () => {
       showInfo("Por favor, espere...");

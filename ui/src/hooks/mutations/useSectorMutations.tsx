@@ -1,13 +1,15 @@
 import { useToast } from "@/hooks/useToast";
 import { sectorsApi } from "@/services";
 import { CreateSectorRequest, Sector, UpdateSectorRequest } from "@/types";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
+
+import { useAxiosMutation } from "../axiosHooks";
 
 export const useSectorMutations = () => {
   const queryClient = useQueryClient();
   const { showSuccess, showError, showInfo } = useToast();
 
-  const createSectorMutation = useMutation({
+  const createSectorMutation = useAxiosMutation({
     mutationFn: async (request: CreateSectorRequest) => await sectorsApi.create(request),
     onMutate: () => showInfo("Por favor, espere..."),
     onError: () => showError("Ha ocurrido un error."),
@@ -22,7 +24,7 @@ export const useSectorMutations = () => {
     },
   });
 
-  const updateSectorMutation = useMutation({
+  const updateSectorMutation = useAxiosMutation({
     mutationFn: async ({ id, request }: { id: number; request: UpdateSectorRequest }) =>
       await sectorsApi.update(id, request),
     onMutate: () => showInfo("Por favor, espere..."),
@@ -38,7 +40,7 @@ export const useSectorMutations = () => {
     },
   });
 
-  const removeSectorMutation = useMutation({
+  const removeSectorMutation = useAxiosMutation({
     mutationFn: async (id: number) => await sectorsApi.remove(id),
     onMutate: () => showInfo("Por favor, espere..."),
     onError: () => showError("Ha ocurrido un error."),

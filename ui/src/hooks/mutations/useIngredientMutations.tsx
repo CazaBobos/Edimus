@@ -1,13 +1,15 @@
 import { useToast } from "@/hooks/useToast";
 import { ingredientsApi } from "@/services";
 import { Ingredient, IngredientRequest } from "@/types";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
+
+import { useAxiosMutation } from "../axiosHooks";
 
 export const useIngredientMutations = () => {
   const queryClient = useQueryClient();
   const { showSuccess, showError, showInfo } = useToast();
 
-  const createIngredientMutation = useMutation({
+  const createIngredientMutation = useAxiosMutation({
     mutationFn: async (request: Required<IngredientRequest>) => await ingredientsApi.create(request),
     onMutate: () => {
       showInfo("Por favor, espere...");
@@ -25,7 +27,7 @@ export const useIngredientMutations = () => {
     },
   });
 
-  const updateIngredientMutation = useMutation({
+  const updateIngredientMutation = useAxiosMutation({
     mutationFn: async ({ id, request }: { id: number; request: IngredientRequest }) =>
       await ingredientsApi.update(id, request),
     onMutate: () => {
@@ -44,7 +46,7 @@ export const useIngredientMutations = () => {
     },
   });
 
-  const removeIngredientMutation = useMutation({
+  const removeIngredientMutation = useAxiosMutation({
     mutationFn: async (id: number) => await ingredientsApi.remove(id),
     onMutate: () => {
       showInfo("Por favor, espere...");
@@ -62,7 +64,7 @@ export const useIngredientMutations = () => {
     },
   });
 
-  const restoreIngredientMutation = useMutation({
+  const restoreIngredientMutation = useAxiosMutation({
     mutationFn: async (id: number) => await ingredientsApi.restore(id),
     onMutate: () => {
       showInfo("Por favor, espere...");

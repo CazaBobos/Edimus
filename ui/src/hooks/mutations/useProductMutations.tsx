@@ -1,13 +1,15 @@
 import { useToast } from "@/hooks/useToast";
 import { productsApi } from "@/services";
 import { Product, ProductRequest } from "@/types";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
+
+import { useAxiosMutation } from "../axiosHooks";
 
 export const useProductMutations = () => {
   const queryClient = useQueryClient();
   const { showSuccess, showError, showInfo } = useToast();
 
-  const createProductMutation = useMutation({
+  const createProductMutation = useAxiosMutation({
     mutationFn: async (request: Required<ProductRequest>) => await productsApi.create(request),
     onMutate: () => showInfo("Por favor, espere..."),
     onError: () => showError("Ha ocurrido un error."),
@@ -22,7 +24,7 @@ export const useProductMutations = () => {
     },
   });
 
-  const updateProductMutation = useMutation({
+  const updateProductMutation = useAxiosMutation({
     mutationFn: async ({ id, request }: { id: number; request: ProductRequest }) =>
       await productsApi.update(id, request),
     onMutate: () => showInfo("Por favor, espere..."),
@@ -37,7 +39,7 @@ export const useProductMutations = () => {
     },
   });
 
-  const removeProductMutation = useMutation({
+  const removeProductMutation = useAxiosMutation({
     mutationFn: async (id: number) => await productsApi.remove(id),
     onMutate: () => showInfo("Por favor, espere..."),
     onError: () => showError("Ha ocurrido un error."),
@@ -51,7 +53,7 @@ export const useProductMutations = () => {
     },
   });
 
-  const restoreProductMutation = useMutation({
+  const restoreProductMutation = useAxiosMutation({
     mutationFn: async (id: number) => await productsApi.restore(id),
     onMutate: () => showInfo("Por favor, espere..."),
     onError: () => showError("Ha ocurrido un error."),

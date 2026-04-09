@@ -1,8 +1,9 @@
 import { companiesApi } from "@/services";
-import { useQuery } from "@tanstack/react-query";
+
+import { useAxiosQuery } from "../axiosHooks";
 
 export const useCompanyQuery = (companyId: number) => {
-  const query = useQuery({
+  const query = useAxiosQuery({
     queryKey: ["company", companyId],
     queryFn: () => companiesApi.findOne(companyId),
   });

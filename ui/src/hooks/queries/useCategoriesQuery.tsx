@@ -1,9 +1,10 @@
 import { categoriesApi } from "@/services";
 import { GetCategoriesParams } from "@/types";
-import { useQuery } from "@tanstack/react-query";
+
+import { useAxiosQuery } from "../axiosHooks";
 
 export const useCategoriesQuery = (params: GetCategoriesParams = {}) => {
-  const query = useQuery({
+  const query = useAxiosQuery({
     queryKey: ["categories", params],
     queryFn: () => categoriesApi.findMany(params),
   });

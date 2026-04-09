@@ -1,9 +1,10 @@
 import { sectorsApi } from "@/services";
 import { GetSectorsParams } from "@/types";
-import { useQuery } from "@tanstack/react-query";
+
+import { useAxiosQuery } from "../axiosHooks";
 
 export const useSectorsQuery = (params: GetSectorsParams = {}) => {
-  const query = useQuery({
+  const query = useAxiosQuery({
     queryKey: ["sectors", params],
     queryFn: () => sectorsApi.findMany(params),
   });
