@@ -63,6 +63,8 @@ export const TableDialog = () => {
   };
   const [request, setRequest] = useState<UpdateTableRequest>({});
 
+  const effectiveStatus = request.status ?? table?.status;
+
   const handleSetOrders = (orders: TableOrder[]) => {
     setRequest((prev) => ({ ...prev, orders }));
   };
@@ -110,8 +112,8 @@ export const TableDialog = () => {
       withOverlay={false}
       shadow="xl"
     >
-      <div className={styles.row}>
-        <div className={styles.content}>
+      <div className={styles.dialogLayout}>
+        <div className={styles.topControls}>
           <div className={styles.row}>
             <Positioner positionX={table?.positionX} positionY={table?.positionY} onChange={handleSetCoords} />
             <SurfaceEditor
@@ -123,22 +125,30 @@ export const TableDialog = () => {
               onChange={handleSetSurface}
             />
           </div>
-          <Button label="Guardar Cambios" icon={<BiSave />} onClick={handleSave} />
-          {table && <Button label="Eliminar Mesa" icon={<BiTrash />} onClick={handleRemove} />}
         </div>
         {table && (
-          <div>
+          <div className={styles.tabSection}>
             <Tabs source={tabs} active={activeTab} onChange={setActiveTab} />
             <Card className={styles.card}>
               {
                 {
-                  0: <OrdersList table={table} onChange={handleSetOrders} />,
+                  0: (
+                    <OrdersList
+                      table={table}
+                      onChange={handleSetOrders}
+                      disabled={effectiveStatus === TableStatus.Free}
+                    />
+                  ),
                   1: <QRLink table={table} />,
                 }[activeTab]
               }
             </Card>
           </div>
         )}
+        <div className={styles.actions}>
+          <Button label="Guardar Cambios" icon={<BiSave />} onClick={handleSave} />
+          {table && <Button label="Eliminar Mesa" icon={<BiTrash />} onClick={handleRemove} />}
+        </div>
       </div>
     </Drawer>
   );

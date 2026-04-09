@@ -8,40 +8,40 @@
   font-weight: 700;
 }
 
-// Hides the selected label text — only the leftSection circle and chevron are visible
-.statusInput {
-  cursor: pointer;
-}
-
-.statusDropdown {
-  width: fit-content;
-  min-width: 140px;
-}
-
-.statusOption {
+.dialogLayout {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.content {
+.topControls {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  min-width: 200px;
 }
 
 .row {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  gap: 16px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.tabSection {
+  display: flex;
+  flex-direction: column;
   gap: 16px;
 }
 
 .card {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 350px;
-  width: 350px;
+  justify-content: center;
+  min-height: 260px;
+  width: 100%;
 }

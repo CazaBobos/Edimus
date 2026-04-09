@@ -6,6 +6,13 @@
   gap: 24px;
   height: 100%;
 
+  .loadingOverlay {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   > h2 {
     display: flex;
     align-items: center;

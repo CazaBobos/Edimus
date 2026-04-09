@@ -11,10 +11,11 @@ import styles from "./styles.module.scss";
 
 type OrdersListProps = {
   table: Table;
+  disabled?: boolean;
   onChange: (orders: TableOrder[]) => void;
 };
 export const OrdersList = (props: OrdersListProps) => {
-  const { table, onChange } = props;
+  const { table, disabled = false, onChange } = props;
   const { data: products } = useProductsQuery();
 
   const productsMap = new Map<number, Product>(products.map((p) => [p.id, p]));
@@ -66,55 +67,61 @@ export const OrdersList = (props: OrdersListProps) => {
 
   return (
     <div className={styles.order}>
-      <ul>
-        <li>
-          <Select
-            options={productOptions}
-            value={selectedProduct.toString()}
-            onChange={(s) => setSelectedProduct(Number(s.value))}
-          />
-          <Input
-            type="number"
-            placeholder="Cant."
-            value={currentAmount}
-            onChange={(s) => setCurrentAmount(Number(s.value))}
-          />
-          <Button
-            icon={<BiPlus />}
-            disabled={selectedProduct === -1}
-            onClick={() =>
-              handleAddOrder({
-                productId: selectedProduct,
-                amount: currentAmount,
-              })
-            }
-          />
-        </li>
-        {!orders?.length && <strong>La mesa no registra pedidos</strong>}
-        {orders.map((o, i) => {
-          const product = productsMap.get(o.productId);
-
-          return (
-            <li key={`order_${i}`}>
-              <div className={styles.row}>
-                {o.amount}x {product?.name}
-              </div>
-              <div className={styles.row}>
-                <b>${o.amount * (product?.price ?? 0)}</b>
-                <BiX onClick={() => handleRemoveOrder(o.productId)} />
-              </div>
+      {disabled ? (
+        <strong className={styles.disabledNotice}>La mesa debe estar ocupada para registrar pedidos</strong>
+      ) : (
+        <>
+          <ul>
+            <li>
+              <Select
+                options={productOptions}
+                value={selectedProduct.toString()}
+                onChange={(s) => setSelectedProduct(Number(s.value))}
+              />
+              <Input
+                type="number"
+                placeholder="Cant."
+                value={currentAmount}
+                onChange={(s) => setCurrentAmount(Number(s.value))}
+              />
+              <Button
+                icon={<BiPlus />}
+                disabled={selectedProduct === -1}
+                onClick={() =>
+                  handleAddOrder({
+                    productId: selectedProduct,
+                    amount: currentAmount,
+                  })
+                }
+              />
             </li>
-          );
-        })}
-      </ul>
-      <b>
-        Total de la Mesa: $
-        {orders?.reduce((acum, curr) => {
-          const p = productsMap.get(curr.productId);
+            {!orders?.length && <strong>La mesa no registra pedidos</strong>}
+            {orders.map((o, i) => {
+              const product = productsMap.get(o.productId);
 
-          return acum + curr.amount * (p?.price ?? 0);
-        }, 0)}
-      </b>
+              return (
+                <li key={`order_${i}`}>
+                  <div className={styles.row}>
+                    {o.amount}x {product?.name}
+                  </div>
+                  <div className={styles.row}>
+                    <b>${o.amount * (product?.price ?? 0)}</b>
+                    <BiX onClick={() => handleRemoveOrder(o.productId)} />
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+          <b>
+            Total de la Mesa: $
+            {orders?.reduce((acum, curr) => {
+              const p = productsMap.get(curr.productId);
+
+              return acum + curr.amount * (p?.price ?? 0);
+            }, 0)}
+          </b>
+        </>
+      )}
     </div>
   );
 };

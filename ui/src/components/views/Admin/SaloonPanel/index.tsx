@@ -1,6 +1,6 @@
 import { useCompanyQuery } from "@/hooks/queries/useCompanyQuery";
 import { useAdminStore } from "@/stores";
-import { SegmentedControl } from "@mantine/core";
+import { Loader, SegmentedControl } from "@mantine/core";
 import { useState } from "react";
 import { BiWine, BiArea } from "react-icons/bi";
 
@@ -13,12 +13,22 @@ import { TableDialog } from "./TableDialog";
 
 export const SaloonPanel = () => {
   const { setTableDialogOpenState, setSectorDialogOpenState } = useAdminStore();
-  const { data: company } = useCompanyQuery(1);
+  const { data: company, isLoading } = useCompanyQuery(1);
 
   const layouts = company?.premises[0].layouts ?? [];
   const [selectedLayoutId, setSelectedLayoutId] = useState<number | undefined>(undefined);
 
   const currentLayoutId = selectedLayoutId ?? layouts[0]?.id;
+
+  if (isLoading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.loadingOverlay}>
+          <Loader size="lg" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
