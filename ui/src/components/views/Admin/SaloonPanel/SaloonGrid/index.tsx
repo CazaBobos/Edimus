@@ -1,4 +1,4 @@
-import { colors } from "@/common/colors";
+import colors from "@/common/colors.module.scss";
 import { useCompanyQuery } from "@/hooks/queries/useCompanyQuery";
 import { useSectorsQuery } from "@/hooks/queries/useSectorsQuery";
 import { useTablesQuery } from "@/hooks/queries/useTablesQuery";

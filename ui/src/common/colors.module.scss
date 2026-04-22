@@ -1,0 +1,34 @@
+@use "common/colors" as *;
+
+:export {
+  white: $white;
+  black: $black;
+  darkText: $dark_text;
+  lightText: $light_text;
+  lightGrey: $light_grey;
+  grey: $grey;
+  darkGrey: $dark_grey;
+  red: $red;
+  green: $green;
+  yellow: $yellow;
+  orange: $orange;
+  blue: $blue;
+  tooltipBg: $tooltip_bg;
+  shadowDark: $shadow_dark;
+  overlayDark: $overlay_dark;
+  hoverLight: $hover_light;
+  borderLight: $border_light;
+  borderSubtle: $border_subtle;
+  surfaceLight: $surface_light;
+  greenTint: $green_tint;
+  greenBorder: $green_border;
+  orangeGlow: $orange_glow;
+  orangeTint: $orange_tint;
+  orangeBadge: $orange_badge;
+  orangeBorder: $orange_border;
+  orangeTintHover: $orange_tint_hover;
+  orangeBorderHover: $orange_border_hover;
+  orangeFocus: $orange_focus;
+  redTint: $red_tint;
+  redBorder: $red_border;
+}

@@ -1,4 +1,4 @@
-import { colors } from "@/common/colors";
+import colors from "@/common/colors.module.scss";
 import { TopProduct } from "@/types/stats.types";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 

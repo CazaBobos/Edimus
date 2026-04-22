@@ -1,4 +1,4 @@
-import { colors } from "@/common/colors";
+import colors from "@/common/colors.module.scss";
 import { useAdminStore } from "@/stores";
 import { Coords } from "@/types";
 import { ReactNode, useEffect, useRef, useState } from "react";

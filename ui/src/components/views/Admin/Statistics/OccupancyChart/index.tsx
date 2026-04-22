@@ -1,4 +1,4 @@
-import { colors } from "@/common/colors";
+import colors from "@/common/colors.module.scss";
 import { useOccupancyQuery } from "@/hooks/queries/useStatsQueries";
 import { useState } from "react";
 import { Bar, BarChart, BarShapeProps, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
