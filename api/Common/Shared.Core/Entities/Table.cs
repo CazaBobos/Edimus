@@ -53,8 +53,6 @@ public class Table : AggregateRoot<int>
         List<(int, int)>? orders = null
         )
     {
-        var affectedMembers = new List<string>();
-
         if (status is not null && status != Status)
         {
             Guard.Operation(status != TableStatus.Arrived, "Cannot manually set a table to Arrived. Use the link endpoint instead.");
@@ -69,25 +67,16 @@ public class Table : AggregateRoot<int>
                 CalledAt = null;
                 Orders.Clear();
             }
-
-            affectedMembers.Add(nameof(Status));
         }
         if (positionX is not null && positionX != PositionX)
-        {
             PositionX = (int)Guard.Argument(() => positionX).NotNegative();
-            affectedMembers.Add(nameof(PositionX));
-        }
         if (positionY is not null && positionY != PositionY)
-        {
             PositionY = (int)Guard.Argument(() => positionY).NotNegative();
-            affectedMembers.Add(nameof(PositionY));
-        }
         if (surface is not null)
         {
             Guard.Argument(() => surface).Require(surface => surface.Any(s => s.Item1 == 0 && s.Item2 == 0));
             Surface.Clear();
             Surface.AddRange(surface.Select(s => new TableCoord(s.Item1, s.Item2, Id)));
-            affectedMembers.Add(nameof(Surface));
         }
         if (orders is not null && status != TableStatus.Free)
         {
@@ -106,8 +95,6 @@ public class Table : AggregateRoot<int>
 
             if (delta.Count > 0)
                 AddDomainEvent(new OrdersUpdatedEvent { Delta = delta });
-
-            affectedMembers.Add(nameof(Orders));
         }
     }
 }

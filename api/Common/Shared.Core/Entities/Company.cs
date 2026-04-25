@@ -33,24 +33,15 @@ public class Company : AggregateRoot<int>
         bool? publicPrices = null,
         bool? publicOrders = null)
     {
-        var affectedMembers = new List<string>();
-
         if (name is not null && name != Name)
         {
             Name = ValidateName(name);
             Acronym = GenerateAcronym(name);
-            affectedMembers.Add(nameof(Name));
         }
         if (slogan is not null && slogan != Slogan)
-        {
             Slogan = ValidateName(slogan);
-            affectedMembers.Add(nameof(Slogan));
-        }
         if (acronym is not null && acronym != Acronym)
-        {
             Acronym = Guard.Argument(() => acronym).NotNull().NotEmpty().MaxLength(8);
-            affectedMembers.Add(nameof(Acronym));
-        }
         if (reactiveStock is not null && reactiveStock != ReactiveStock) ReactiveStock = reactiveStock.Value;
         if (publicPrices is not null && publicPrices != PublicPrices) PublicPrices = publicPrices.Value;
         if (publicOrders is not null && publicOrders != PublicOrders) PublicOrders = publicOrders.Value;

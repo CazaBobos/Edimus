@@ -1,7 +1,8 @@
-﻿using Dawn;
+using Dawn;
 using Shared.Core.Domain;
 
 namespace Shared.Core.Entities;
+
 public class Product : AggregateRoot<int>
 {
     public override int Id { get; protected set; }
@@ -36,47 +37,30 @@ public class Product : AggregateRoot<int>
         Guard.Operation(Enabled == true, "A product cannot be modified when it's not active. Restore it and try again.");
         Guard.Operation(parentId == null || categoryId == null, "A product can either have a parent, or a category");
 
-        var affectedMembers = new List<string>();
-
         if (parentId is not null && parentId != ParentId)
         {
             ParentId = (int)Guard.Argument(() => parentId).Positive();
             CategoryId = null;
-            affectedMembers.Add(nameof(ParentId));
         }
         if (categoryId is not null && categoryId != CategoryId)
         {
             CategoryId = (int)Guard.Argument(() => categoryId).Positive();
             ParentId = null;
-            affectedMembers.Add(nameof(CategoryId));
         }
         if (name is not null && name != Name)
-        {
             Name = ValidateName(name);
-            affectedMembers.Add(nameof(Name));
-        }
         if (description is not null && description != Description)
-        {
-            Description = Guard.Argument(() => description)
-                .NotNull()
-                .MaxLength(128);
-            affectedMembers.Add(nameof(Description));
-        }
+            Description = Guard.Argument(() => description).NotNull().MaxLength(128);
         if (price is not null && price != Price)
-        {
             Price = Guard.Argument(() => (decimal)price).NotNegative();
-            affectedMembers.Add(nameof(Price));
-        }
         if (consumptions is not null)
         {
             Guard.Argument(() => consumptions).Require(x => x.All(s => s.Item1 > 0 && s.Item2 > 0));
             Consumptions.Clear();
             var newConsumptions = consumptions.Select(c => new Consumption(productId: Id, ingredientId: c.Item1, amount: c.Item2));
             Consumptions.AddRange(newConsumptions);
-            affectedMembers.Add(nameof(Consumptions));
         }
-
     }
 
-    private string ValidateName(string name) => Guard.Argument(() => name).NotNull().NotEmpty().NotWhiteSpace().DoesNotContain("  ");
+    private static string ValidateName(string name) => Guard.Argument(() => name).NotNull().NotEmpty().NotWhiteSpace().DoesNotContain("  ");
 }

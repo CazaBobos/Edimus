@@ -1,6 +1,7 @@
 ﻿using Shared.Core.Domain;
 
 namespace Shared.Core.Entities;
+
 public class Image : Entity<int>
 {
     public override int Id { get; protected set; }
@@ -14,5 +15,10 @@ public class Image : Entity<int>
         ProductId = productId;
         BLOB = blob;
         Enabled = true;
+    }
+
+    public void Update(byte[] blob)
+    {
+        BLOB = blob;
     }
 }

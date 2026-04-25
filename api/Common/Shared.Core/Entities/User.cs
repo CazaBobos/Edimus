@@ -56,25 +56,17 @@ public class User : Entity<int>, IUserRecord
     {
         Guard.Operation(Enabled == true, "A user cannot be modified when it's not active. Restore it and try again.");
 
-        var affectedMembers = new List<string>();
-
         if (username is not null && username != Username)
-        {
             Username = Guard.Argument(() => username)
                 .NotNull()
                 .MinLength(4)
                 .MaxLength(32)
                 .ValidUsernameFormat();
-            affectedMembers.Add(nameof(Username));
-        }
         if (email is not null && email != Email)
-        {
             Email = Guard.Argument(() => email)
                 .NotNull()
                 .MaxLength(64)
                 .ValidEmailFormat();
-            affectedMembers.Add(nameof(Email));
-        }
         if (currentPassword is not null || newPassword is not null)
         {
             Guard.Operation(HashService.Verify(currentPassword!, Password), "User password is incorrect.");
@@ -85,8 +77,6 @@ public class User : Entity<int>, IUserRecord
                 .MaxLength(64)
                 .ValidPasswordFormat();
             Password = HashService.CreateHash(newPassword!);
-
-            affectedMembers.Add(nameof(Password));
         }
 
         if (companyIds is not null && !companyIds.OrderBy(x => x).SequenceEqual(CompanyIds.OrderBy(x => x)))

@@ -32,36 +32,20 @@ public class Sector : AggregateRoot<int>
 
     public void Update(string? name = null, string? color = null, int? positionX = null, int? positionY = null, List<(int, int)>? surface = null)
     {
-        var affectedMembers = new List<string>();
-
         if (name is not null && name != Name)
-        {
             Name = ValidateName(name);
-            affectedMembers.Add(nameof(Name));
-        }
         if (color is not null && color != Color)
-        {
             Color = ValidateName(color);
-            affectedMembers.Add(nameof(Color));
-        }
         if (positionX is not null && positionX != PositionX)
-        {
             PositionX = (int)Guard.Argument(() => positionX).NotNegative();
-            affectedMembers.Add(nameof(PositionX));
-        }
         if (positionY is not null && positionY != PositionY)
-        {
             PositionY = (int)Guard.Argument(() => positionY).NotNegative();
-            affectedMembers.Add(nameof(PositionY));
-        }
         if (surface is not null)
         {
             Guard.Argument(() => surface).Require(surface => surface.Any(s => s.Item1 == 0 && s.Item2 == 0));
-
             Surface.Clear();
             var newSurface = surface.Select(s => new SectorCoord(s.Item1, s.Item2, Id));
             Surface.AddRange(newSurface);
-            affectedMembers.Add(nameof(Surface));
         }
     }
 

@@ -2,6 +2,7 @@ using Dawn;
 using Shared.Core.Domain;
 
 namespace Shared.Core.Entities;
+
 public class Ingredient : Entity<int>
 {
     public override int Id { get; protected set; }
@@ -32,29 +33,13 @@ public class Ingredient : Entity<int>
     {
         Guard.Operation(Enabled == true, "An ingredient cannot be modified when it's not active. Restore it and try again.");
 
-        var affectedMembers = new List<string>();
-
         if (name is not null && name != Name)
-        {
-            Name = Guard.Argument(() => name)
-                .NotNull()
-                .MaxLength(32);
-            affectedMembers.Add(nameof(Name));
-        }
+            Name = Guard.Argument(() => name).NotNull().MaxLength(32);
         if (stock is not null && stock != Stock)
-        {
             Stock = Guard.Argument(() => (decimal)stock).Positive();
-            affectedMembers.Add(nameof(Stock));
-        }
         if (alert is not null && alert != Alert)
-        {
             Alert = Guard.Argument(() => (int)alert).Positive();
-            affectedMembers.Add(nameof(Alert));
-        }
         if (unit is not null && unit != Unit)
-        {
             Unit = (MeasurementUnit)unit;
-            affectedMembers.Add(nameof(Unit));
-        }
     }
 }

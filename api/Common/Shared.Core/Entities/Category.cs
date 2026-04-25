@@ -21,14 +21,8 @@ public class Category : Entity<int>
 
     public void Update(string name)
     {
-        var affectedMembers = new List<string>();
-
         if (name is not null && name != Name)
-        {
             Name = ValidateName(name);
-            affectedMembers.Add(nameof(Name));
-        }
-
     }
 
     private string ValidateName(string name) => Guard.Argument(() => name).NotNull().NotEmpty().NotWhiteSpace().MaxLength(32);
