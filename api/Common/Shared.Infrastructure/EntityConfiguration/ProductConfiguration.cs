@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Shared.Core.Entities;
 
 namespace Shared.Infrastructure.EntityConfiguration;
+
 public class ProductConfiguration : IEntityTypeConfiguration<Product>
 {
     public void Configure(EntityTypeBuilder<Product> entity)
@@ -25,8 +26,8 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .IsRequired();
 
         entity.HasOne(e => e.Image)
-            .WithOne(e => e.Product)
-            .HasForeignKey<Image>(e => e.ProductId);
+            .WithOne()
+            .HasForeignKey<Product>(e => e.ImageId);
 
         entity.HasMany(e => e.Tags)
             .WithMany(e => e.Products);

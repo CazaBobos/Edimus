@@ -12,12 +12,6 @@ public class ImageConfiguration : IEntityTypeConfiguration<Image>
             .HasColumnName("ImageId")
             .ValueGeneratedOnAdd();
 
-        entity.Property(e => e.ProductId)
-            .IsRequired();
-        entity.HasOne(e => e.Product)
-            .WithOne(e => e.Image)
-            .HasForeignKey<Product>(e => e.ImageId);
-
         entity.Property(e => e.BLOB)
             .IsRequired();
 

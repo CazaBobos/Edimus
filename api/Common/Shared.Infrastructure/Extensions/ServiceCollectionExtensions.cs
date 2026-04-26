@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Shared.Core.Persistence;
 using Shared.Core.Services;
 using Shared.Core.Settings;
 using Shared.Infrastructure.Persistence;
@@ -7,12 +7,14 @@ using Shared.Infrastructure.Security;
 using Shared.Infrastructure.Services;
 
 namespace Shared.Infrastructure.Extensions;
+
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddDatabaseContext(this IServiceCollection services)
     {
         services.AddHttpContextAccessor();
         services.AddDbContext<DatabaseContext>();
+        services.AddScoped<IImageRepository, ImageRepository>();
 
         return services;
     }
