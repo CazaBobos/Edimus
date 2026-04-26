@@ -26,16 +26,12 @@ export default function Menu() {
           </Badge>
         )}
       </header>
-
       <main className={styles.main}>
         <MenuCards />
         <OrderDialog />
         <FiltersDialog />
       </main>
-
-      <div className={styles.fab}>
-        <MenuBar />
-      </div>
+      <MenuBar />
     </div>
   );
 }

@@ -1,19 +1,43 @@
+@use "common/colors" as *;
+
 .content {
   display: flex;
   flex-direction: column;
   width: 300px;
-  .header {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 8px;
-  }
-  .tag {
-    display: flex;
-    gap: 8px;
-    padding: 4px 0;
-    &:last-child{
+  padding: 20px;
+  gap: 16px;
+}
 
-      margin-bottom: 16px;
-    }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+  }
+}
+
+.tagList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: $light_text;
+  cursor: pointer;
+  transition: background 0.12s;
+
+  &:hover {
+    background: $hover_light;
   }
 }

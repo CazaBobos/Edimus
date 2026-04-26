@@ -3,14 +3,18 @@
 import { useCategoriesQuery } from "@/hooks/queries/useCategoriesQuery";
 import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
 import { Product } from "@/types";
+import { Loader } from "@mantine/core";
+import Image from "next/image";
 import { useMemo, useState } from "react";
 
 import styles from "./styles.module.scss";
 
 export const MenuCards = () => {
-  const { data: categories } = useCategoriesQuery();
-  const { data: products } = useProductsQuery();
+  const { data: categories, isLoading: categoriesLoading } = useCategoriesQuery();
+  const { data: products, isLoading: productsLoading } = useProductsQuery();
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+
+  const isLoading = categoriesLoading || productsLoading;
 
   const activeCategory = selectedCategory ?? categories[0]?.id ?? null;
 
@@ -39,35 +43,49 @@ export const MenuCards = () => {
           </button>
         ))}
       </div>
-
-      <div className={styles.productList}>
-        {filteredProducts.length === 0 && <p className={styles.empty}>No hay productos en esta categoría</p>}
-        {filteredProducts.map((p, i) => (
-          <div key={p.id} className={styles.product} style={{ "--index": i } as React.CSSProperties}>
-            <div className={styles.productMain}>
-              <div className={styles.productInfo}>
-                <span className={styles.productName}>{p.name}</span>
-                {p.description && <span className={styles.productDesc}>{p.description}</span>}
+      {isLoading ? (
+        <div className={styles.loaderWrapper}>
+          <Loader size="sm" />
+        </div>
+      ) : (
+        <div className={styles.productList}>
+          {filteredProducts.length === 0 && <p className={styles.empty}>No hay productos en esta categoría</p>}
+          {filteredProducts.map((p, i) => (
+            <div key={p.id} className={styles.product} style={{ "--index": i } as React.CSSProperties}>
+              <div className={styles.productMain}>
+                {p.imageId && (
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}products/${p.id}/image`}
+                    alt={p.name}
+                    height={0}
+                    width={0}
+                    className={styles.productImage}
+                  />
+                )}
+                <div className={styles.productInfo}>
+                  <span className={styles.productName}>{p.name}</span>
+                  {p.description && <span className={styles.productDesc}>{p.description}</span>}
+                </div>
+                {!!p.price && <span className={styles.price}>${p.price}</span>}
               </div>
-              {!!p.price && <span className={styles.price}>${p.price}</span>}
-            </div>
 
-            {!!variantsMap[p.id]?.length && (
-              <ul className={styles.variants}>
-                {variantsMap[p.id].map((v) => (
-                  <li key={v.id} className={styles.variant}>
-                    <div className={styles.variantInfo}>
-                      <span className={styles.variantName}>{v.name}</span>
-                      {v.description && <span className={styles.productDesc}>{v.description}</span>}
-                    </div>
-                    {!!v.price && <span className={styles.variantPrice}>${v.price}</span>}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        ))}
-      </div>
+              {!!variantsMap[p.id]?.length && (
+                <ul className={styles.variants}>
+                  {variantsMap[p.id].map((v) => (
+                    <li key={v.id} className={styles.variant}>
+                      <div className={styles.variantInfo}>
+                        <span className={styles.variantName}>{v.name}</span>
+                        {v.description && <span className={styles.productDesc}>{v.description}</span>}
+                      </div>
+                      {!!v.price && <span className={styles.variantPrice}>${v.price}</span>}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

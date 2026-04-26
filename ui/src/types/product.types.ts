@@ -8,7 +8,7 @@ export type Product = {
   description?: string;
   price?: number;
   tags?: number[];
-  image?: Buffer | null;
+  imageId?: number | null;
   enabled: boolean;
   consumptions: Consumption[];
 };

@@ -10,6 +10,7 @@ import { Square } from "../SaloonGrid/Square";
 import styles from "./styles.module.scss";
 
 type SurfaceEditorProps = {
+  smallButtons?: boolean;
   content?: ReactNode;
   offset?: Coords;
   height: number;
@@ -19,7 +20,15 @@ type SurfaceEditorProps = {
 };
 
 export const SurfaceEditor = (props: SurfaceEditorProps) => {
-  const { content = "", offset = { x: 0, y: 0 }, height, width, defaultValue = [{ x: 0, y: 0 }], onChange } = props;
+  const {
+    smallButtons = false,
+    content = "",
+    offset = { x: 0, y: 0 },
+    height,
+    width,
+    defaultValue = [{ x: 0, y: 0 }],
+    onChange,
+  } = props;
 
   const squareSize = useAdminStore((store) => store.squareSize);
 
@@ -120,8 +129,18 @@ export const SurfaceEditor = (props: SurfaceEditorProps) => {
         )}
       </div>
       <div className={styles.actions}>
-        <Button icon={<BiSolidCheckSquare />} label="Rellenar" onClick={handleFillAll} />
-        <Button icon={<BiEraser />} label="Limpiar" onClick={handleClearAll} />
+        <Button
+          icon={<BiSolidCheckSquare />}
+          label={smallButtons ? undefined : "Rellenar"}
+          title="Rellenar"
+          onClick={handleFillAll}
+        />
+        <Button
+          icon={<BiEraser />}
+          label={smallButtons ? undefined : "Limpiar"}
+          title="Limpiar"
+          onClick={handleClearAll}
+        />
       </div>
     </div>
   );

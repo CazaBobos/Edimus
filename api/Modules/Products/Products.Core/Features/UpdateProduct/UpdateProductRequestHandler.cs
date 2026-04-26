@@ -6,6 +6,7 @@ using Products.Core.Model;
 using Shared.Core.Exceptions;
 
 namespace Products.Core.Features.CreateProduct;
+
 public class UpdateProductRequestHandler : IRequestHandler<UpdateProductRequest, UpdateProductResponse>
 {
     private readonly IProductsRepository _productsRepository;

@@ -1,9 +1,10 @@
-import colors from "@/common/colors.module.scss";
 import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
 import { useSingleTableQuery } from "@/hooks/queries/useSingleTableQuery";
 import { useMenuStore } from "@/stores";
 import { Product } from "@/types";
 import { BiX } from "react-icons/bi";
+
+import { Button } from "@/components/ui/Button";
 
 import { Dialog } from "../../../ui/Dialog";
 import styles from "./styles.module.scss";
@@ -17,40 +18,43 @@ export const OrderDialog = () => {
 
   const productsMap = new Map<number, Product>(products.map((p) => [p.id, p]));
 
+  const total =
+    table?.orders.reduce((acc, o) => {
+      const p = productsMap.get(o.productId);
+      return acc + o.amount * (p?.price ?? 0);
+    }, 0) ?? 0;
+
   return (
     <Dialog open={isOrderDialogOpen} onClose={handleClose}>
       <div className={styles.content}>
         <div className={styles.header}>
           <h2>Cuenta</h2>
-          <BiX size={32} />
+          <Button variant="subtle" icon={<BiX size={18} />} onClick={handleClose} />
         </div>
-        {!table?.orders.length && <strong>La mesa no registra pedidos</strong>}
-        {table?.orders.map((o) => {
-          const p = productsMap.get(o.productId);
-          if (!p) return null;
+        <div className={styles.orderList}>
+          {!table?.orders.length ? (
+            <p className={styles.empty}>La mesa no registra pedidos</p>
+          ) : (
+            table.orders.map((o) => {
+              const p = productsMap.get(o.productId);
+              if (!p) return null;
 
-          let name = p.name;
-          let price = p.price;
+              let name = p.name;
+              let price = p.price ?? 0;
 
-          if (p.parentId) {
-            const parent = productsMap.get(p.parentId);
+              if (p.parentId) {
+                const parent = productsMap.get(p.parentId);
+                if (p.price === 0) price = parent?.price ?? 0;
+                name = `${parent?.name} - ${name}`;
+              }
 
-            if (p.price === 0) price = parent!.price;
-
-            name = `${parent!.name} - ` + name;
-          }
-
-          return <OrderCard key={name} product={name} price={price ?? 0} owned />;
-        })}
+              return <OrderCard key={o.productId} product={name} amount={o.amount} price={price} />;
+            })
+          )}
+        </div>
         <div className={styles.footer}>
-          <b style={{ color: colors.lightGrey }}>
-            Total Mesa: $
-            {table?.orders.reduce((acum, curr) => {
-              const p = productsMap.get(curr.productId);
-
-              return acum + curr.amount * (p?.price ?? 0);
-            }, 0)}
-          </b>
+          <span>Total Mesa</span>
+          <b>${total}</b>
         </div>
       </div>
     </Dialog>
@@ -59,15 +63,14 @@ export const OrderDialog = () => {
 
 type OrderCardProps = {
   product: string;
+  amount: number;
   price: number;
-  owned?: boolean;
 };
-const OrderCard = (props: OrderCardProps) => {
-  const { product, price, owned } = props;
-  return (
-    <div className={styles.card} data-owned={owned}>
-      <b>{product}</b>
-      <b>${price}</b>
-    </div>
-  );
-};
+const OrderCard = ({ product, amount, price }: OrderCardProps) => (
+  <div className={styles.card}>
+    <span className={styles.cardName}>
+      <b>{amount}×</b> {product}
+    </span>
+    <b>${amount * price}</b>
+  </div>
+);

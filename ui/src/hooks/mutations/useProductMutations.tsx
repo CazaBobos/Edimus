@@ -31,10 +31,20 @@ export const useProductMutations = () => {
     onError: () => showError("Ha ocurrido un error."),
     onSuccess: (_, variables) => {
       showSuccess("El producto se ha actualizado correctamente.");
-
       queryClient.setQueriesData<Product[]>({ queryKey: ["products"] }, (query) => {
         if (!query) return;
         return query.map((p) => (p.id === variables.id ? { ...p, ...variables.request } : p));
+      });
+    },
+  });
+
+  const updateProductImageMutation = useAxiosMutation({
+    mutationFn: async ({ id, image }: { id: number; image: string | null }) => await productsApi.updateImage(id, image),
+    onError: () => showError("Ha ocurrido un error al guardar la imagen."),
+    onSuccess: (imageId, { id }) => {
+      queryClient.setQueriesData<Product[]>({ queryKey: ["products"] }, (query) => {
+        if (!query) return;
+        return query.map((p) => (p.id === id ? { ...p, imageId: imageId ?? null } : p));
       });
     },
   });
@@ -70,6 +80,7 @@ export const useProductMutations = () => {
   return {
     createProductMutation,
     updateProductMutation,
+    updateProductImageMutation,
     removeProductMutation,
     restoreProductMutation,
   };

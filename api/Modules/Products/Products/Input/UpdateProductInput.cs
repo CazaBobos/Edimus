@@ -9,7 +9,6 @@ public class UpdateProductInput
     public string? Name { get; set; }
     public string? Description { get; set; }
     public decimal? Price { get; set; }
-    public byte[]? Image { get; set; }
     public List<int>? Tags { get; set; }
     public List<ConsumptionModel>? Consumptions { get; set; }
 }

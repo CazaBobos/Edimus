@@ -8,6 +8,8 @@ import { PiCallBell, PiBasket } from "react-icons/pi";
 
 import { Button } from "@/components/ui/Button";
 
+import styles from "./styles.module.scss";
+
 export const MenuBar = () => {
   const { setIsFiltersDialogOpen, setIsOrderDialogOpen } = useMenuStore();
 
@@ -25,14 +27,14 @@ export const MenuBar = () => {
 
   if (!table) return null;
   return (
-    <>
-      <Button icon={<BiFilterAlt size={32} />} onClick={() => setIsFiltersDialogOpen(true)} />
-      <Button icon={<PiBasket size={32} />} onClick={() => setIsOrderDialogOpen(true)} />
+    <div className={styles.fab}>
+      <Button icon={<BiFilterAlt size={24} />} onClick={() => setIsFiltersDialogOpen(true)} />
+      <Button icon={<PiBasket size={24} />} onClick={() => setIsOrderDialogOpen(true)} />
       <Button
-        icon={<PiCallBell size={32} />}
+        icon={<PiCallBell size={24} />}
         onClick={handleTableCall}
         disabled={table.status === TableStatus.Calling || locked}
       />
-    </>
+    </div>
   );
 };

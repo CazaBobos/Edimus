@@ -30,10 +30,21 @@ export const useTablesHub = (layoutId: number | undefined) => {
       });
     });
 
-    connection.start().then(() => connection.invoke("JoinLayout", layoutId));
+    let started = false;
+    connection
+      .start()
+      .then(() => {
+        started = true;
+        connection.invoke("JoinLayout", layoutId);
+      })
+      .catch(() => {});
 
     return () => {
-      connection.invoke("LeaveLayout", layoutId).finally(() => connection.stop());
+      if (started) {
+        connection.invoke("LeaveLayout", layoutId).finally(() => connection.stop());
+      } else {
+        connection.stop();
+      }
     };
   }, [layoutId, queryClient]);
 };

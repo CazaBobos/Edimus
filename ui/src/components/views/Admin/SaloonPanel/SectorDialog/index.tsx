@@ -57,7 +57,6 @@ export const SectorDialog = () => {
       title={sector ? `Sector "${sector?.name}"` : "Nuevo Sector"}
       position="right"
       size="xl"
-      withOverlay={false}
       shadow="xl"
     >
       <div className={styles.content}>

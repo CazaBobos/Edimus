@@ -58,7 +58,6 @@ export const IngredientDialog = () => {
       title={title}
       position="right"
       size="md"
-      withOverlay={false}
       shadow="xl"
     >
       <div className={styles.content}>

@@ -2,7 +2,9 @@ using Mediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Products.Core.Features.CreateProduct;
+using Products.Core.Features.GetProductImage;
 using Products.Core.Features.GetProducts;
+using Products.Core.Features.UpdateProductImage;
 using Products.Core.Features.RemoveProduct;
 using Products.Core.Features.RestoreProduct;
 using Products.Input;
@@ -38,6 +40,7 @@ public class ProductsController : ControllerBase
             MaxPrice = input.MaxPrice,
             Tags = input.Tags,
             Enabled = input.Enabled,
+            User = User.Identity?.IsAuthenticated == true ? User.GetUser() : null,
         }, cancellationToken);
 
         HttpContext.Response.Headers.Add(Pagination.Count, $"{response.Count}");
@@ -85,6 +88,33 @@ public class ProductsController : ControllerBase
         }, cancellationToken);
 
         return Ok(response);
+    }
+
+    /// <summary>
+    /// Sets or removes the image for a product. Send null to remove.
+    /// </summary>
+    [HttpPut("{id}/image")]
+    public async Task<IActionResult> UpdateImage(int id, [FromBody] UpdateProductImageInput input, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new UpdateProductImageRequest
+        {
+            Id = id,
+            Image = input.Image,
+            User = User.GetUser(),
+        }, cancellationToken);
+
+        return Ok(response.ImageId);
+    }
+
+    /// <summary>
+    /// Returns the image for a product
+    /// </summary>
+    [HttpGet("{id}/image")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetImage(int id, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new GetProductImageRequest { Id = id }, cancellationToken);
+        return File(response.BLOB, "image/jpeg");
     }
 
     /// <summary>

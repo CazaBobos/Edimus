@@ -28,6 +28,57 @@
   margin-top: 8px;
 }
 
+// ─── Image ─────────────────────────────────────────────────────
+
+.imageSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid $border_light;
+  padding-top: 16px;
+}
+
+.imagePreview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  border: 1px solid $border_subtle;
+  overflow: hidden;
+}
+
+.imageButtons {
+  display: flex;
+  gap: 8px;
+
+  > * {
+    flex: 1;
+  }
+}
+
+.imageUploadBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 6px;
+  border: 1.5px dashed $border_subtle;
+  background: transparent;
+  color: $light_grey;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
+
+  &:hover {
+    border-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-filled);
+  }
+}
+
 // ─── Consumptions ──────────────────────────────────────────────
 
 .consumptionsSection {
@@ -86,23 +137,6 @@
   text-align: right;
 }
 
-.consumptionRemove {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: $grey;
-  padding: 2px;
-  border-radius: 4px;
-  flex-shrink: 0;
-  transition: color 0.12s;
-
-  &:hover {
-    color: $red;
-  }
-}
 
 .consumptionAdd {
   display: flex;

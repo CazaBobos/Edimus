@@ -18,6 +18,11 @@ export const productsApi = {
 
     return response.data;
   },
+  updateImage: async (id: number, image: string | null) => {
+    const response = await axiosClient.put<number | null>(`products/${id}/image`, { image });
+
+    return response.data;
+  },
   remove: async (id: number) => {
     const response = await axiosClient.delete<void>(`products/${id}`);
 

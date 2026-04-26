@@ -1,6 +1,7 @@
+import { useIngredientsQuery } from "@/hooks/queries/useIngredientsQuery";
 import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
 import { Product, Table, TableOrder } from "@/types";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { BiPlus, BiX } from "react-icons/bi";
 
 import { Button } from "@/components/ui/Button";
@@ -17,8 +18,7 @@ type OrdersListProps = {
 export const OrdersList = (props: OrdersListProps) => {
   const { table, disabled = false, onChange } = props;
   const { data: products } = useProductsQuery();
-
-  const productsMap = new Map<number, Product>(products.map((p) => [p.id, p]));
+  const { ingredientsMap } = useIngredientsQuery();
 
   const [orders, setOrders] = useState<TableOrder[]>(table?.orders);
 
@@ -40,6 +40,40 @@ export const OrdersList = (props: OrdersListProps) => {
     onChange(newOrders);
   };
 
+  const productsMap = useMemo(() => new Map<number, Product>(products.map((p) => [p.id, p])), [products]);
+  const originalProductIds = useMemo(() => new Set(table.orders.map((o) => o.productId)), [table.orders]);
+
+  const projectedStock = useMemo(() => {
+    const reduction = new Map<number, number>();
+
+    for (const order of orders) {
+      if (originalProductIds.has(order.productId)) continue;
+      const product = productsMap.get(order.productId);
+      if (!product) continue;
+      for (const c of product.consumptions) {
+        reduction.set(c.ingredientId, (reduction.get(c.ingredientId) ?? 0) + order.amount * c.amount);
+      }
+    }
+
+    const stock = new Map<number, number>();
+    ingredientsMap?.forEach((ing) => {
+      stock.set(ing.id, ing.stock - (reduction.get(ing.id) ?? 0));
+    });
+    return stock;
+  }, [orders, originalProductIds, productsMap, ingredientsMap]);
+
+  const checkStock = (productId: number): string | null => {
+    const product = productsMap.get(productId);
+    if (!product) return null;
+    for (const c of product.consumptions) {
+      const available = projectedStock.get(c.ingredientId) ?? 0;
+      if (available < c.amount) {
+        return ingredientsMap?.get(c.ingredientId)?.name ?? "ingrediente";
+      }
+    }
+    return null;
+  };
+
   const productOptions: SelectOption[] = products
     .filter((p) => p.price !== 0 || p.parentId)
     .map((p) => {
@@ -54,10 +88,13 @@ export const OrdersList = (props: OrdersListProps) => {
         name = `${parent!.name} - ` + name;
       }
 
+      const lacking = checkStock(p.id);
+
       return {
         value: p.id,
-        label: `${name} - $${price}`,
+        label: lacking ? `${name} - $${price} (sin stock: ${lacking})` : `${name} - $${price}`,
         hidden: orders.some((r) => r.productId === p.id),
+        disabled: !!lacking,
       };
     })
     .sort((a, b) => a.label.localeCompare(b.label));

@@ -12,7 +12,7 @@ import {
 } from "@/types";
 import { Drawer } from "@mantine/core";
 import { useRef, useState } from "react";
-import { BiDownload, BiLock, BiSave, BiSolidCircle, BiTrash } from "react-icons/bi";
+import { BiClipboard, BiDownload, BiLock, BiReceipt, BiSave, BiSolidCircle, BiTrash } from "react-icons/bi";
 import QRCode from "react-qr-code";
 
 import { Button } from "@/components/ui/Button";
@@ -108,8 +108,7 @@ export const TableDialog = () => {
         </div>
       }
       position="right"
-      size="xl"
-      withOverlay={false}
+      size="md"
       shadow="xl"
     >
       <div className={styles.dialogLayout}>
@@ -117,6 +116,7 @@ export const TableDialog = () => {
           <div className={styles.row}>
             <Positioner positionX={table?.positionX} positionY={table?.positionY} onChange={handleSetCoords} />
             <SurfaceEditor
+              smallButtons
               content={<BiLock size={14} />}
               offset={{ x: -1, y: -1 }}
               height={3}
@@ -147,7 +147,13 @@ export const TableDialog = () => {
         )}
         <div className={styles.actions}>
           <Button label="Guardar Cambios" icon={<BiSave />} onClick={handleSave} />
-          {table && <Button label="Eliminar Mesa" icon={<BiTrash />} onClick={handleRemove} />}
+          {table && (
+            <>
+              <Button label="Emitir control de pedido" icon={<BiClipboard />} />
+              <Button label="Generar comprobante" icon={<BiReceipt />} />
+              <Button label="Eliminar Mesa" icon={<BiTrash />} onClick={handleRemove} />
+            </>
+          )}
         </div>
       </div>
     </Drawer>

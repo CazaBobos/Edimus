@@ -62,5 +62,21 @@ public class Product : AggregateRoot<int>
         }
     }
 
+    public void UpdateImage(byte[]? blob)
+    {
+        if (blob is null)
+        {
+            Image = null;
+            return;
+        }
+
+        Guard.Argument(() => blob).Require(x => x.Length <= 500_000, _ => "Image exceeds maximum allowed size of 500KB");
+
+        if (Image is not null)
+            Image.Update(blob);
+        else
+            Image = new Image(Id, blob);
+    }
+
     private static string ValidateName(string name) => Guard.Argument(() => name).NotNull().NotEmpty().NotWhiteSpace().DoesNotContain("  ");
 }

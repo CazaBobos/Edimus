@@ -1,0 +1,17 @@
+@use "common/colors" as *;
+
+/* ── Floating action buttons ────────────────────────── */
+
+.fab {
+  position: absolute;
+  bottom: 24px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 50;
+
+  > * {
+    filter: drop-shadow(0 4px 12px $shadow_dark);
+  }
+}
