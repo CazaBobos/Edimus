@@ -67,6 +67,7 @@ public class Product : AggregateRoot<int>
         if (blob is null)
         {
             Image = null;
+            ImageId = null;
             return;
         }
 
@@ -77,6 +78,9 @@ public class Product : AggregateRoot<int>
         else
             Image = new Image(Id, blob);
     }
+
+    // Call after SaveChanges so EF has propagated the generated Image.Id back.
+    public void SyncImageId() => ImageId = Image?.Id;
 
     private static string ValidateName(string name) => Guard.Argument(() => name).NotNull().NotEmpty().NotWhiteSpace().DoesNotContain("  ");
 }

@@ -39,7 +39,13 @@ export const Positioner = (props: PositionerProps) => {
 
     const onKeyDown = (e: KeyboardEvent) => {
       const delta = deltas[e.key];
-      if (!delta) return;
+      if (
+        !delta ||
+        document.activeElement instanceof HTMLInputElement ||
+        document.activeElement instanceof HTMLTextAreaElement
+      )
+        return;
+
       e.preventDefault();
       handleChange({ x: currentCoords.x + delta.x, y: currentCoords.y + delta.y });
     };

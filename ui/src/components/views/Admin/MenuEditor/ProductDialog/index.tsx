@@ -4,9 +4,11 @@ import { useIngredientsQuery } from "@/hooks/queries/useIngredientsQuery";
 import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
 import { useAdminStore } from "@/stores";
 import { measurementUnitsMap, ProductRequest } from "@/types";
+import { compressImage } from "@/utils/imageCompression";
 import { Drawer } from "@mantine/core";
-import { useEffect, useState } from "react";
-import { BiPlus, BiSave, BiTrash, BiUpload, BiX } from "react-icons/bi";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { BiCamera, BiPlus, BiSave, BiTrash, BiUpload, BiX } from "react-icons/bi";
 
 import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
@@ -24,6 +26,7 @@ export const ProductDialog = () => {
     setRequest({});
     setNewIngredientId("-1");
     setNewAmount("");
+    setPendingImage(undefined);
     setProductDialogOpenState(undefined);
   };
 
@@ -33,8 +36,13 @@ export const ProductDialog = () => {
 
   const parentableProducts = products.filter((p) => !!p.categoryId);
 
-  const { createProductMutation, updateProductMutation, removeProductMutation, restoreProductMutation } =
-    useProductMutations();
+  const {
+    createProductMutation,
+    updateProductMutation,
+    updateProductImageMutation,
+    removeProductMutation,
+    restoreProductMutation,
+  } = useProductMutations();
 
   const handleEnable = () => {
     if (!product) return;
@@ -70,11 +78,42 @@ export const ProductDialog = () => {
     }
   };
 
+  const handleSaveImage = () => {
+    if (!product || pendingImage === undefined) return;
+    const base64 = pendingImage ? pendingImage.split(",")[1] : null;
+    updateProductImageMutation.mutate(
+      { id: product.id, image: base64 },
+      {
+        onSuccess: () => setPendingImage(undefined),
+      },
+    );
+  };
+
   const [isVariant, setIsVariant] = useState<boolean>(false);
   useEffect(() => {
     setIsVariant(!!product?.parentId);
     setRequest((prev) => ({ ...prev, consumptions: product?.consumptions ?? [] }));
+    setPendingImage(undefined);
   }, [product]);
+
+  // ─── Image ──────────────────────────────────────────────────
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  // undefined = no change, null = removal pending, string = data URL of new image
+  const [pendingImage, setPendingImage] = useState<string | null | undefined>(undefined);
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const base64 = await compressImage(file);
+    setPendingImage(`data:image/jpeg;base64,${base64}`);
+  };
+
+  const currentImageSrc =
+    pendingImage !== undefined
+      ? pendingImage
+      : product?.imageId
+        ? `${process.env.NEXT_PUBLIC_API_BASE_URL}products/${product.id}/image`
+        : null;
 
   // ─── Consumptions ───────────────────────────────────────────
   const [newIngredientId, setNewIngredientId] = useState<string>("-1");
@@ -108,15 +147,7 @@ export const ProductDialog = () => {
     : "Nuevo Producto";
 
   return (
-    <Drawer
-      opened={product !== undefined}
-      onClose={handleClose}
-      title={title}
-      position="right"
-      size="md"
-      withOverlay={false}
-      shadow="xl"
-    >
+    <Drawer opened={product !== undefined} onClose={handleClose} title={title} position="right" size="md" shadow="xl">
       <div className={styles.content}>
         <Input title="Nombre" name="name" defaultValue={product?.name} onChange={handleChange} />
         <Input
@@ -150,7 +181,35 @@ export const ProductDialog = () => {
             disabled={!isVariant}
           />
         </div>
-
+        {product && (
+          <div className={styles.imageSection}>
+            <p className={styles.sectionLabel}>Imagen</p>
+            {currentImageSrc && (
+              <div className={styles.imagePreview}>
+                <Image src={currentImageSrc} alt={product.name} fill style={{ objectFit: "cover" }} />
+              </div>
+            )}
+            <div className={styles.imageButtons}>
+              <label className={styles.imageUploadBtn}>
+                <BiCamera size={16} />
+                {currentImageSrc ? "Cambiar imagen" : "Subir imagen"}
+                <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageChange} hidden />
+              </label>
+              {currentImageSrc && (
+                <Button
+                  variant="subtle"
+                  danger
+                  label="Eliminar"
+                  icon={<BiX size={16} />}
+                  onClick={() => setPendingImage(null)}
+                />
+              )}
+            </div>
+            {pendingImage !== undefined && (
+              <Button label="Guardar imagen" icon={<BiSave />} onClick={handleSaveImage} />
+            )}
+          </div>
+        )}
         {product && (
           <div className={styles.consumptionsSection}>
             <p className={styles.sectionLabel}>Ingredientes</p>
@@ -164,12 +223,12 @@ export const ProductDialog = () => {
                       <span className={styles.consumptionName}>{ingredient?.name ?? `#${c.ingredientId}`}</span>
                       <span className={styles.consumptionUnit}>{measurementUnitsMap[ingredient?.unit ?? 0]}</span>
                       <span className={styles.consumptionAmount}>{c.amount}</span>
-                      <button
-                        className={styles.consumptionRemove}
+                      <Button
+                        variant="action"
+                        danger
+                        icon={<BiX size={14} />}
                         onClick={() => handleRemoveConsumption(c.ingredientId)}
-                      >
-                        <BiX size={14} />
-                      </button>
+                      />
                     </div>
                   );
                 })}
