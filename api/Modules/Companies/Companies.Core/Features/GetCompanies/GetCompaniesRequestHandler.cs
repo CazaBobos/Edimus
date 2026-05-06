@@ -25,13 +25,15 @@ public class GetCompaniesRequestHandler : IRequestHandler<GetCompaniesRequest, G
             .WhereAcronym(request.Acronym)
             .WhereEnabled(request.Enabled);
 
+        var count = await query.CountAsync(cancellationToken);
+
         var companies = await query
             .Paginate(request.Limit, request.Page)
             .ToListAsync(cancellationToken);
 
         return new GetCompaniesResponse
         {
-            Count = query.Count(),
+            Count = count,
             Limit = request.Limit,
             Page = request.Page,
             Companies = companies.Adapt<List<CompanyModel>>(),

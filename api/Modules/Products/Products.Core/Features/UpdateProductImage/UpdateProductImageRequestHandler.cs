@@ -27,9 +27,10 @@ public class UpdateProductImageRequestHandler : IRequestHandler<UpdateProductIma
 
         if (product is null) throw new HttpNotFoundException();
 
+        var oldImage = product.Image;
+
         product.UpdateImage(request.Image);
 
-        var oldImage = product.Image;
         if (request.Image is null && oldImage is not null)
         {
             _imageRepository.MarkDeleted(oldImage);

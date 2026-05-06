@@ -27,6 +27,8 @@ public class GetProductsRequestHandler : IRequestHandler<GetProductsRequest, Get
             .WhereTags(request.Tags)
             .WhereEnabled(request.Enabled);
 
+        var count = await query.CountAsync(cancellationToken);
+
         var products = await query
             .Paginate(request.Limit, request.Page)
             .OrderBy(x => x.Id)
@@ -34,7 +36,7 @@ public class GetProductsRequestHandler : IRequestHandler<GetProductsRequest, Get
 
         return new GetProductsResponse
         {
-            Count = query.Count(),
+            Count = count,
             Limit = request.Limit,
             Page = request.Page,
             Products = products.Adapt<List<ProductModel>>(),

@@ -26,6 +26,8 @@ public class GetIngredientsRequestHandler : IRequestHandler<GetIngredientsReques
             .WhereUnit(request.Unit)
             .WhereEnabled(request.Enabled);
 
+        var count = await query.CountAsync(cancellationToken);
+
         var ingredients = await query
             .Paginate(request.Limit, request.Page)
             .OrderBy(x => x.Id)
@@ -33,7 +35,7 @@ public class GetIngredientsRequestHandler : IRequestHandler<GetIngredientsReques
 
         return new GetIngredientsResponse
         {
-            Count = query.Count(),
+            Count = count,
             Limit = request.Limit,
             Page = request.Page,
             Ingredients = ingredients.Adapt<List<IngredientModel>>()

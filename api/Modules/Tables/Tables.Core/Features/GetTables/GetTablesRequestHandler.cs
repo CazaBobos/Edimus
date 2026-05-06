@@ -24,13 +24,15 @@ public class GetTablesRequestHandler : IRequestHandler<GetTablesRequest, GetTabl
             .WhereStatus(request.Status)
             .WhereEnabled(request.Enabled);
 
+        var count = await query.CountAsync(cancellationToken);
+
         var tables = await query
             .Paginate(request.Limit, request.Page)
             .ToListAsync(cancellationToken);
 
         return new GetTablesResponse
         {
-            Count = query.Count(),
+            Count = count,
             Limit = request.Limit,
             Page = request.Page,
             Tables = tables.Adapt<List<TableModel>>()

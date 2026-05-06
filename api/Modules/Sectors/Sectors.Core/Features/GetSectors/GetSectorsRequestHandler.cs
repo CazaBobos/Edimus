@@ -24,13 +24,15 @@ public class GetSectorsRequestHandler : IRequestHandler<GetSectorsRequest, GetSe
             .WhereName(request.Name)
             .WhereEnabled(request.Enabled);
 
+        var count = await query.CountAsync(cancellationToken);
+
         var sectors = await query
             .Paginate(request.Limit, request.Page)
             .ToListAsync(cancellationToken);
 
         return new GetSectorsResponse
         {
-            Count = query.Count(),
+            Count = count,
             Limit = request.Limit,
             Page = request.Page,
             Sectors = sectors.Adapt<List<SectorModel>>()

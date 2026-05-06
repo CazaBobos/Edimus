@@ -24,13 +24,15 @@ public class GetCategoriesRequestHandler : IRequestHandler<GetCategoriesRequest,
             .WhereName(request.Name)
             .WhereEnabled(request.Enabled);
 
+        var count = await query.CountAsync(cancellationToken);
+
         var categories = await query
             .Paginate(request.Limit, request.Page)
             .ToListAsync(cancellationToken);
 
         return new GetCategoriesResponse
         {
-            Count = query.Count(),
+            Count = count,
             Limit = request.Limit,
             Page = request.Page,
             Categories = categories.Adapt<List<CategoryModel>>()

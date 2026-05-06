@@ -20,13 +20,15 @@ public class GetUsersRequestHandler : IRequestHandler<GetUsersRequest, GetUsersR
             .Where(u => request.Username == null || u.Username.Contains(request.Username))
             .Where(u => request.Email == null || u.Email.Contains(request.Email));
 
+        var count = await query.CountAsync(cancellationToken);
+
         var users = await query
             .Paginate(request.Limit, request.Page)
             .ToListAsync(cancellationToken);
 
         return new GetUsersResponse
         {
-            Count = query.Count(),
+            Count = count,
             Limit = request.Limit,
             Page = request.Page,
             Users = users.Adapt<List<UserModel>>(),
