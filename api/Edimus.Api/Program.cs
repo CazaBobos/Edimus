@@ -15,6 +15,7 @@ using Shared.Infrastructure.Extensions;
 using Statistics.Extensions;
 using Tables.Extensions;
 using Tables.Hubs;
+using Tags.Extensions;
 using Users.Extensions;
 
 var options = new WebApplicationOptions
@@ -55,6 +56,7 @@ builder.Services.AddProducts();
 builder.Services.AddSectors();
 builder.Services.AddStatistics();
 builder.Services.AddTables();
+builder.Services.AddTags();
 builder.Services.AddUsers();
 builder.Services.AddIdentity();
 

@@ -36,6 +36,7 @@
     <ProjectReference Include="..\Modules\Sectors\Sectors\Sectors.csproj" />
     <ProjectReference Include="..\Modules\Statistics\Statistics\Statistics.csproj" />
     <ProjectReference Include="..\Modules\Tables\Tables\Tables.csproj" />
+    <ProjectReference Include="..\Modules\Tags\Tags\Tags.csproj" />
     <ProjectReference Include="..\Modules\Users\Users\Users.csproj" />
   </ItemGroup>
 
