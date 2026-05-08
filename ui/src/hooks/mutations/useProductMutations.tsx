@@ -29,11 +29,11 @@ export const useProductMutations = () => {
       await productsApi.update(id, request),
     onMutate: () => showInfo("Por favor, espere..."),
     onError: () => showError("Ha ocurrido un error."),
-    onSuccess: (_, variables) => {
+    onSuccess: (updatedProduct, variables) => {
       showSuccess("El producto se ha actualizado correctamente.");
       queryClient.setQueriesData<Product[]>({ queryKey: ["products"] }, (query) => {
         if (!query) return;
-        return query.map((p) => (p.id === variables.id ? { ...p, ...variables.request } : p));
+        return query.map((p) => (p.id === variables.id ? updatedProduct : p));
       });
     },
   });

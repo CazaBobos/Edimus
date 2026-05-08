@@ -5,6 +5,8 @@ type MenuStore = {
   setIsFiltersDialogOpen: (value: boolean) => void;
   isOrderDialogOpen: boolean;
   setIsOrderDialogOpen: (value: boolean) => void;
+  tagFilters: number[];
+  setTagFilters: (ids: number[]) => void;
 };
 
 export const useMenuStore = create<MenuStore>()((set) => ({
@@ -17,5 +19,10 @@ export const useMenuStore = create<MenuStore>()((set) => ({
   setIsOrderDialogOpen: (value: boolean) =>
     set(() => ({
       isOrderDialogOpen: value,
+    })),
+  tagFilters: [],
+  setTagFilters: (ids: number[]) =>
+    set(() => ({
+      tagFilters: ids,
     })),
 }));

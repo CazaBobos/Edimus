@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Core.Extensions;
-using Tags.Core.Abstractions;
+using Shared.Core.Persistence;
 
 namespace Tags.Core.Extensions;
 

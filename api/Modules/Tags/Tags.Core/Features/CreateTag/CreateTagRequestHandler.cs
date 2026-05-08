@@ -1,6 +1,6 @@
 using Mediator;
 using Shared.Core.Entities;
-using Tags.Core.Abstractions;
+using Shared.Core.Persistence;
 
 namespace Tags.Core.Features.CreateTag;
 

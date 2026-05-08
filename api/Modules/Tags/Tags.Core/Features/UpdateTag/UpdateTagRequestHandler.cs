@@ -1,6 +1,6 @@
 using Mediator;
 using Shared.Core.Exceptions;
-using Tags.Core.Abstractions;
+using Shared.Core.Persistence;
 
 namespace Tags.Core.Features.UpdateTag;
 

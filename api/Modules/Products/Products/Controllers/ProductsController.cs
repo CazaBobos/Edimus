@@ -83,11 +83,12 @@ public class ProductsController : ControllerBase
             Name = input.Name,
             Description = input.Description,
             Price = input.Price,
+            TagIds = input.TagIds,
             Consumptions = input.Consumptions,
             User = User.GetUser(),
         }, cancellationToken);
 
-        return Ok(response);
+        return Ok(response.Product);
     }
 
     /// <summary>

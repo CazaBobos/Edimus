@@ -2,7 +2,7 @@ using Mapster;
 using Mediator;
 using Microsoft.EntityFrameworkCore;
 using Shared.Core.Extensions;
-using Tags.Core.Abstractions;
+using Shared.Core.Persistence;
 using Tags.Core.Extensions;
 using Tags.Core.Model;
 

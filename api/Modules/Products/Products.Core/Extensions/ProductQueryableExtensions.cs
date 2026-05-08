@@ -37,11 +37,7 @@ public static class ProductQueryableExtensions
     {
         if (tags is null || tags.Count == 0) return queryable;
 
-        return queryable.Where(product =>
-            product.Tags == null ||
-            product.Tags.Count == 0 ||
-            product.Tags.Any(tag => tags.Contains(tag.Id))
-        );
+        return queryable.Where(product => product.Tags.Any(tag => tags.Contains(tag.Id)));
     }
 
     public static IQueryable<Product> WhereEnabled(this IQueryable<Product> queryable, bool? enabled)

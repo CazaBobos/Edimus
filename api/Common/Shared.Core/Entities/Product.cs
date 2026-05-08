@@ -32,7 +32,14 @@ public class Product : AggregateRoot<int>
         Enabled = true;
     }
 
-    public void Update(int? parentId, int? categoryId, decimal? price, string? name, string? description, List<(int, decimal)>? consumptions)
+    public void Update(
+        int? parentId,
+        int? categoryId,
+        decimal? price,
+        string? name,
+        string? description,
+        List<Tag>? tags,
+        List<(int, decimal)>? consumptions)
     {
         Guard.Operation(Enabled == true, "A product cannot be modified when it's not active. Restore it and try again.");
         Guard.Operation(parentId == null || categoryId == null, "A product can either have a parent, or a category");
@@ -53,6 +60,12 @@ public class Product : AggregateRoot<int>
             Description = Guard.Argument(() => description).NotNull().MaxLength(128);
         if (price is not null && price != Price)
             Price = Guard.Argument(() => (decimal)price).NotNegative();
+        if (tags is not null)
+        {
+            Guard.Argument(() => tags).Require(x => x.All(t => t.Id > 0));
+            Tags.Clear();
+            Tags.AddRange(tags);
+        }
         if (consumptions is not null)
         {
             Guard.Argument(() => consumptions).Require(x => x.All(s => s.Item1 > 0 && s.Item2 > 0));

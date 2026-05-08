@@ -14,7 +14,7 @@ export const productsApi = {
     return response.data;
   },
   update: async (id: number, request: ProductRequest) => {
-    const response = await axiosClient.put<void>(`products/${id}`, request);
+    const response = await axiosClient.put<Product>(`products/${id}`, request);
 
     return response.data;
   },

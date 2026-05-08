@@ -2,10 +2,11 @@ import { useProductMutations } from "@/hooks/mutations/useProductMutations";
 import { useCategoriesQuery } from "@/hooks/queries/useCategoriesQuery";
 import { useIngredientsQuery } from "@/hooks/queries/useIngredientsQuery";
 import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
+import { useTagsQuery } from "@/hooks/queries/useTagsQuery";
 import { useAdminStore } from "@/stores";
 import { measurementUnitsMap, ProductRequest } from "@/types";
 import { compressImage } from "@/utils/imageCompression";
-import { Drawer } from "@mantine/core";
+import { Drawer, MultiSelect } from "@mantine/core";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { BiCamera, BiPlus, BiSave, BiTrash, BiUpload, BiX } from "react-icons/bi";
@@ -30,6 +31,7 @@ export const ProductDialog = () => {
     setProductDialogOpenState(undefined);
   };
 
+  const { data: tags } = useTagsQuery({ enabled: true });
   const { data: products } = useProductsQuery();
   const { data: categories } = useCategoriesQuery();
   const { data: ingredients, ingredientsMap } = useIngredientsQuery({ enabled: true });
@@ -92,7 +94,11 @@ export const ProductDialog = () => {
   const [isVariant, setIsVariant] = useState<boolean>(false);
   useEffect(() => {
     setIsVariant(!!product?.parentId);
-    setRequest((prev) => ({ ...prev, consumptions: product?.consumptions ?? [] }));
+    setRequest((prev) => ({
+      ...prev,
+      consumptions: product?.consumptions ?? [],
+      tagIds: product?.tags?.map((t) => t.id) ?? [],
+    }));
     setPendingImage(undefined);
   }, [product]);
 
@@ -254,6 +260,18 @@ export const ProductDialog = () => {
               </div>
               <Button variant="action" icon={<BiPlus size={15} />} onClick={handleAddConsumption} />
             </div>
+          </div>
+        )}
+        {product && (
+          <div className={styles.tagsSection}>
+            <p className={styles.sectionLabel}>Etiquetas</p>
+            <MultiSelect
+              data={tags.map((t) => ({ value: String(t.id), label: t.name }))}
+              value={(request.tagIds ?? []).map(String)}
+              onChange={(values) => setRequest((prev) => ({ ...prev, tagIds: values.map(Number) }))}
+              placeholder="Seleccionar etiquetas..."
+              searchable
+            />
           </div>
         )}
 

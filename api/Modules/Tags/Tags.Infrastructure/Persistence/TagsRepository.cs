@@ -1,7 +1,7 @@
 using Mediator;
 using Shared.Core.Entities;
 using Shared.Infrastructure.Persistence;
-using Tags.Core.Abstractions;
+using Shared.Core.Persistence;
 
 namespace Tags.Infrastructure.Persistence;
 

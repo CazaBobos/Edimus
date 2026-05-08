@@ -1,4 +1,5 @@
 import { Consumption } from "./consumption.types";
+import { Tag } from "./tag.types";
 
 export type Product = {
   id: number;
@@ -7,7 +8,7 @@ export type Product = {
   name: string;
   description?: string;
   price?: number;
-  tags?: number[];
+  tags?: Tag[];
   imageId?: number | null;
   enabled: boolean;
   consumptions: Consumption[];
@@ -22,7 +23,7 @@ export type GetProductsParams = {
   categoryIds?: number[];
   minPrice?: number;
   maxPrice?: number;
-  tags?: string[];
+  tags?: number[];
   enabled?: boolean;
 };
 
@@ -32,6 +33,6 @@ export type ProductRequest = {
   name?: string;
   description?: string;
   price?: number;
-  tags?: number[];
+  tagIds?: number[];
   consumptions?: Consumption[];
 };

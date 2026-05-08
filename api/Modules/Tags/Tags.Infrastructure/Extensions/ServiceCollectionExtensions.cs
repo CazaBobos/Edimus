@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using Tags.Core.Abstractions;
+using Shared.Core.Persistence;
 using Tags.Infrastructure.Persistence;
 
 namespace Tags.Infrastructure.Extensions;

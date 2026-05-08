@@ -1,3 +1,4 @@
+import { useTagsQuery } from "@/hooks/queries/useTagsQuery";
 import { useMenuStore } from "@/stores";
 import { useState } from "react";
 import { BiX } from "react-icons/bi";
@@ -8,15 +9,21 @@ import { Dialog } from "@/components/ui/Dialog";
 
 import styles from "./styles.module.scss";
 
-const TAGS = ["Carnes", "Pastas", "Pizza", "Postres", "Dulce", "Salado", "Sin Gluten", "Veggie"];
-
 export const FiltersDialog = () => {
-  const { isFiltersDialogOpen, setIsFiltersDialogOpen } = useMenuStore();
-  const handleClose = () => setIsFiltersDialogOpen(false);
+  const { isFiltersDialogOpen, setIsFiltersDialogOpen, tagFilters, setTagFilters } = useMenuStore();
+  const { data: tags } = useTagsQuery({ enabled: true });
 
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const toggleTag = (tag: string) =>
-    setSelectedTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]));
+  const [selectedTagIds, setSelectedTagIds] = useState<number[]>(tagFilters);
+
+  const toggleTag = (id: number) =>
+    setSelectedTagIds((prev) => (prev.includes(id) ? prev.filter((t) => t !== id) : [...prev, id]));
+
+  const handleApply = () => {
+    setTagFilters(selectedTagIds);
+    setIsFiltersDialogOpen(false);
+  };
+
+  const handleClose = () => setIsFiltersDialogOpen(false);
 
   return (
     <Dialog open={isFiltersDialogOpen} onClose={handleClose}>
@@ -26,14 +33,14 @@ export const FiltersDialog = () => {
           <Button variant="subtle" icon={<BiX size={18} />} onClick={handleClose} />
         </div>
         <div className={styles.tagList}>
-          {TAGS.map((t) => (
-            <label key={t} className={styles.tag}>
-              <Checkbox name={t} checked={selectedTags.includes(t)} onChange={() => toggleTag(t)} />
-              {t}
+          {tags.map((t) => (
+            <label key={t.id} className={styles.tag}>
+              <Checkbox name={String(t.id)} checked={selectedTagIds.includes(t.id)} onChange={() => toggleTag(t.id)} />
+              {t.name}
             </label>
           ))}
         </div>
-        <Button label="Aplicar" onClick={handleClose} />
+        <Button label="Aplicar" onClick={handleApply} />
       </div>
     </Dialog>
   );

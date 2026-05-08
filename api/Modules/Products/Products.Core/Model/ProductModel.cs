@@ -10,5 +10,6 @@ public class ProductModel
     public decimal Price { get; set; }
     public int? ImageId { get; set; }
     public bool Enabled { get; set; }
+    public List<TagModel> Tags { get; set; } = new();
     public List<ConsumptionModel> Consumptions { get; set; } = new();
 }
