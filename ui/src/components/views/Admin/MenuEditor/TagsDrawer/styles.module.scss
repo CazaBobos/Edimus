@@ -1,0 +1,78 @@
+@use "common/colors" as *;
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 4px;
+}
+
+.addRow {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+
+  > *:first-child {
+    flex: 1;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tagRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid $border_subtle;
+  background: $hover_light;
+
+  &:has(.editInput) {
+    background: transparent;
+    border-color: var(--mantine-primary-color-filled);
+  }
+}
+
+.dot {
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  color: $red;
+
+  &[data-enabled="true"] {
+    color: $green;
+  }
+}
+
+.tagName {
+  flex: 1;
+  font-size: 13px;
+  color: $light_text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.editInput {
+  flex: 1;
+  font-size: 13px;
+  font-family: inherit;
+  color: $light_text;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  min-width: 0;
+}
+
+.empty {
+  font-size: 13px;
+  color: $grey;
+  font-style: italic;
+  padding: 8px 10px;
+}

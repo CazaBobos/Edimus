@@ -2,6 +2,7 @@
 
 import { useCategoriesQuery } from "@/hooks/queries/useCategoriesQuery";
 import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
+import { useMenuStore } from "@/stores";
 import { Product } from "@/types";
 import { Loader } from "@mantine/core";
 import Image from "next/image";
@@ -11,7 +12,8 @@ import styles from "./styles.module.scss";
 
 export const MenuCards = () => {
   const { data: categories, isLoading: categoriesLoading } = useCategoriesQuery();
-  const { data: products, isLoading: productsLoading } = useProductsQuery();
+  const { data: products, isLoading: productsLoading } = useProductsQuery({ enabled: true });
+  const tagFilters = useMenuStore((store) => store.tagFilters);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
   const isLoading = categoriesLoading || productsLoading;
@@ -28,7 +30,12 @@ export const MenuCards = () => {
     return map;
   }, [products]);
 
-  const filteredProducts = products.filter((p) => !p.parentId && p.categoryId === activeCategory);
+  const filteredProducts = products.filter(
+    (p) =>
+      !p.parentId &&
+      p.categoryId === activeCategory &&
+      (tagFilters.length === 0 || p.tags?.some((t) => tagFilters.includes(t.id))),
+  );
 
   return (
     <div className={styles.container}>

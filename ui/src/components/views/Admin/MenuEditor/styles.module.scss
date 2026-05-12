@@ -22,6 +22,12 @@
   }
 }
 
+.headerActions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
 .body {
   display: flex;
   flex: 1;

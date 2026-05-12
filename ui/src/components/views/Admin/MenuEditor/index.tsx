@@ -3,12 +3,13 @@ import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
 import { useAdminStore } from "@/stores";
 import { Product } from "@/types";
 import { MouseEvent, useMemo, useState } from "react";
-import { BiChevronRight, BiPlus, BiSolidCircle } from "react-icons/bi";
+import { BiChevronRight, BiPlus, BiSolidCircle, BiTag } from "react-icons/bi";
 
 import { Button } from "@/components/ui/Button";
 
 import { ProductDialog } from "./ProductDialog";
 import styles from "./styles.module.scss";
+import { TagsDrawer } from "./TagsDrawer";
 
 export const MenuEditor = () => {
   const { setProductDialogOpenState } = useAdminStore();
@@ -16,6 +17,7 @@ export const MenuEditor = () => {
   const { data: categories } = useCategoriesQuery();
 
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
+  const [isTagsDrawerOpen, setIsTagsDrawerOpen] = useState(false);
 
   const productsByCategory = useMemo(() => {
     const map: Record<number, Product[]> = {};
@@ -45,12 +47,20 @@ export const MenuEditor = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <h2>Menú</h2>
-        <Button
-          variant="brand"
-          label="Nuevo Producto"
-          icon={<BiPlus size={15} />}
-          onClick={() => setProductDialogOpenState(null)}
-        />
+        <div className={styles.headerActions}>
+          <Button
+            variant="brand"
+            label="Etiquetas"
+            icon={<BiTag size={15} />}
+            onClick={() => setIsTagsDrawerOpen(true)}
+          />
+          <Button
+            variant="brand"
+            label="Nuevo Producto"
+            icon={<BiPlus size={15} />}
+            onClick={() => setProductDialogOpenState(null)}
+          />
+        </div>
       </div>
 
       <div className={styles.body}>
@@ -120,8 +130,8 @@ export const MenuEditor = () => {
           )}
         </div>
       </div>
-
       <ProductDialog />
+      <TagsDrawer opened={isTagsDrawerOpen} onClose={() => setIsTagsDrawerOpen(false)} />
     </div>
   );
 };
