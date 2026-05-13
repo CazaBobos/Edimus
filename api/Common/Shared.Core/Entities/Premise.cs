@@ -18,4 +18,9 @@ public class Premise : Entity<int>
         Name = Guard.Argument(() => name).NotNull().NotEmpty();
         Enabled = true;
     }
+
+    public void Update(string? name)
+    {
+        if (name is not null) Name = Guard.Argument(() => name).NotNull().NotEmpty();
+    }
 }

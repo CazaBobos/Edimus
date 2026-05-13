@@ -24,4 +24,17 @@ public class Layout : Entity<int>
         Width = Guard.Argument(() => width).Positive();
         Enabled = true;
     }
+
+    public void Update(string? name, int? height, int? width)
+    {
+        if (name is not null) Name = Guard.Argument(() => name).NotNull().NotEmpty();
+        if (height is not null) Height = Guard.Argument(() => height.Value).Positive();
+        if (width is not null) Width = Guard.Argument(() => width.Value).Positive();
+    }
+
+    public void UpdateBoundaries(List<LayoutCoord> boundaries)
+    {
+        Boundaries.Clear();
+        Boundaries.AddRange(boundaries);
+    }
 }
