@@ -8,6 +8,8 @@ export * from "./sector.types";
 export * from "./stats.types";
 export * from "./table.types";
 export * from "./tag.types";
+export * from "./premise.types";
+export * from "./layout.types";
 
 export type Nullable<T> = T | null | undefined;
 

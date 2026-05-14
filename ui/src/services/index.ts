@@ -6,6 +6,8 @@ export * from "./api.sectors";
 export * from "./api.stats";
 export * from "./api.tables";
 export * from "./api.tags";
+export * from "./api.premises";
+export * from "./api.layouts";
 
 export type ExceptionResponse = {
   status: number;

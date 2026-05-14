@@ -14,8 +14,8 @@ import styles from "./styles.module.scss";
 
 export const SaloonGrid = ({ layoutId }: { layoutId: number | undefined }) => {
   const { data: company } = useCompanyQuery(1);
-  const { data: tables } = useTablesQuery();
-  const { data: sectors } = useSectorsQuery();
+  const { data: tables } = useTablesQuery({ layoutId });
+  const { data: sectors } = useSectorsQuery({ layoutId });
   const squareSize = useAdminStore((store) => store.squareSize);
   const setTableDialogOpenState = useAdminStore((store) => store.setTableDialogOpenState);
   const previewPosition = useAdminStore((store) => store.previewPosition);
