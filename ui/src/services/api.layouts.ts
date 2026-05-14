@@ -1,4 +1,4 @@
-import { CreateLayoutRequest, GetLayoutsParams, Layout, UpdateLayoutRequest } from "@/types";
+import { BoundaryType, CreateLayoutRequest, GetLayoutsParams, Layout, UpdateLayoutRequest } from "@/types";
 
 import { axiosClient } from "./axios";
 
@@ -19,5 +19,8 @@ export const layoutsApi = {
   },
   restore: async (id: number) => {
     await axiosClient.patch(`layouts/${id}`);
+  },
+  updateBoundaries: async (id: number, boundaries: { x: number; y: number; type: BoundaryType }[]) => {
+    await axiosClient.put(`layouts/${id}/boundaries`, { boundaries });
   },
 };
