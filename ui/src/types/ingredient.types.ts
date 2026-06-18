@@ -8,6 +8,7 @@ export type Ingredient = {
 };
 
 export type IngredientRequest = {
+  companyId?: number;
   name?: string;
   stock?: number;
   unit?: MeasurementUnit;

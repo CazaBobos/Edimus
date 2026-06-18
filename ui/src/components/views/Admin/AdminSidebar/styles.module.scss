@@ -83,3 +83,43 @@
   white-space: nowrap;
 }
 
+/* ── Company switcher ───────────────────────────────── */
+
+.companyArea {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-top: 1px solid $border_light;
+}
+
+.companyIcon {
+  color: $light_grey;
+  flex-shrink: 0;
+}
+
+.company,
+.activeCompany {
+  font-size: 12px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid $border_light;
+  cursor: pointer;
+  background: transparent;
+}
+
+.company {
+  color: $light_grey;
+
+  &:hover {
+    background: $border_light;
+  }
+}
+
+.activeCompany {
+  background: $blue;
+  border-color: $blue;
+  color: white;
+  font-weight: 600;
+}
+

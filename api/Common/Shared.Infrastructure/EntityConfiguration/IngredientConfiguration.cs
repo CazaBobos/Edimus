@@ -12,6 +12,11 @@ public class IngredientConfiguration : IEntityTypeConfiguration<Ingredient>
             .HasColumnName("IngredientId")
             .ValueGeneratedOnAdd();
 
+        entity.Property(e => e.CompanyId).IsRequired();
+        entity.HasOne(e => e.Company)
+            .WithMany()
+            .HasForeignKey(e => e.CompanyId);
+
         entity.Property(e => e.Name)
             .IsRequired();
         entity.Property(e => e.Stock)

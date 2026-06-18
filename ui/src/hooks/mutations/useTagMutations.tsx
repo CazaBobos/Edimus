@@ -1,5 +1,6 @@
 import { useToast } from "@/hooks/useToast";
 import { tagsApi } from "@/services";
+import { useAppUserStore } from "@/stores";
 import { Tag } from "@/types";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -8,9 +9,10 @@ import { useAxiosMutation } from "../axiosHooks";
 export const useTagMutations = () => {
   const queryClient = useQueryClient();
   const { showSuccess, showError, showInfo } = useToast();
+  const activeCompanyId = useAppUserStore((s) => s.activeCompanyId);
 
   const createTagMutation = useAxiosMutation({
-    mutationFn: async (name: string) => await tagsApi.create(name),
+    mutationFn: async (name: string) => await tagsApi.create({ companyId: activeCompanyId!, name }),
     onMutate: () => showInfo("Por favor, espere..."),
     onError: () => showError("Ha ocurrido un error."),
     onSuccess: (id, name) => {

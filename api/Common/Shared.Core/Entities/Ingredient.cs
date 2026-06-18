@@ -6,6 +6,8 @@ namespace Shared.Core.Entities;
 public class Ingredient : Entity<int>
 {
     public override int Id { get; protected set; }
+    public int CompanyId { get; protected set; }
+    public virtual Company? Company { get; protected set; }
     public string Name { get; protected set; } = string.Empty;
     public decimal Stock { get; protected set; }
     public int Alert { get; protected set; }
@@ -13,8 +15,9 @@ public class Ingredient : Entity<int>
     public virtual List<Consumption> Consumptions { get; protected set; } = [];
 
     protected Ingredient() { }
-    public Ingredient(string name, decimal stock, int alert, MeasurementUnit unit)
+    public Ingredient(int companyId, string name, decimal stock, int alert, MeasurementUnit unit)
     {
+        CompanyId = Guard.Argument(() => companyId).Positive();
         Name = Guard.Argument(() => name)
             .NotNull()
             .MaxLength(32);

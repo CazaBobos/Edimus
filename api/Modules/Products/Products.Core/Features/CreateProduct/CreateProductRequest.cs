@@ -3,8 +3,10 @@ using Products.Core.Model;
 using Shared.Core.Abstractions;
 
 namespace Products.Core.Features.CreateProduct;
+
 public class CreateProductRequest : IRequest<CreateProductResponse>
 {
+    public int CompanyId { get; set; }
     public int? ParentId { get; set; }
     public int? CategoryId { get; set; }
     public decimal Price { get; set; }

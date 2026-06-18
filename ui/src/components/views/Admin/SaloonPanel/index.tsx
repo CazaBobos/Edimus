@@ -1,5 +1,5 @@
 import { useCompanyQuery } from "@/hooks/queries/useCompanyQuery";
-import { useAdminStore } from "@/stores";
+import { useAdminStore, useAppUserStore } from "@/stores";
 import { Loader, SegmentedControl } from "@mantine/core";
 import { useState } from "react";
 import { BiWine, BiArea } from "react-icons/bi";
@@ -13,9 +13,10 @@ import { TableDialog } from "./TableDialog";
 
 export const SaloonPanel = () => {
   const { setTableDialogOpenState, setSectorDialogOpenState } = useAdminStore();
-  const { data: company, isLoading } = useCompanyQuery(1);
+  const activeCompanyId = useAppUserStore((s) => s.activeCompanyId);
+  const { data: company, isLoading } = useCompanyQuery(activeCompanyId);
 
-  const layouts = company?.premises[0].layouts ?? [];
+  const layouts = company?.premises[0]?.layouts ?? [];
   const [selectedLayoutId, setSelectedLayoutId] = useState<number | undefined>(undefined);
 
   const currentLayoutId = selectedLayoutId ?? layouts[0]?.id;

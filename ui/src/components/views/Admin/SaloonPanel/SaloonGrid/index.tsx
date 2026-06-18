@@ -3,7 +3,7 @@ import { useCompanyQuery } from "@/hooks/queries/useCompanyQuery";
 import { useSectorsQuery } from "@/hooks/queries/useSectorsQuery";
 import { useTablesQuery } from "@/hooks/queries/useTablesQuery";
 import { useTablesHub } from "@/hooks/useTablesHub";
-import { useAdminStore } from "@/stores";
+import { useAdminStore, useAppUserStore } from "@/stores";
 import { BoundaryType, tableStatusColorMap } from "@/types";
 import React from "react";
 
@@ -13,14 +13,15 @@ import { Square } from "./Square";
 import styles from "./styles.module.scss";
 
 export const SaloonGrid = ({ layoutId }: { layoutId: number | undefined }) => {
-  const { data: company } = useCompanyQuery(1);
+  const activeCompanyId = useAppUserStore((s) => s.activeCompanyId);
+  const { data: company } = useCompanyQuery(activeCompanyId);
   const { data: tables } = useTablesQuery({ layoutId });
   const { data: sectors } = useSectorsQuery({ layoutId });
   const squareSize = useAdminStore((store) => store.squareSize);
   const setTableDialogOpenState = useAdminStore((store) => store.setTableDialogOpenState);
   const previewPosition = useAdminStore((store) => store.previewPosition);
 
-  const currentLayout = company?.premises[0].layouts.find((l) => l.id === layoutId);
+  const currentLayout = company?.premises[0]?.layouts.find((l) => l.id === layoutId);
 
   useTablesHub(currentLayout?.id);
 

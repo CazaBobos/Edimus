@@ -13,6 +13,11 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .HasColumnName("ProductId")
             .ValueGeneratedOnAdd();
 
+        entity.Property(e => e.CompanyId).IsRequired();
+        entity.HasOne(e => e.Company)
+            .WithMany()
+            .HasForeignKey(e => e.CompanyId);
+
         entity.HasOne(e => e.Category)
             .WithMany(e => e.Products)
             .HasForeignKey(e => e.CategoryId);

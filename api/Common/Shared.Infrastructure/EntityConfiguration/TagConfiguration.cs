@@ -12,6 +12,11 @@ public class TagConfiguration : IEntityTypeConfiguration<Tag>
             .HasColumnName("TagId")
             .ValueGeneratedOnAdd();
 
+        entity.Property(e => e.CompanyId).IsRequired();
+        entity.HasOne(e => e.Company)
+            .WithMany()
+            .HasForeignKey(e => e.CompanyId);
+
         entity.Property(e => e.Name)
             .IsRequired()
             .HasMaxLength(32);

@@ -51,6 +51,7 @@ public class TagsController : ControllerBase
     {
         var response = await _mediator.Send(new CreateTagRequest
         {
+            CompanyId = input.CompanyId,
             Name = input.Name,
             User = User.GetUser(),
         }, cancellationToken);

@@ -1,6 +1,7 @@
 using Mediator;
 using Products.Core.Abstractions;
 using Shared.Core.Entities;
+using Shared.Core.Exceptions;
 
 namespace Products.Core.Features.CreateProduct;
 public class CreateProductRequestHandler : IRequestHandler<CreateProductRequest, CreateProductResponse>
@@ -14,7 +15,11 @@ public class CreateProductRequestHandler : IRequestHandler<CreateProductRequest,
 
     public async ValueTask<CreateProductResponse> Handle(CreateProductRequest request, CancellationToken cancellationToken)
     {
+        if (!request.User.CompanyIds.Contains(request.CompanyId))
+            throw new HttpForbiddenException("You don't have access to this company.");
+
         var product = new Product(
+            request.CompanyId,
             request.ParentId,
             request.CategoryId,
             request.Price,

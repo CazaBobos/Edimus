@@ -2,7 +2,7 @@
 
 import { useAdminStore, useAppUserStore } from "@/stores";
 import { useRouter } from "next/navigation";
-import { BiBarChartAlt2, BiBook, BiBox, BiCog, BiGrid, BiLogOut, BiUser } from "react-icons/bi";
+import { BiBarChartAlt2, BiBook, BiBox, BiBuildings, BiCog, BiGrid, BiLogOut, BiUser } from "react-icons/bi";
 
 import { Button } from "@/components/ui/Button";
 
@@ -19,6 +19,8 @@ const NAV_ITEMS = [
 export const AdminSidebar = () => {
   const router = useRouter();
   const user = useAppUserStore((store) => store.user);
+  const activeCompanyId = useAppUserStore((store) => store.activeCompanyId);
+  const setActiveCompanyId = useAppUserStore((store) => store.setActiveCompanyId);
   const endSession = useAppUserStore((store) => store.endSession);
   const selectedTab = useAdminStore((store) => store.headerPanelState.selectedTab);
   const setHeaderPanelState = useAdminStore((store) => store.setHeaderPanelState);
@@ -52,6 +54,20 @@ export const AdminSidebar = () => {
         ))}
       </nav>
 
+      {(user?.companyIds.length ?? 0) > 1 && (
+        <div className={styles.companyArea}>
+          <BiBuildings size={13} className={styles.companyIcon} />
+          {user!.companyIds.map((id) => (
+            <button
+              key={id}
+              className={id === activeCompanyId ? styles.activeCompany : styles.company}
+              onClick={() => setActiveCompanyId(id)}
+            >
+              #{id}
+            </button>
+          ))}
+        </div>
+      )}
       <div className={styles.userArea}>
         <div className={styles.userInfo}>
           <div className={styles.avatar}>

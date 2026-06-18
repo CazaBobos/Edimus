@@ -7,8 +7,8 @@ export const tagsApi = {
     const response = await axiosClient.get<Tag[]>("tags", { params });
     return response.data;
   },
-  create: async (name: string) => {
-    const response = await axiosClient.post<number>("tags", { name });
+  create: async (request: { companyId: number; name: string }) => {
+    const response = await axiosClient.post<number>("tags", request);
     return response.data;
   },
   update: async (id: number, name: string) => {

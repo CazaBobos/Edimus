@@ -56,6 +56,7 @@ public class IngredientsController : ControllerBase
     {
         var response = await _mediator.Send(new CreateIngredientRequest
         {
+            CompanyId = input.CompanyId,
             Name = input.Name,
             Stock = input.Stock,
             Alert = input.Alert,

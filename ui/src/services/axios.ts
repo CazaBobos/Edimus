@@ -29,6 +29,12 @@ const drainQueue = (error: unknown) => {
   pendingQueue = [];
 };
 
+axiosClient.interceptors.request.use((config) => {
+  const { activeCompanyId } = useAppUserStore.getState();
+  if (activeCompanyId != null) config.params = { ...config.params, companyId: activeCompanyId };
+  return config;
+});
+
 const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
 
 const parseDates = (value: unknown): unknown => {

@@ -6,6 +6,7 @@ namespace Ingredients.Core.Features.CreateIngredient;
 
 public class CreateIngredientRequest : IRequest<CreateIngredientResponse>
 {
+    public int CompanyId { get; set; }
     public string Name { get; set; } = string.Empty;
     public decimal Stock { get; set; }
     public int Alert { get; set; }

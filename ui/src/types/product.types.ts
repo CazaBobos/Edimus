@@ -28,6 +28,7 @@ export type GetProductsParams = {
 };
 
 export type ProductRequest = {
+  companyId?: number;
   parentId?: number;
   categoryId?: number;
   name?: string;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Shared.Core.Abstractions;
 using Shared.Core.Persistence;
 using Shared.Core.Services;
 using Shared.Core.Settings;
@@ -15,6 +16,7 @@ public static class ServiceCollectionExtensions
         services.AddHttpContextAccessor();
         services.AddDbContext<DatabaseContext>();
         services.AddScoped<IImageRepository, ImageRepository>();
+        services.AddScoped<ICurrentCompanyService, CurrentCompanyService>();
 
         return services;
     }

@@ -96,6 +96,7 @@ app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 app.UseMiddleware<ParamBracketRemoverMiddleware>();
 
 app.UseAuthentication(); //<= JWT Auth
+app.UseMiddleware<CompanyContextMiddleware>();
 
 app.UseAuthorization();
 

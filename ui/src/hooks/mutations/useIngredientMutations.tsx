@@ -1,5 +1,6 @@
 import { useToast } from "@/hooks/useToast";
 import { ingredientsApi } from "@/services";
+import { useAppUserStore } from "@/stores";
 import { Ingredient, IngredientRequest } from "@/types";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -8,9 +9,11 @@ import { useAxiosMutation } from "../axiosHooks";
 export const useIngredientMutations = () => {
   const queryClient = useQueryClient();
   const { showSuccess, showError, showInfo } = useToast();
+  const activeCompanyId = useAppUserStore((s) => s.activeCompanyId);
 
   const createIngredientMutation = useAxiosMutation({
-    mutationFn: async (request: Required<IngredientRequest>) => await ingredientsApi.create(request),
+    mutationFn: async (request: Omit<Required<IngredientRequest>, "companyId">) =>
+      await ingredientsApi.create({ ...request, companyId: activeCompanyId! }),
     onMutate: () => {
       showInfo("Por favor, espere...");
     },

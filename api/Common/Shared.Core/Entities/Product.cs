@@ -6,6 +6,8 @@ namespace Shared.Core.Entities;
 public class Product : AggregateRoot<int>
 {
     public override int Id { get; protected set; }
+    public int CompanyId { get; protected set; }
+    public virtual Company? Company { get; protected set; }
     public int? ParentId { get; protected set; }
     public int? CategoryId { get; protected set; }
     public virtual Category? Category { get; protected set; }
@@ -18,10 +20,11 @@ public class Product : AggregateRoot<int>
     public virtual List<Consumption> Consumptions { get; protected set; } = [];
 
     protected Product() { }
-    public Product(int? parentId, int? categoryId, decimal price, string name, string description = "")
+    public Product(int companyId, int? parentId, int? categoryId, decimal price, string name, string description = "")
     {
         Guard.Operation(parentId != null ^ categoryId != null, "A product can either have a parent, or a category");
 
+        CompanyId = Guard.Argument(() => companyId).Positive();
         ParentId = Guard.Argument(() => parentId).Positive();
         CategoryId = Guard.Argument(() => categoryId).Positive();
         Name = ValidateName(name);

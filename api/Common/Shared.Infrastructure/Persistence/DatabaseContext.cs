@@ -12,11 +12,13 @@ public class DatabaseContext : DbContext
 {
     public IConfiguration Configuration { get; }
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly ICurrentCompanyService _currentCompanyService;
 
-    public DatabaseContext(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+    public DatabaseContext(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, ICurrentCompanyService currentCompanyService)
     {
         Configuration = configuration;
         _httpContextAccessor = httpContextAccessor;
+        _currentCompanyService = currentCompanyService;
     }
 
     #region Tables
@@ -128,6 +130,15 @@ public class DatabaseContext : DbContext
     {
         modelBuilder.ConfigureTables();
         modelBuilder.SeedTables();
+
+        modelBuilder.Entity<Product>().HasQueryFilter(p =>
+            !_currentCompanyService.AllowedCompanyIds.Any() || _currentCompanyService.AllowedCompanyIds.Contains(p.CompanyId));
+        modelBuilder.Entity<Tag>().HasQueryFilter(t =>
+            !_currentCompanyService.AllowedCompanyIds.Any() || _currentCompanyService.AllowedCompanyIds.Contains(t.CompanyId));
+        modelBuilder.Entity<Ingredient>().HasQueryFilter(i =>
+            !_currentCompanyService.AllowedCompanyIds.Any() || _currentCompanyService.AllowedCompanyIds.Contains(i.CompanyId));
+        modelBuilder.Entity<Category>().HasQueryFilter(c =>
+            !_currentCompanyService.AllowedCompanyIds.Any() || _currentCompanyService.AllowedCompanyIds.Contains(c.CompanyId));
     }
 
     private static bool IsAuditableEntity(Type clrType)

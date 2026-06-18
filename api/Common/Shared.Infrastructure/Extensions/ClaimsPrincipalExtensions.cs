@@ -26,7 +26,7 @@ public static class ClaimsPrincipalExtensions
         return user.GetClaimValue(UserClaims.Username) ?? "";
     }
 
-    private static List<int> GetUserCompanies(this ClaimsPrincipal user)
+    public static List<int> GetUserCompanies(this ClaimsPrincipal user)
     {
         var value = user.GetClaimValue(UserClaims.Companies);
 
