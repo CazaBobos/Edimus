@@ -1,5 +1,4 @@
 using Mediator;
-using Shared.Core.Abstractions;
 
 namespace Users.Core.Features.GetUsers;
 public class GetUsersRequest : IRequest<GetUsersResponse>
@@ -8,5 +7,4 @@ public class GetUsersRequest : IRequest<GetUsersResponse>
     public int? Page { get; set; }
     public string? Username { get; set; }
     public string? Email { get; set; }
-    public IUserRecord? User { get; set; }
 }

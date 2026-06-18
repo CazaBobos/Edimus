@@ -52,7 +52,6 @@ public class PremisesController : ControllerBase
         {
             CompanyId = input.CompanyId,
             Name = input.Name,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response.Id);
@@ -68,7 +67,6 @@ public class PremisesController : ControllerBase
         {
             Id = id,
             Name = input.Name,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok();
@@ -83,7 +81,6 @@ public class PremisesController : ControllerBase
         await _mediator.Send(new RemovePremiseRequest
         {
             Id = id,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok();
@@ -98,7 +95,6 @@ public class PremisesController : ControllerBase
         await _mediator.Send(new RestorePremiseRequest
         {
             Id = id,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok();

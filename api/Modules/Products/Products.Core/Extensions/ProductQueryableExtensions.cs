@@ -4,6 +4,13 @@ namespace Products.Core.Extensions;
 
 public static class ProductQueryableExtensions
 {
+    public static IQueryable<Product> WhereCompany(this IQueryable<Product> queryable, int? companyId)
+    {
+        if (companyId is null) return queryable;
+
+        return queryable.Where(product => product.CompanyId == companyId);
+    }
+
     public static IQueryable<Product> WhereName(this IQueryable<Product> queryable, string? name)
     {
         if (name is null) return queryable;

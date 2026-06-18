@@ -4,6 +4,13 @@ namespace Ingredients.Core.Extensions;
 
 public static class IngredientQueryableExtensions
 {
+    public static IQueryable<Ingredient> WhereCompany(this IQueryable<Ingredient> queryable, int? companyId)
+    {
+        if (companyId is null) return queryable;
+
+        return queryable.Where(ingredient => ingredient.CompanyId == companyId);
+    }
+
     public static IQueryable<Ingredient> WhereName(this IQueryable<Ingredient> queryable, string? name)
     {
         if (name is null) return queryable;

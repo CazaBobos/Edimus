@@ -1,7 +1,6 @@
 using Mediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Infrastructure.Extensions;
 using Users.Core.Features.CreateUser;
 using Users.Core.Features.GetUsers;
 using Users.Core.Model;
@@ -29,7 +28,6 @@ public class UsersController : ControllerBase
             Page = input.Page,
             Username = input.Username,
             Email = input.Email,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return response.Users;
@@ -48,7 +46,6 @@ public class UsersController : ControllerBase
             Email = input.Email,
             Password = input.Password,
             Companies = input.Companies,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return response.User;

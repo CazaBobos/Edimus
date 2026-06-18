@@ -32,6 +32,7 @@ public class IngredientsController : ControllerBase
         {
             Limit = input.Limit,
             Page = input.Page,
+            CompanyId = input.CompanyId,
             Name = input.Name,
             MinStock = input.MinStock,
             MaxStock = input.MaxStock,
@@ -77,7 +78,6 @@ public class IngredientsController : ControllerBase
         {
             Id = id,
             Name = input.Name,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);
@@ -92,7 +92,6 @@ public class IngredientsController : ControllerBase
         var response = await _mediator.Send(new RemoveIngredientRequest
         {
             Id = id,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);
@@ -107,7 +106,6 @@ public class IngredientsController : ControllerBase
         var response = await _mediator.Send(new RestoreIngredientRequest
         {
             Id = id,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);

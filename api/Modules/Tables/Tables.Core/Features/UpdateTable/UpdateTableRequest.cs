@@ -1,5 +1,4 @@
 using Mediator;
-using Shared.Core.Abstractions;
 using Shared.Core.Entities;
 using Tables.Core.Model;
 
@@ -13,5 +12,4 @@ public class UpdateTableRequest : IRequest<UpdateTableResponse>
     public int? PositionY { get; set; }
     public List<TableCoordModel>? Surface { get; set; }
     public List<OrderModel>? Orders { get; set; }
-    public IUserRecord? User { get; set; }
 }

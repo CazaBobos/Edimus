@@ -1,5 +1,4 @@
 using Mediator;
-using Shared.Core.Abstractions;
 using Shared.Core.Entities;
 
 namespace Users.Core.Features.CreateUser;
@@ -10,5 +9,4 @@ public class CreateUserRequest : IRequest<CreateUserResponse>
     public string Password { get; set; } = string.Empty;
     public UserRole Role { get; set; }
     public List<int> Companies { get; set; } = new();
-    public IUserRecord? User { get; set; }
 }

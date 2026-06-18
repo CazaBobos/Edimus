@@ -69,7 +69,6 @@ public class CompaniesController : ControllerBase
         {
             Name = input.Name,
             Slogan = input.Slogan,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response.Id);
@@ -89,7 +88,6 @@ public class CompaniesController : ControllerBase
             ReactiveStock = input.ReactiveStock,
             PublicPrices = input.PublicPrices,
             PublicOrders = input.PublicOrders,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);
@@ -104,7 +102,6 @@ public class CompaniesController : ControllerBase
         var response = await _mediator.Send(new RemoveCompanyRequest
         {
             Id = companyId,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);
@@ -119,10 +116,8 @@ public class CompaniesController : ControllerBase
         var response = await _mediator.Send(new RestoreCompanyRequest
         {
             Id = companyId,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);
     }
-
 }

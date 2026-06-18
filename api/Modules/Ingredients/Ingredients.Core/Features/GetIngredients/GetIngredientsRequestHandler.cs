@@ -20,6 +20,7 @@ public class GetIngredientsRequestHandler : IRequestHandler<GetIngredientsReques
     public async ValueTask<GetIngredientsResponse> Handle(GetIngredientsRequest request, CancellationToken cancellationToken)
     {
         var query = _ingredientsRepository.AsQueryable()
+            .WhereCompany(request.CompanyId)
             .WhereName(request.Name)
             .WhereStockRange(request.MinStock, request.MaxStock)
             .WhereAlertRange(request.MinAlert, request.MaxAlert)

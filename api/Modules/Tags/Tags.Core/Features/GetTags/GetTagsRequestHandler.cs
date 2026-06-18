@@ -20,6 +20,7 @@ public class GetTagsRequestHandler : IRequestHandler<GetTagsRequest, GetTagsResp
     public async ValueTask<GetTagsResponse> Handle(GetTagsRequest request, CancellationToken cancellationToken)
     {
         var query = _tagsRepository.AsQueryable()
+            .WhereCompany(request.CompanyId)
             .WhereName(request.Name)
             .WhereEnabled(request.Enabled);
 

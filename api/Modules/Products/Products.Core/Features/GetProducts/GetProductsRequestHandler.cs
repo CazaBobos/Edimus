@@ -20,6 +20,7 @@ public class GetProductsRequestHandler : IRequestHandler<GetProductsRequest, Get
     public async ValueTask<GetProductsResponse> Handle(GetProductsRequest request, CancellationToken cancellationToken)
     {
         var query = _productsRepository.AsQueryable()
+            .WhereCompany(request.CompanyId)
             .WhereName(request.Name)
             .WhereDescription(request.Description)
             .WhereCategories(request.Categories)

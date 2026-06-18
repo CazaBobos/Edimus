@@ -1,5 +1,4 @@
 using Mediator;
-using Shared.Core.Abstractions;
 
 namespace Sectors.Core.Features.GetManySectors;
 
@@ -10,5 +9,4 @@ public class GetSectorsRequest : IRequest<GetSectorsResponse>
     public int? LayoutId { get; set; }
     public string? Name { get; set; }
     public bool? Enabled { get; set; }
-    public IUserRecord? User { get; set; }
 }

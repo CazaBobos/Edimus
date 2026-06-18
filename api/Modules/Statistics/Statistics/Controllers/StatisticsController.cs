@@ -1,7 +1,6 @@
 using Mediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Infrastructure.Extensions;
 using Statistics.Core.Features.GetAttentionTimes;
 using Statistics.Core.Features.GetOccupancy;
 using Statistics.Core.Features.GetRotation;
@@ -29,7 +28,6 @@ public class StatisticsController : ControllerBase
         var response = await _mediator.Send(new GetOccupancyRequest
         {
             Date = date,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response.Data);
@@ -50,7 +48,6 @@ public class StatisticsController : ControllerBase
             From = from,
             To = to,
             GroupBy = groupBy,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response.Data);
@@ -69,7 +66,6 @@ public class StatisticsController : ControllerBase
         {
             From = from,
             To = to,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);
@@ -88,7 +84,6 @@ public class StatisticsController : ControllerBase
         {
             From = from,
             To = to,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);
@@ -109,7 +104,6 @@ public class StatisticsController : ControllerBase
             From = from,
             To = to,
             Limit = limit,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response.Data);
@@ -128,7 +122,6 @@ public class StatisticsController : ControllerBase
         {
             From = from,
             To = to,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);

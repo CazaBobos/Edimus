@@ -3,6 +3,7 @@ public class GetProductsInput
 {
     public int? Limit { get; set; }
     public int? Page { get; set; }
+    public int? CompanyId { get; set; }
     public string? Name { get; set; }
     public string? Description { get; set; }
     public List<int>? Categories { get; set; }

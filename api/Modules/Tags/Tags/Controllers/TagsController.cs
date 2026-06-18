@@ -32,6 +32,7 @@ public class TagsController : ControllerBase
         {
             Limit = input.Limit,
             Page = input.Page,
+            CompanyId = input.CompanyId,
             Name = input.Name,
             Enabled = input.Enabled,
         }, cancellationToken);
@@ -69,7 +70,6 @@ public class TagsController : ControllerBase
         {
             Id = id,
             Name = input.Name,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);
@@ -84,7 +84,6 @@ public class TagsController : ControllerBase
         var response = await _mediator.Send(new RemoveTagRequest
         {
             Id = id,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);
@@ -99,7 +98,6 @@ public class TagsController : ControllerBase
         var response = await _mediator.Send(new RestoreTagRequest
         {
             Id = id,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);

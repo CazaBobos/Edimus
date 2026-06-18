@@ -1,5 +1,4 @@
 using Mediator;
-using Shared.Core.Abstractions;
 
 namespace Companies.Core.Features.UpdateCompany;
 
@@ -11,5 +10,4 @@ public class UpdateCompanyRequest : IRequest<UpdateCompanyResponse>
     public bool? ReactiveStock { get; set; }
     public bool? PublicPrices { get; set; }
     public bool? PublicOrders { get; set; }
-    public IUserRecord? User { get; set; }
 }

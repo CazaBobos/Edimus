@@ -1,6 +1,5 @@
 using Mediator;
 using Products.Core.Model;
-using Shared.Core.Abstractions;
 
 namespace Products.Core.Features.CreateProduct;
 
@@ -14,5 +13,4 @@ public class UpdateProductRequest : IRequest<UpdateProductResponse>
     public decimal? Price { get; set; }
     public List<int>? TagIds { get; set; }
     public List<ConsumptionModel>? Consumptions { get; set; }
-    public IUserRecord? User { get; set; }
 }

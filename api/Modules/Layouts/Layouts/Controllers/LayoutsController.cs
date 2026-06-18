@@ -55,7 +55,6 @@ public class LayoutsController : ControllerBase
             Name = input.Name,
             Height = input.Height,
             Width = input.Width,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response.Id);
@@ -73,7 +72,6 @@ public class LayoutsController : ControllerBase
             Name = input.Name,
             Height = input.Height,
             Width = input.Width,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok();
@@ -89,7 +87,6 @@ public class LayoutsController : ControllerBase
         {
             LayoutId = id,
             Boundaries = input.Boundaries.Select(b => (b.X, b.Y, b.Type)).ToList(),
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok();
@@ -104,7 +101,6 @@ public class LayoutsController : ControllerBase
         await _mediator.Send(new RemoveLayoutRequest
         {
             Id = id,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok();
@@ -119,7 +115,6 @@ public class LayoutsController : ControllerBase
         await _mediator.Send(new RestoreLayoutRequest
         {
             Id = id,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok();

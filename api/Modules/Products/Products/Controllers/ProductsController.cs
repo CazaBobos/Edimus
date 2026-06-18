@@ -33,6 +33,7 @@ public class ProductsController : ControllerBase
         {
             Limit = input.Limit,
             Page = input.Page,
+            CompanyId = input.CompanyId,
             Name = input.Name,
             Description = input.Description,
             Categories = input.Categories,
@@ -40,12 +41,11 @@ public class ProductsController : ControllerBase
             MaxPrice = input.MaxPrice,
             Tags = input.Tags,
             Enabled = input.Enabled,
-            User = User.Identity?.IsAuthenticated == true ? User.GetUser() : null,
         }, cancellationToken);
 
-        HttpContext.Response.Headers.Add(Pagination.Count, $"{response.Count}");
-        HttpContext.Response.Headers.Add(Pagination.Page, $"{response.Page}");
-        HttpContext.Response.Headers.Add(Pagination.Limit, $"{response.Limit}");
+        HttpContext.Response.Headers.TryAdd(Pagination.Count, $"{response.Count}");
+        HttpContext.Response.Headers.TryAdd(Pagination.Page, $"{response.Page}");
+        HttpContext.Response.Headers.TryAdd(Pagination.Limit, $"{response.Limit}");
 
         return Ok(response.Products);
     }
@@ -86,7 +86,6 @@ public class ProductsController : ControllerBase
             Price = input.Price,
             TagIds = input.TagIds,
             Consumptions = input.Consumptions,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response.Product);
@@ -102,7 +101,6 @@ public class ProductsController : ControllerBase
         {
             Id = id,
             Image = input.Image,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response.ImageId);
@@ -128,7 +126,6 @@ public class ProductsController : ControllerBase
         var response = await _mediator.Send(new RemoveProductRequest
         {
             Id = id,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);
@@ -143,7 +140,6 @@ public class ProductsController : ControllerBase
         var response = await _mediator.Send(new RestoreProductRequest
         {
             Id = id,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);

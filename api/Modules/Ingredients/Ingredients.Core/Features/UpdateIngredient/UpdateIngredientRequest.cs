@@ -1,5 +1,4 @@
 using Mediator;
-using Shared.Core.Abstractions;
 using Shared.Core.Entities;
 
 namespace Ingredients.Core.Features.UpdateIngredient;
@@ -11,5 +10,4 @@ public class UpdateIngredientRequest : IRequest<UpdateIngredientResponse>
     public decimal? Stock { get; set; }
     public int? Alert { get; set; }
     public MeasurementUnit? Unit { get; set; }
-    public IUserRecord User { get; set; } = null!;
 }

@@ -29,9 +29,6 @@ public class TablesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> FindMany([FromQuery] GetTablesInput input, CancellationToken cancellationToken)
     {
-        // is User.Companies.Contains(CompanyId) then allow Get/Create
-        // CompanyId: string
-
         var response = await _mediator.Send(new GetTablesRequest
         {
             Limit = input.Limit,
@@ -39,7 +36,6 @@ public class TablesController : ControllerBase
             LayoutId = input.LayoutId,
             Status = input.Status,
             Enabled = input.Enabled,
-            User = User.GetUser(),
         }, cancellationToken);
 
         HttpContext.Response.Headers.TryAdd(Pagination.Count, $"{response.Count}");
@@ -62,7 +58,6 @@ public class TablesController : ControllerBase
             PositionX = input.PositionX,
             PositionY = input.PositionY,
             Surface = input.Surface,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);
@@ -82,7 +77,6 @@ public class TablesController : ControllerBase
             PositionY = input.PositionY,
             Surface = input.Surface,
             Orders = input.Orders,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);
@@ -142,7 +136,6 @@ public class TablesController : ControllerBase
         var response = await _mediator.Send(new RemoveTableRequest
         {
             Id = id,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);

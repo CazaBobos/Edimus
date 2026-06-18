@@ -26,9 +26,6 @@ public class SectorsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> FindMany([FromQuery] GetSectorsInput input, CancellationToken cancellationToken)
     {
-        // is User.Companies.Contains(CompanyId) then allow Get/Create
-        // CompanyId: string
-
         var response = await _mediator.Send(new GetSectorsRequest
         {
             Limit = input.Limit,
@@ -36,7 +33,6 @@ public class SectorsController : ControllerBase
             LayoutId = input.LayoutId,
             Name = input.Name,
             Enabled = input.Enabled,
-            User = User.GetUser(),
         }, cancellationToken);
 
         HttpContext.Response.Headers.TryAdd(Pagination.Count, $"{response.Count}");
@@ -60,7 +56,6 @@ public class SectorsController : ControllerBase
             Name = input.Name,
             Color = input.Color,
             Surface = input.Surface,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response.Id);
@@ -80,7 +75,6 @@ public class SectorsController : ControllerBase
             Name = input.Name,
             Color = input.Color,
             Surface = input.Surface,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);
@@ -95,7 +89,6 @@ public class SectorsController : ControllerBase
         var response = await _mediator.Send(new RemoveSectorRequest
         {
             Id = id,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);

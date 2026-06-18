@@ -1,6 +1,5 @@
 using Mediator;
 using Sectors.Core.Model;
-using Shared.Core.Abstractions;
 
 namespace Sectors.Core.Features.UpdateSector;
 
@@ -12,5 +11,4 @@ public class UpdateSectorRequest : IRequest<UpdateSectorResponse>
     public string? Name { get; set; }
     public string? Color { get; set; }
     public List<SectorCoordModel>? Surface { get; set; }
-    public IUserRecord? User { get; set; }
 }

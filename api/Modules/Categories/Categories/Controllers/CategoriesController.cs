@@ -54,7 +54,6 @@ public class CategoriesController : ControllerBase
         {
             CompanyId = input.CompanyId,
             Name = input.Name,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response.Id);
@@ -70,7 +69,6 @@ public class CategoriesController : ControllerBase
         {
             Id = id,
             Name = input.Name,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);
@@ -85,7 +83,6 @@ public class CategoriesController : ControllerBase
         var response = await _mediator.Send(new RemoveCategoryRequest
         {
             Id = id,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);
@@ -100,7 +97,6 @@ public class CategoriesController : ControllerBase
         var response = await _mediator.Send(new RestoreCategoryRequest
         {
             Id = id,
-            User = User.GetUser(),
         }, cancellationToken);
 
         return Ok(response);
