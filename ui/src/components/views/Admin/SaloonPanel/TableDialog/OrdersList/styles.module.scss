@@ -1,5 +1,14 @@
 @use "common/colors" as *;
 
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: $grey;
+  font-size: 13px;
+  padding: 16px 0;
+}
+
 .disabledNotice {
   color: $grey;
   font-size: 13px;

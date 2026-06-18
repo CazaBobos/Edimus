@@ -57,8 +57,22 @@ export const Positioner = (props: PositionerProps) => {
   return (
     <div className={styles.positioner}>
       <div className={styles.row}>
-        <span>X: {currentCoords.x}</span>
-        <span>Y: {currentCoords.y}</span>
+        <label className={styles.coordInput}>
+          <span>X:</span>
+          <input
+            type="number"
+            value={currentCoords.x}
+            onChange={(e) => handleChange({ x: Number(e.target.value), y: currentCoords.y })}
+          />
+        </label>
+        <label className={styles.coordInput}>
+          <span>Y:</span>
+          <input
+            type="number"
+            value={currentCoords.y}
+            onChange={(e) => handleChange({ x: currentCoords.x, y: Number(e.target.value) })}
+          />
+        </label>
       </div>
       <Button icon={<BiSolidUpArrow />} onClick={up} />
       <div className={styles.row}>

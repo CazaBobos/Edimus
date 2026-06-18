@@ -1,6 +1,7 @@
 import { useIngredientsQuery } from "@/hooks/queries/useIngredientsQuery";
 import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
 import { Product, Table, TableOrder } from "@/types";
+import { Loader } from "@mantine/core";
 import { useMemo, useState } from "react";
 import { BiPlus, BiX } from "react-icons/bi";
 
@@ -17,7 +18,7 @@ type OrdersListProps = {
 };
 export const OrdersList = (props: OrdersListProps) => {
   const { table, disabled = false, onChange } = props;
-  const { data: products } = useProductsQuery();
+  const { data: products, isLoading: productsLoading } = useProductsQuery();
   const { ingredientsMap } = useIngredientsQuery();
 
   const [orders, setOrders] = useState<TableOrder[]>(table?.orders);
@@ -106,6 +107,11 @@ export const OrdersList = (props: OrdersListProps) => {
     <div className={styles.order}>
       {disabled ? (
         <strong className={styles.disabledNotice}>La mesa debe estar ocupada para registrar pedidos</strong>
+      ) : productsLoading ? (
+        <div className={styles.loading}>
+          <Loader size="sm" />
+          <span>Cargando productos...</span>
+        </div>
       ) : (
         <>
           <ul>

@@ -49,7 +49,7 @@ export const SaloonPanel = () => {
         </div>
       </h2>
       <SaloonGrid layoutId={currentLayoutId} />
-      <TableDialog />
+      <TableDialog layoutId={currentLayoutId} />
       <SectorDialog />
     </div>
   );

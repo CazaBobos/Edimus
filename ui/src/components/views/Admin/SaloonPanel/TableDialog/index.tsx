@@ -1,4 +1,6 @@
 import { useTableMutations } from "@/hooks/mutations/useTableMutations";
+import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
+import { useTablesQuery } from "@/hooks/queries/useTablesQuery";
 import { useAdminStore } from "@/stores";
 import {
   Coords,
@@ -10,9 +12,9 @@ import {
   tableStatusNameMap,
   UpdateTableRequest,
 } from "@/types";
-import { Drawer } from "@mantine/core";
-import { useRef, useState } from "react";
-import { BiClipboard, BiDownload, BiLock, BiReceipt, BiSave, BiSolidCircle, BiTrash } from "react-icons/bi";
+import { Drawer, Modal, SegmentedControl } from "@mantine/core";
+import { useMemo, useRef, useState } from "react";
+import { BiClipboard, BiDownload, BiLock, BiReceipt, BiSave, BiSolidCircle, BiTransfer, BiTrash } from "react-icons/bi";
 import QRCode from "react-qr-code";
 
 import { Button } from "@/components/ui/Button";
@@ -51,7 +53,9 @@ const statusOptions = [
   },
 ];
 
-export const TableDialog = () => {
+type TableDialogProps = { layoutId: number | undefined };
+
+export const TableDialog = ({ layoutId }: TableDialogProps) => {
   const table = useAdminStore((store) => store.tableDialogOpenState);
   const setTableDialogOpenState = useAdminStore((store) => store.setTableDialogOpenState);
   const setPreviewPosition = useAdminStore((store) => store.setPreviewPosition);
@@ -85,7 +89,7 @@ export const TableDialog = () => {
 
   const handleSave = () => {
     if (table) updateTableMutation.mutate({ id: table.id, request }, mutationOptions);
-    else createTableMutation.mutate({ layoutId: 1, ...request } as CreateTableRequest, mutationOptions);
+    else createTableMutation.mutate({ layoutId: layoutId ?? 1, ...request } as CreateTableRequest, mutationOptions);
   };
 
   const handleRemove = () => {
@@ -151,7 +155,7 @@ export const TableDialog = () => {
             <>
               <Button label="Emitir control de pedido" icon={<BiClipboard />} />
               <Button label="Generar comprobante" icon={<BiReceipt />} />
-              <Button label="Eliminar Mesa" icon={<BiTrash />} onClick={handleRemove} />
+              <Button danger label="Eliminar Mesa" icon={<BiTrash />} onClick={handleRemove} />
             </>
           )}
         </div>
@@ -176,10 +180,19 @@ const QRLink = ({ table }: QRLinkProps) => {
 
     const img = new Image();
     img.onload = () => {
+      const padding = 12;
+      const labelHeight = 36;
       const canvas = document.createElement("canvas");
-      canvas.width = img.width;
-      canvas.height = img.height;
-      canvas.getContext("2d")!.drawImage(img, 0, 0);
+      canvas.width = img.width + padding * 2;
+      canvas.height = img.height + padding * 2 + labelHeight;
+      const ctx = canvas.getContext("2d")!;
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, padding, padding);
+      ctx.fillStyle = "#111111";
+      ctx.font = `bold ${Math.round(canvas.width * 0.075)}px sans-serif`;
+      ctx.textAlign = "center";
+      ctx.fillText(`Mesa #${table.id}`, canvas.width / 2, img.height + padding * 2 + labelHeight * 0.65);
       URL.revokeObjectURL(url);
 
       const a = document.createElement("a");
@@ -192,6 +205,7 @@ const QRLink = ({ table }: QRLinkProps) => {
 
   return (
     <>
+      <p className={styles.qrLabel}>Mesa #{table.id}</p>
       <div ref={wrapperRef}>
         <a target="_blank" href={link}>
           <QRCode value={link} />
