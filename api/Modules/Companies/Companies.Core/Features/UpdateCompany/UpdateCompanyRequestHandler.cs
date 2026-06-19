@@ -23,7 +23,7 @@ public class UpdateCompanyRequestHandler : IRequestHandler<UpdateCompanyRequest,
         company.Update(
             request.Name,
             request.Slogan,
-            null,
+            request.Slug,
             request.ReactiveStock,
             request.PublicPrices,
             request.PublicOrders

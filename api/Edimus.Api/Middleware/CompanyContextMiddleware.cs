@@ -13,9 +13,9 @@ public class CompanyContextMiddleware
         if (httpContext.User.Identity?.IsAuthenticated == true)
         {
             var userCompanies = httpContext.User.GetUserCompanies();
-            var headerValue = httpContext.Request.Headers["X-Company-Id"].FirstOrDefault();
+            var paramValue = httpContext.Request.Query["companyId"].FirstOrDefault();
 
-            if (headerValue is not null && int.TryParse(headerValue, out var companyId))
+            if (paramValue is not null && int.TryParse(paramValue, out var companyId))
             {
                 if (!userCompanies.Contains(companyId))
                 {

@@ -19,7 +19,7 @@ public class CreateCompanyRequestHandler : IRequestHandler<CreateCompanyRequest,
         var company = new Company(
             request.Name,
             request.Slogan,
-            request.Acronym
+            request.Slug
         );
 
         var existingCompany = await _companiesRepository.AsQueryable()

@@ -18,11 +18,11 @@ public static class CompanyQueryableExtensions
         return queryable.Where(company => company.Slogan.Contains(slogan));
     }
 
-    public static IQueryable<Company> WhereAcronym(this IQueryable<Company> queryable, string? acronym)
+    public static IQueryable<Company> WhereSlug(this IQueryable<Company> queryable, string? slug)
     {
-        if (acronym is null) return queryable;
+        if (slug is null) return queryable;
 
-        return queryable.Where(company => company.Acronym.Contains(acronym));
+        return queryable.Where(company => company.Slug.Contains(slug));
     }
 
     public static IQueryable<Company> WhereEnabled(this IQueryable<Company> queryable, bool? enabled)

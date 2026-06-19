@@ -8,6 +8,6 @@ public class GetCompaniesRequest : IRequest<GetCompaniesResponse>
     public int? Page { get; set; }
     public string? Name { get; set; }
     public string? Slogan { get; set; }
-    public string? Acronym { get; set; }
+    public string? Slug { get; set; }
     public bool? Enabled { get; set; }
 }

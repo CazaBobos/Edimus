@@ -25,7 +25,6 @@ public class IngredientsController : ControllerBase
     /// Finds all ingredients that match the given name
     /// </summary>
     [HttpGet]
-    [AllowAnonymous]
     public async Task<IActionResult> FindMany([FromQuery] GetIngredientsInput input, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetIngredientsRequest

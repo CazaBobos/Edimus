@@ -30,8 +30,9 @@ const drainQueue = (error: unknown) => {
 };
 
 axiosClient.interceptors.request.use((config) => {
-  const { activeCompanyId } = useAppUserStore.getState();
-  if (activeCompanyId != null) config.params = { ...config.params, companyId: activeCompanyId };
+  const { activeCompanyId, user } = useAppUserStore.getState();
+  if (activeCompanyId != null && (user?.companyIds.length ?? 0) > 1)
+    config.params = { ...config.params, companyId: activeCompanyId };
   return config;
 });
 

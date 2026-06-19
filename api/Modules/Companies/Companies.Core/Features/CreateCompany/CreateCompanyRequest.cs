@@ -6,5 +6,5 @@ public class CreateCompanyRequest : IRequest<CreateCompanyResponse>
 {
     public string Name { get; set; } = string.Empty;
     public string Slogan { get; set; } = string.Empty;
-    public string? Acronym { get; set; }
+    public string? Slug { get; set; }
 }

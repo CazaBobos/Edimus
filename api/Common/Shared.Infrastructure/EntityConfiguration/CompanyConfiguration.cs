@@ -18,9 +18,11 @@ public class CompanyConfiguration : IEntityTypeConfiguration<Company>
         entity.Property(e => e.Slogan)
             .IsRequired()
             .HasMaxLength(64);
-        entity.Property(e => e.Acronym)
+        entity.Property(e => e.Slug)
             .IsRequired()
-            .HasMaxLength(8);
+            .HasMaxLength(50);
+        entity.HasIndex(e => e.Slug)
+            .IsUnique();
 
         entity.HasMany(e => e.Premises)
             .WithOne(e => e.Company)

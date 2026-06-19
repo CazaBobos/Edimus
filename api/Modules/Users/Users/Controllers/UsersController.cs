@@ -36,7 +36,6 @@ public class UsersController : ControllerBase
     /// <summary>
     /// Creates a new user
     /// </summary>
-    [AllowAnonymous]
     [HttpPost]
     public async Task<UserModel> Create([FromBody] CreateUserInput input, CancellationToken cancellationToken)
     {

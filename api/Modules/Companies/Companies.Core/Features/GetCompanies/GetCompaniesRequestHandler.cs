@@ -22,7 +22,7 @@ public class GetCompaniesRequestHandler : IRequestHandler<GetCompaniesRequest, G
         var query = _companiesRepository.AsQueryable()
             .WhereName(request.Name)
             .WhereSlogan(request.Slogan)
-            .WhereAcronym(request.Acronym)
+            .WhereSlug(request.Slug)
             .WhereEnabled(request.Enabled);
 
         var count = await query.CountAsync(cancellationToken);

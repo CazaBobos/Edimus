@@ -48,7 +48,7 @@ public class CompaniesController : ControllerBase
             Limit = input.Limit,
             Page = input.Page,
             Name = input.Name,
-            Acronym = input.Acronym,
+            Slug = input.Slug,
             Enabled = input.Enabled
         }, cancellationToken);
 
@@ -69,6 +69,7 @@ public class CompaniesController : ControllerBase
         {
             Name = input.Name,
             Slogan = input.Slogan,
+            Slug = input.Slug,
         }, cancellationToken);
 
         return Ok(response.Id);
@@ -85,6 +86,7 @@ public class CompaniesController : ControllerBase
             Id = companyId,
             Name = input.Name,
             Slogan = input.Slogan,
+            Slug = input.Slug,
             ReactiveStock = input.ReactiveStock,
             PublicPrices = input.PublicPrices,
             PublicOrders = input.PublicOrders,

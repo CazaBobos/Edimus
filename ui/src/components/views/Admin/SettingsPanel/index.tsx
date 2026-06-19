@@ -29,6 +29,11 @@ export const SettingsPanel = () => {
     setRequest((prev) => ({ ...prev, [name]: value === "true" }));
   };
 
+  const handleSetRequest = (event: ControlState) => {
+    const { name, value } = event;
+    setRequest((prev) => ({ ...prev, [name]: value }));
+  };
+
   const { updateSettingsMutation } = useCompanyMutations();
 
   const handleSave = () => {
@@ -94,6 +99,18 @@ export const SettingsPanel = () => {
       </div>
 
       <div className={styles.content}>
+        <section className={styles.section}>
+          <h3 className={styles.sectionTitle}>General</h3>
+          <div className={styles.settingRow}>
+            <div className={styles.settingInfo}>
+              <span className={styles.settingLabel}>Slug</span>
+              <span className={styles.settingDescription}>
+                Identificador único del local en la URL del menú público. Se genera automáticamente si no se especifica.
+              </span>
+            </div>
+            <Input name="slug" defaultValue={company?.slug} onChange={handleSetRequest} />
+          </div>
+        </section>
         <section className={styles.section}>
           <h3 className={styles.sectionTitle}>Apariencia</h3>
           <div className={styles.settingRow}>

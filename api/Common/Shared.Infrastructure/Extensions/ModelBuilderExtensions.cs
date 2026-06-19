@@ -63,7 +63,7 @@ public static class ModelBuilderExtensions
         });
 
         modelBuilder.Entity<Company>().HasData(
-            new Company(name: "Maria Antonieta", slogan: "Universo Deli", acronym: "MA").WithId(1)
+            new Company(name: "Maria Antonieta", slogan: "Universo Deli", slug: "maria-antonieta").WithId(1)
         );
 
         modelBuilder.Entity<Premise>().HasData(
