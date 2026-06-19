@@ -1,0 +1,36 @@
+root = true
+
+[*.cs]
+charset = utf-8
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Namespace style
+csharp_style_namespace_declarations = file_scoped:error
+dotnet_diagnostic.IDE0161.severity = error
+
+# Remove unused usings
+dotnet_diagnostic.IDE0005.severity = error
+
+# Require explicit access modifiers
+dotnet_style_require_accessibility_modifiers = always:error
+
+# Usings outside namespace, System first
+csharp_using_directive_placement = outside_namespace:error
+dotnet_sort_system_directives_first = true
+
+# Prefer var when type is apparent
+csharp_style_var_when_type_is_apparent = true:suggestion
+csharp_style_var_for_built_in_types = false:suggestion
+
+# Prefer pattern matching
+csharp_style_pattern_matching_over_is_with_cast_check = true:suggestion
+csharp_style_pattern_matching_over_as_with_null_check = true:suggestion
+
+# Prefer `using var` without braces
+csharp_prefer_simple_using_statement = true:suggestion
+
+# Braces required for multiline blocks
+csharp_prefer_braces = when_multiline:warning

@@ -129,7 +129,6 @@ public class DatabaseContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ConfigureTables();
-        modelBuilder.SeedTables();
 
         modelBuilder.Entity<Product>().HasQueryFilter(p =>
             !_currentCompanyService.AllowedCompanyIds.Any() || _currentCompanyService.AllowedCompanyIds.Contains(p.CompanyId));
