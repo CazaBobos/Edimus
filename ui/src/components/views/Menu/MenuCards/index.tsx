@@ -10,9 +10,9 @@ import { useMemo, useState } from "react";
 
 import styles from "./styles.module.scss";
 
-export const MenuCards = () => {
-  const { data: categories, isLoading: categoriesLoading } = useCategoriesQuery();
-  const { data: products, isLoading: productsLoading } = useProductsQuery({ enabled: true });
+export const MenuCards = ({ companyId }: { companyId: number }) => {
+  const { data: categories, isLoading: categoriesLoading } = useCategoriesQuery({ companyId, enabled: true });
+  const { data: products, isLoading: productsLoading } = useProductsQuery({ companyId, enabled: true });
   const tagFilters = useMenuStore((store) => store.tagFilters);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 

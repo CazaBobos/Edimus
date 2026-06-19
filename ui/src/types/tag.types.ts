@@ -7,6 +7,7 @@ export type Tag = {
 export type GetTagsParams = {
   name?: string;
   enabled?: boolean;
+  companyId?: number;
   limit?: number;
   page?: number;
 };

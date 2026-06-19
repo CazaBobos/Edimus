@@ -43,8 +43,7 @@ export const SettingsPanel = () => {
   };
 
   // Premises
-  const activeCompanyId = useAppUserStore((s) => s.activeCompanyId);
-  const { data: company } = useCompanyQuery(activeCompanyId);
+  const { data: company } = useCompanyQuery();
   const premises = company?.premises ?? [];
 
   const { createPremiseMutation, updatePremiseMutation, removePremiseMutation, restorePremiseMutation } =

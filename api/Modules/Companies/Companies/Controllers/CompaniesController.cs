@@ -1,6 +1,7 @@
 using Companies.Core.Features.CreateCompany;
 using Companies.Core.Features.GetCompanies;
 using Companies.Core.Features.GetCompany;
+using Companies.Core.Features.GetCompanyBySlug;
 using Companies.Core.Features.RemoveCompany;
 using Companies.Core.Features.RestoreCompany;
 using Companies.Core.Features.UpdateCompany;
@@ -25,13 +26,28 @@ public class CompaniesController : ControllerBase
     /// <summary>
     /// Finds a company by its Id
     /// </summary>
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     [AllowAnonymous]
     public async Task<IActionResult> FindOne(int id, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetCompanyRequest
         {
             Id = id
+        }, cancellationToken);
+
+        return Ok(response.Company);
+    }
+
+    /// <summary>
+    /// Finds a company by its slug
+    /// </summary>
+    [HttpGet("slug/{slug}")]
+    [AllowAnonymous]
+    public async Task<IActionResult> FindBySlug(string slug, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new GetCompanyBySlugRequest
+        {
+            Slug = slug
         }, cancellationToken);
 
         return Ok(response.Company);

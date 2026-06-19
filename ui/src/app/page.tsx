@@ -1,7 +1,10 @@
 "use client";
 
+import { useCompanyBySlugQuery } from "@/hooks/queries/useCompanyBySlugQuery";
 import { useSingleTableQuery } from "@/hooks/queries/useSingleTableQuery";
-import { Badge } from "@mantine/core";
+import { Badge, Loader } from "@mantine/core";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 import { FiltersDialog } from "@/components/views/Menu/FiltersDialog";
 import { MenuBar } from "@/components/views/Menu/MenuBar";
@@ -10,8 +13,22 @@ import { OrderDialog } from "@/components/views/Menu/OrderDialog";
 
 import styles from "./page.module.scss";
 
-export default function Menu() {
+function MenuContent() {
+  const searchParams = useSearchParams();
+  const slug = searchParams.get("slug") ?? "";
+
+  const { data: company, isLoading } = useCompanyBySlugQuery(slug);
   const { data: table } = useSingleTableQuery();
+
+  if (isLoading) {
+    return (
+      <div className={styles.page} style={{ alignItems: "center", justifyContent: "center" }}>
+        <Loader size="sm" />
+      </div>
+    );
+  }
+
+  if (!company) return null;
 
   return (
     <div className={styles.page}>
@@ -27,11 +44,19 @@ export default function Menu() {
         )}
       </header>
       <main className={styles.main}>
-        <MenuCards />
+        <MenuCards companyId={company.id} />
         <OrderDialog />
-        <FiltersDialog />
+        <FiltersDialog companyId={company.id} />
       </main>
       <MenuBar />
     </div>
+  );
+}
+
+export default function Menu() {
+  return (
+    <Suspense>
+      <MenuContent />
+    </Suspense>
   );
 }

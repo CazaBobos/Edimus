@@ -9,9 +9,9 @@ import { Dialog } from "@/components/ui/Dialog";
 
 import styles from "./styles.module.scss";
 
-export const FiltersDialog = () => {
+export const FiltersDialog = ({ companyId }: { companyId: number }) => {
   const { isFiltersDialogOpen, setIsFiltersDialogOpen, tagFilters, setTagFilters } = useMenuStore();
-  const { data: tags } = useTagsQuery({ enabled: true });
+  const { data: tags } = useTagsQuery({ companyId, enabled: true });
 
   const [selectedTagIds, setSelectedTagIds] = useState<number[]>(tagFilters);
 

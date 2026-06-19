@@ -5,7 +5,11 @@ import { axiosClient } from "./axios";
 export const companiesApi = {
   findOne: async (id: number) => {
     const response = await axiosClient.get<Company>(`companies/${id}`);
+    return response.data;
+  },
 
+  findBySlug: async (slug: string) => {
+    const response = await axiosClient.get<Company>(`companies/slug/${slug}`);
     return response.data;
   },
 
