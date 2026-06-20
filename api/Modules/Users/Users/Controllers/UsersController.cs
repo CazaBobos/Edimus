@@ -10,7 +10,7 @@ namespace Users.Controllers;
 
 [Route("api/users")]
 [ApiController]
-//[Authorize]
+[Authorize]
 public class UsersController : ControllerBase
 {
     public readonly IMediator _mediator;

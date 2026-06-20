@@ -129,15 +129,7 @@ public class DatabaseContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ConfigureTables();
-
-        modelBuilder.Entity<Product>().HasQueryFilter(p =>
-            !_currentCompanyService.AllowedCompanyIds.Any() || _currentCompanyService.AllowedCompanyIds.Contains(p.CompanyId));
-        modelBuilder.Entity<Tag>().HasQueryFilter(t =>
-            !_currentCompanyService.AllowedCompanyIds.Any() || _currentCompanyService.AllowedCompanyIds.Contains(t.CompanyId));
-        modelBuilder.Entity<Ingredient>().HasQueryFilter(i =>
-            !_currentCompanyService.AllowedCompanyIds.Any() || _currentCompanyService.AllowedCompanyIds.Contains(i.CompanyId));
-        modelBuilder.Entity<Category>().HasQueryFilter(c =>
-            !_currentCompanyService.AllowedCompanyIds.Any() || _currentCompanyService.AllowedCompanyIds.Contains(c.CompanyId));
+        modelBuilder.ApplyQueryFilters(_currentCompanyService);
     }
 
     private static bool IsAuditableEntity(Type clrType)

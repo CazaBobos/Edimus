@@ -1,3 +1,4 @@
+using Serilog;
 using Categories.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Shared.Infrastructure.Persistence;
@@ -20,6 +21,12 @@ using Tables.Hubs;
 using Tags.Extensions;
 using Users.Extensions;
 
+DotNetEnv.Env.Load(Path.Combine(AppContext.BaseDirectory, ".env"));
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
+
 var options = new WebApplicationOptions
 {
     Args = args,
@@ -27,6 +34,8 @@ var options = new WebApplicationOptions
 };
 
 var builder = WebApplication.CreateBuilder(options);
+
+builder.AddSerilog();
 
 // Configures Web API to be hosted as Windows Service
 builder.Host.UseWindowsService();
@@ -83,7 +92,11 @@ app.UseSwaggerUI(options => options.InjectStylesheet("/swagger-dark.css"));
 
 app.UseCors(options =>
 {
-    options.SetIsOriginAllowed(_ => true);
+    if (app.Environment.IsDevelopment())
+        options.SetIsOriginAllowed(_ => true);
+    else
+        options.WithOrigins(builder.Configuration["Email:FrontendUrl"]!);
+
     options.AllowAnyHeader();
     options.AllowAnyMethod();
     options.AllowCredentials();
@@ -91,6 +104,7 @@ app.UseCors(options =>
 
 if (app.Environment.IsDevelopment()) app.UseHttpsRedirection();
 
+app.UseSerilogRequestLogging();
 app.UseRateLimiter();
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 app.UseMiddleware<ParamBracketRemoverMiddleware>();

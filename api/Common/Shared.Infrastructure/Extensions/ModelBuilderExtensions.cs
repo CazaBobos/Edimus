@@ -1,7 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using Shared.Core.Abstractions;
+using Shared.Core.Entities;
 using Shared.Infrastructure.EntityConfiguration;
 
 namespace Shared.Infrastructure.Extensions;
+
 public static class ModelBuilderExtensions
 {
     public static void ConfigureTables(this ModelBuilder modelBuilder)
@@ -26,5 +29,23 @@ public static class ModelBuilderExtensions
         modelBuilder.ApplyConfiguration(new SessionOrderConfiguration());
         modelBuilder.ApplyConfiguration(new TagConfiguration());
         modelBuilder.ApplyConfiguration(new UserConfiguration());
+    }
+
+    public static void ApplyQueryFilters(this ModelBuilder modelBuilder, ICurrentCompanyService currentCompanyService)
+    {
+        modelBuilder.Entity<Product>().HasQueryFilter(p =>
+            !currentCompanyService.AllowedCompanyIds.Any() || currentCompanyService.AllowedCompanyIds.Contains(p.CompanyId));
+        modelBuilder.Entity<Tag>().HasQueryFilter(t =>
+            !currentCompanyService.AllowedCompanyIds.Any() || currentCompanyService.AllowedCompanyIds.Contains(t.CompanyId));
+        modelBuilder.Entity<Ingredient>().HasQueryFilter(i =>
+            !currentCompanyService.AllowedCompanyIds.Any() || currentCompanyService.AllowedCompanyIds.Contains(i.CompanyId));
+        modelBuilder.Entity<Category>().HasQueryFilter(c =>
+            !currentCompanyService.AllowedCompanyIds.Any() || currentCompanyService.AllowedCompanyIds.Contains(c.CompanyId));
+        modelBuilder.Entity<Layout>().HasQueryFilter(l =>
+            !currentCompanyService.AllowedCompanyIds.Any() || currentCompanyService.AllowedCompanyIds.Contains(l.Premise!.CompanyId));
+        modelBuilder.Entity<Sector>().HasQueryFilter(s =>
+            !currentCompanyService.AllowedCompanyIds.Any() || currentCompanyService.AllowedCompanyIds.Contains(s.Layout!.Premise!.CompanyId));
+        modelBuilder.Entity<Table>().HasQueryFilter(t =>
+            !currentCompanyService.AllowedCompanyIds.Any() || currentCompanyService.AllowedCompanyIds.Contains(t.Layout!.Premise!.CompanyId));
     }
 }
