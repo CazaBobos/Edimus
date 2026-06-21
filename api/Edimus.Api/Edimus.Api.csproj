@@ -29,7 +29,7 @@
 
   <ItemGroup>
 	  <Content Include="StaticFiles\**" CopyToPublishDirectory="PreserveNewest" />
-    <None Include=".env" CopyToOutputDirectory="PreserveNewest" />
+    <None Include=".env" CopyToOutputDirectory="PreserveNewest" Condition="Exists('.env')" />
   </ItemGroup>
 
   <ItemGroup>
