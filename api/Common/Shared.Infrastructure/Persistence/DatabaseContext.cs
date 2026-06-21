@@ -68,7 +68,7 @@ public class DatabaseContext : DbContext
                     else
                     {
                         var enabledProp = e.Properties.FirstOrDefault(p => p.Metadata.Name == "Enabled");
-                        if (enabledProp?.IsModified == true)
+                        if (enabledProp?.IsModified == true && !Equals(enabledProp.OriginalValue, enabledProp.CurrentValue))
                         {
                             operation = (bool)enabledProp.CurrentValue!
                                 ? AuditOperation.Restored
@@ -85,7 +85,7 @@ public class DatabaseContext : DbContext
                         {
                             operation = AuditOperation.Updated;
                             changes = e.Properties
-                                .Where(p => p.IsModified)
+                                .Where(p => p.IsModified && !Equals(p.OriginalValue, p.CurrentValue))
                                 .Select(p => new AuditLogChange(
                                     p.Metadata.Name,
                                     p.OriginalValue?.ToString(),

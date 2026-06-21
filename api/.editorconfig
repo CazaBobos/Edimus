@@ -15,7 +15,7 @@ dotnet_diagnostic.IDE0161.severity = error
 dotnet_diagnostic.IDE0005.severity = error
 
 # Require explicit access modifiers
-dotnet_style_require_accessibility_modifiers = always:error
+dotnet_style_require_accessibility_modifiers = for_non_interface_members:error
 
 # Usings outside namespace, System first
 csharp_using_directive_placement = outside_namespace:error

@@ -8,7 +8,6 @@ using Premises.Core.Features.RestorePremise;
 using Premises.Core.Features.UpdatePremise;
 using Premises.Input;
 using Shared.Core.Abstractions;
-using Shared.Infrastructure.Extensions;
 
 namespace Premises.Controllers;
 

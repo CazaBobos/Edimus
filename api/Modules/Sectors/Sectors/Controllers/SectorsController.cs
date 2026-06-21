@@ -7,7 +7,6 @@ using Sectors.Core.Features.RemoveSector;
 using Sectors.Core.Features.UpdateSector;
 using Sectors.Input;
 using Shared.Core.Abstractions;
-using Shared.Infrastructure.Extensions;
 
 namespace Sectors.Controllers;
 

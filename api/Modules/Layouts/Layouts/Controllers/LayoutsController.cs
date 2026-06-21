@@ -9,7 +9,6 @@ using Mediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Core.Abstractions;
-using Shared.Infrastructure.Extensions;
 
 namespace Layouts.Controllers;
 
