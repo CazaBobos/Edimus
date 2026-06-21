@@ -1,5 +1,4 @@
 using Mediator;
-using Products.Core.Model;
 using Shared.Core.Abstractions;
 
 namespace Products.Core.Features.CreateProduct;

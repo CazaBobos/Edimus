@@ -1,3 +1,4 @@
+export * from "./api.audit";
 export * from "./api.companies";
 export * from "./api.categories";
 export * from "./api.ingredients";

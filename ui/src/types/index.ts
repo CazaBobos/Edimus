@@ -1,3 +1,4 @@
+export * from "./audit.types";
 export * from "./auth.types";
 export * from "./category.types";
 export * from "./company.types";

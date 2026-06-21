@@ -1,6 +1,4 @@
-﻿using Shared.Core.Domain;
-
-namespace Companies.Core.Model;
+﻿namespace Companies.Core.Model;
 
 public class CompanyModel
 {

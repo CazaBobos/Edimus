@@ -5,6 +5,7 @@ import { useAdminStore, useAppUserStore } from "@/stores";
 import { useEffect, useState } from "react";
 
 import { AdminSidebar } from "@/components/views/Admin/AdminSidebar";
+import { AuditLogs } from "@/components/views/Admin/AuditLogs";
 import { IngredientsManager } from "@/components/views/Admin/IngredientsManager";
 import { LoginCard } from "@/components/views/Admin/LoginCard";
 import { MenuEditor } from "@/components/views/Admin/MenuEditor";
@@ -50,7 +51,8 @@ export default function Admin() {
             1: <MenuEditor />,
             2: <IngredientsManager />,
             3: <Statistics />,
-            4: <SettingsPanel />,
+            4: <AuditLogs />,
+            5: <SettingsPanel />,
           }[selectedTab]
         }
       </main>

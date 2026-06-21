@@ -1,6 +1,4 @@
 ﻿using System.Threading.RateLimiting;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.OpenApi.Models;
 
 namespace Edimus.Api.Extensions;
 

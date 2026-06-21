@@ -8,13 +8,15 @@ public static class AuditLogQueryableExtensions
     public static IQueryable<AuditLog> WhereDateFrom(this IQueryable<AuditLog> queryable, DateTime? dateFrom)
     {
         if (dateFrom is null) return queryable;
-        return queryable.Where(l => l.DateTime >= dateFrom.Value);
+        var utc = DateTime.SpecifyKind(dateFrom.Value, DateTimeKind.Utc);
+        return queryable.Where(l => l.DateTime >= utc);
     }
 
     public static IQueryable<AuditLog> WhereDateTo(this IQueryable<AuditLog> queryable, DateTime? dateTo)
     {
         if (dateTo is null) return queryable;
-        return queryable.Where(l => l.DateTime <= dateTo.Value);
+        var utc = DateTime.SpecifyKind(dateTo.Value.Date.AddDays(1).AddTicks(-1), DateTimeKind.Utc);
+        return queryable.Where(l => l.DateTime <= utc);
     }
 
     public static IQueryable<AuditLog> WhereEntityType(this IQueryable<AuditLog> queryable, string? entityType)

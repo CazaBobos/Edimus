@@ -1,0 +1,36 @@
+@use "@/common/colors" as *;
+
+.table {
+  font-size: 13px;
+  --mantine-table-border-color: #{$border_light};
+}
+
+.thead {
+  background: rgba($white, 0.025);
+  border-bottom: 1px solid $border_subtle;
+}
+
+.th {
+  color: $grey;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  padding: 10px 14px;
+}
+
+.td {
+  color: $light_text;
+  padding: 10px 14px;
+  vertical-align: middle;
+}
+
+.clickable {
+  cursor: pointer;
+  transition: background 0.12s;
+
+  &:hover .td {
+    background: $hover_light;
+  }
+}

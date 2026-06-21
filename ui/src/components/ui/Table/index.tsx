@@ -1,16 +1,24 @@
 import { Table as MantineTable } from "@mantine/core";
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
+import styles from "./styles.module.scss";
+
 type TableProps<T> = {
   data: T[];
   columns: ColumnDef<T, unknown>[];
+  onRowClick?: (row: T) => void;
+  isRowClickable?: (row: T) => boolean;
 };
 
-export default function Table<T>({ data, columns }: TableProps<T>) {
+export default function Table<T>({ data, columns, onRowClick, isRowClickable }: TableProps<T>) {
   const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel() });
 
   return (
-    <MantineTable striped highlightOnHover withTableBorder withColumnBorders>
+    <MantineTable
+      withTableBorder
+      withColumnBorders
+      classNames={{ table: styles.table, thead: styles.thead, th: styles.th, td: styles.td }}
+    >
       <MantineTable.Thead>
         {table.getHeaderGroups().map((hg) => (
           <MantineTable.Tr key={hg.id}>
@@ -23,15 +31,22 @@ export default function Table<T>({ data, columns }: TableProps<T>) {
         ))}
       </MantineTable.Thead>
       <MantineTable.Tbody>
-        {table.getRowModel().rows.map((row) => (
-          <MantineTable.Tr key={row.id}>
-            {row.getVisibleCells().map((cell, i) => (
-              <MantineTable.Td key={`${cell.id} ${i}`}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </MantineTable.Td>
-            ))}
-          </MantineTable.Tr>
-        ))}
+        {table.getRowModel().rows.map((row) => {
+          const clickable = isRowClickable ? isRowClickable(row.original) : !!onRowClick;
+          return (
+            <MantineTable.Tr
+              key={row.id}
+              className={clickable ? styles.clickable : undefined}
+              onClick={clickable ? () => onRowClick?.(row.original) : undefined}
+            >
+              {row.getVisibleCells().map((cell, i) => (
+                <MantineTable.Td key={`${cell.id} ${i}`}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </MantineTable.Td>
+              ))}
+            </MantineTable.Tr>
+          );
+        })}
       </MantineTable.Tbody>
     </MantineTable>
   );

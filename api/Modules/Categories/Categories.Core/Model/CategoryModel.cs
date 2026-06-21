@@ -1,6 +1,5 @@
-﻿using Shared.Core.Domain;
+﻿namespace Categories.Core.Model;
 
-namespace Categories.Core.Model;
 public class CategoryModel
 {
     public int Id { get; set; }

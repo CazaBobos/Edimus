@@ -1,0 +1,93 @@
+@use "@/common/colors" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  color: $light_text;
+  margin: 0;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.hint {
+  color: $grey;
+  font-size: 14px;
+  text-align: center;
+  padding-top: 40px;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.badge_created {
+  background: $green_tint;
+  color: $green;
+  border: 1px solid $green_border;
+}
+
+.badge_updated {
+  background: rgba($blue, 0.12);
+  color: $blue;
+  border: 1px solid rgba($blue, 0.25);
+}
+
+.badge_removed {
+  background: $red_tint;
+  color: $red;
+  border: 1px solid $red_border;
+}
+
+.badge_restored {
+  background: $orange_tint;
+  color: $orange;
+  border: 1px solid $orange_border;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.idColumn {
+  display: flex;
+  align-items: center;
+  svg {
+    margin-left: auto;
+    color: $blue;
+    opacity: 0.6;
+    height: 24px;
+    width: 24px;
+  }
+}
+
+.pageInfo {
+  color: $grey;
+  font-size: 13px;
+  min-width: 60px;
+  text-align: center;
+}
