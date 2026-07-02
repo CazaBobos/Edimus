@@ -28,7 +28,6 @@
 
 .actions {
   display: flex;
-  flex-direction: column;
   gap: 8px;
 }
 
@@ -47,7 +46,13 @@
 }
 
 .qrLabel {
+  width: 256px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   font-size: 18px;
   font-weight: 700;
-  margin: 0 0 12px;
+  margin-bottom: 12px;
 }
+

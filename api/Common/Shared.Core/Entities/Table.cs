@@ -50,7 +50,8 @@ public class Table : AggregateRoot<int>
         int? positionX = null,
         int? positionY = null,
         List<(int, int)>? surface = null,
-        List<(int, int)>? orders = null
+        List<(int, int)>? orders = null,
+        bool reactiveStock = true
         )
     {
         if (status is not null && status != Status)
@@ -94,7 +95,7 @@ public class Table : AggregateRoot<int>
                 .ToList();
 
             if (delta.Count > 0)
-                AddDomainEvent(new OrdersUpdatedEvent { Delta = delta });
+                AddDomainEvent(new OrdersUpdatedEvent { Delta = delta, ReactiveStock = reactiveStock });
         }
     }
 }

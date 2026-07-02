@@ -32,6 +32,8 @@ public class UpdateTableRequestHandler : IRequestHandler<UpdateTableRequest, Upd
         var calledAt = table.CalledAt;
         var now = DateTime.UtcNow;
 
+        var reactiveStock = await _tablesRepository.GetCompanyReactiveStock(request.Id, cancellationToken);
+
         // Snapshot orders before update — they get cleared when status → Free
         var orderSnapshot = request.Status == TableStatus.Free
             ? table.Orders
@@ -44,7 +46,8 @@ public class UpdateTableRequestHandler : IRequestHandler<UpdateTableRequest, Upd
             request.PositionX,
             request.PositionY,
             request.Surface?.Select(c => (c.X, c.Y)).ToList(),
-            request.Orders?.Select(r => (r.ProductId, r.Amount)).ToList()
+            request.Orders?.Select(r => (r.ProductId, r.Amount)).ToList(),
+            reactiveStock
         );
 
         await _tablesRepository.Update(table, cancellationToken);

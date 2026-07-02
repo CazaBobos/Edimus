@@ -16,7 +16,7 @@ public class DeductStockOnOrderHandler : INotificationHandler<OrdersUpdatedEvent
 
     public async ValueTask Handle(OrdersUpdatedEvent notification, CancellationToken cancellationToken)
     {
-        if (notification.Delta.Count == 0) return;
+        if (!notification.ReactiveStock || notification.Delta.Count == 0) return;
 
         var productIds = notification.Delta.Select(d => d.ProductId).ToList();
 

@@ -10,7 +10,10 @@ import { Button } from "@/components/ui/Button";
 
 import styles from "./styles.module.scss";
 
-export const MenuBar = () => {
+type MenuBarProps = {
+  publicOrders: boolean;
+};
+export const MenuBar = ({ publicOrders }: MenuBarProps) => {
   const { setIsFiltersDialogOpen, setIsOrderDialogOpen } = useMenuStore();
 
   const { data: table } = useSingleTableQuery();
@@ -29,7 +32,7 @@ export const MenuBar = () => {
   return (
     <div className={styles.fab}>
       <Button icon={<BiFilterAlt size={24} />} onClick={() => setIsFiltersDialogOpen(true)} />
-      <Button icon={<PiBasket size={24} />} onClick={() => setIsOrderDialogOpen(true)} />
+      {publicOrders && <Button icon={<PiBasket size={24} />} onClick={() => setIsOrderDialogOpen(true)} />}
       <Button
         icon={<PiCallBell size={24} />}
         onClick={handleTableCall}

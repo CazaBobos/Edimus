@@ -10,7 +10,14 @@ import { useMemo, useState } from "react";
 
 import styles from "./styles.module.scss";
 
-export const MenuCards = ({ companyId }: { companyId: number }) => {
+type MenuCardsProps = {
+  companyId: number;
+  publicPrices: boolean;
+  hasTable: boolean;
+};
+
+export const MenuCards = ({ companyId, publicPrices, hasTable }: MenuCardsProps) => {
+  const showPrices = publicPrices ? hasTable : false;
   const { data: categories, isLoading: categoriesLoading } = useCategoriesQuery({ companyId, enabled: true });
   const { data: products, isLoading: productsLoading } = useProductsQuery({ companyId, enabled: true });
   const tagFilters = useMenuStore((store) => store.tagFilters);
@@ -73,7 +80,7 @@ export const MenuCards = ({ companyId }: { companyId: number }) => {
                   <span className={styles.productName}>{p.name}</span>
                   {p.description && <span className={styles.productDesc}>{p.description}</span>}
                 </div>
-                {!!p.price && <span className={styles.price}>${p.price}</span>}
+                {!!p.price && showPrices && <span className={styles.price}>${p.price}</span>}
               </div>
 
               {!!variantsMap[p.id]?.length && (
@@ -84,7 +91,7 @@ export const MenuCards = ({ companyId }: { companyId: number }) => {
                         <span className={styles.variantName}>{v.name}</span>
                         {v.description && <span className={styles.productDesc}>{v.description}</span>}
                       </div>
-                      {!!v.price && <span className={styles.variantPrice}>${v.price}</span>}
+                      {!!v.price && showPrices && <span className={styles.variantPrice}>${v.price}</span>}
                     </li>
                   ))}
                 </ul>

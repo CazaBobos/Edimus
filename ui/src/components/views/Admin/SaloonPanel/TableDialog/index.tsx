@@ -1,8 +1,10 @@
 import { useTableMutations } from "@/hooks/mutations/useTableMutations";
+import { useCompanyQuery } from "@/hooks/queries/useCompanyQuery";
 import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
 import { useTablesQuery } from "@/hooks/queries/useTablesQuery";
 import { useAdminStore } from "@/stores";
 import {
+  Company,
   Coords,
   CreateTableRequest,
   Table,
@@ -12,7 +14,7 @@ import {
   tableStatusNameMap,
   UpdateTableRequest,
 } from "@/types";
-import { Drawer, Modal, SegmentedControl } from "@mantine/core";
+import { Drawer } from "@mantine/core";
 import { useMemo, useRef, useState } from "react";
 import { BiClipboard, BiDownload, BiLock, BiReceipt, BiSave, BiSolidCircle, BiTransfer, BiTrash } from "react-icons/bi";
 import QRCode from "react-qr-code";
@@ -25,8 +27,10 @@ import { Tabs } from "@/components/ui/Tabs";
 
 import { Positioner } from "../Positioner";
 import { SurfaceEditor } from "../SurfaceEditor";
+import { OrderControl } from "./OrderControl";
 import { OrdersList } from "./OrdersList";
 import styles from "./styles.module.scss";
+import { TransferModal } from "./TransferModal";
 
 const statusOptions = [
   {
@@ -69,6 +73,15 @@ export const TableDialog = ({ layoutId }: TableDialogProps) => {
 
   const effectiveStatus = request.status ?? table?.status;
 
+  const { data: company } = useCompanyQuery();
+
+  const { data: products } = useProductsQuery();
+  const productsMap = useMemo(() => new Map(products.map((p) => [p.id, p])), [products]);
+
+  const { data: tables } = useTablesQuery({ layoutId });
+  const [transferOpen, setTransferOpen] = useState(false);
+  const [orderControlOpen, setOrderControlOpen] = useState(false);
+
   const handleSetOrders = (orders: TableOrder[]) => {
     setRequest((prev) => ({ ...prev, orders }));
   };
@@ -89,85 +102,119 @@ export const TableDialog = ({ layoutId }: TableDialogProps) => {
 
   const handleSave = () => {
     if (table) updateTableMutation.mutate({ id: table.id, request }, mutationOptions);
-    else createTableMutation.mutate({ layoutId: layoutId ?? 1, ...request } as CreateTableRequest, mutationOptions);
+    else createTableMutation.mutate({ layoutId, ...request } as CreateTableRequest, mutationOptions);
   };
 
   const handleRemove = () => {
     if (table) removeTableMutation.mutate(table.id, mutationOptions);
   };
 
+  const handleOrderControl = () => {
+    if (table) setOrderControlOpen(true);
+  };
+
   const tabs = ["Pedidos", "Código QR"];
   const [activeTab, setActiveTab] = useState<number>(0);
 
   return (
-    <Drawer
-      opened={table !== undefined}
-      onClose={handleClose}
-      title={
-        <div className={styles.drawerTitle}>
-          <span>{table ? `Mesa #${table.id}` : "Nueva Mesa"}</span>
-          {table && (
-            <Select options={statusOptions} value={String(request.status ?? table.status)} onChange={handleSetStatus} />
-          )}
-        </div>
-      }
-      position="right"
-      size="md"
-      shadow="xl"
-    >
-      <div className={styles.dialogLayout}>
-        <div className={styles.topControls}>
-          <div className={styles.row}>
-            <Positioner positionX={table?.positionX} positionY={table?.positionY} onChange={handleSetCoords} />
-            <SurfaceEditor
-              smallButtons
-              content={<BiLock size={14} />}
-              offset={{ x: -1, y: -1 }}
-              height={3}
-              width={3}
-              defaultValue={table?.surface}
-              onChange={handleSetSurface}
-            />
+    <>
+      <Drawer
+        opened={table !== undefined}
+        onClose={handleClose}
+        title={
+          <div className={styles.drawerTitle}>
+            <span>{table ? `Mesa #${table.id}` : "Nueva Mesa"}</span>
+            {table && (
+              <Select
+                options={statusOptions}
+                value={String(request.status ?? table.status)}
+                onChange={handleSetStatus}
+              />
+            )}
           </div>
-        </div>
-        {table && (
-          <div className={styles.tabSection}>
-            <Tabs source={tabs} active={activeTab} onChange={setActiveTab} />
-            <Card className={styles.card}>
-              {
+        }
+        position="right"
+        size="md"
+        shadow="xl"
+      >
+        <div className={styles.dialogLayout}>
+          <div className={styles.topControls}>
+            <div className={styles.row}>
+              <Positioner positionX={table?.positionX} positionY={table?.positionY} onChange={handleSetCoords} />
+              <SurfaceEditor
+                smallButtons
+                content={<BiLock size={14} />}
+                offset={{ x: -1, y: -1 }}
+                height={3}
+                width={3}
+                defaultValue={table?.surface}
+                onChange={handleSetSurface}
+              />
+            </div>
+          </div>
+          {table && (
+            <div className={styles.tabSection}>
+              <Tabs source={tabs} active={activeTab} onChange={setActiveTab} />
+              <Card className={styles.card}>
                 {
-                  0: (
-                    <OrdersList
-                      table={table}
-                      onChange={handleSetOrders}
-                      disabled={effectiveStatus === TableStatus.Free}
-                    />
-                  ),
-                  1: <QRLink table={table} />,
-                }[activeTab]
-              }
-            </Card>
-          </div>
-        )}
-        <div className={styles.actions}>
-          <Button label="Guardar Cambios" icon={<BiSave />} onClick={handleSave} />
-          {table && (
-            <>
-              <Button label="Emitir control de pedido" icon={<BiClipboard />} />
-              <Button label="Generar comprobante" icon={<BiReceipt />} />
-              <Button danger label="Eliminar Mesa" icon={<BiTrash />} onClick={handleRemove} />
-            </>
+                  {
+                    0: (
+                      <OrdersList
+                        table={table}
+                        onChange={handleSetOrders}
+                        disabled={effectiveStatus === TableStatus.Free}
+                      />
+                    ),
+                    1: company ? <QRLink company={company} table={table} /> : null,
+                  }[activeTab]
+                }
+              </Card>
+            </div>
           )}
+          <div className={styles.actions}>
+            <Button label="Guardar" icon={<BiSave size={16} />} onClick={handleSave} />
+            {table && (
+              <>
+                <Button danger label="Eliminar" icon={<BiTrash size={16} />} onClick={handleRemove} />
+                <Button icon={<BiClipboard />} onClick={handleOrderControl} title="Emitir control de pedido" />
+                <Button icon={<BiReceipt />} title="Generar comprobante" />
+                <Button icon={<BiTransfer />} onClick={() => setTransferOpen(true)} title="Transferir Pedido" />
+              </>
+            )}
+          </div>
         </div>
-      </div>
-    </Drawer>
+      </Drawer>
+      {table && (
+        <OrderControl
+          opened={orderControlOpen}
+          table={table}
+          orders={request.orders ?? table.orders}
+          productsMap={productsMap}
+          onClose={() => setOrderControlOpen(false)}
+        />
+      )}
+      <TransferModal
+        opened={transferOpen}
+        tables={tables}
+        sourceTable={table}
+        sourceOrders={request.orders ?? table?.orders ?? []}
+        onClose={() => setTransferOpen(false)}
+        onSuccess={() => {
+          setTransferOpen(false);
+          handleClose();
+        }}
+      />
+    </>
   );
 };
 
-type QRLinkProps = { table: Table };
-const QRLink = ({ table }: QRLinkProps) => {
+type QRLinkProps = {
+  company: Company;
+  table: Table;
+};
+const QRLink = ({ company, table }: QRLinkProps) => {
   const { protocol, hostname, port } = window.location;
-  const link = `${protocol}//${hostname}:${port}?tableId=${table.qrId}`;
+  const link = `${protocol}//${hostname}:${port}?slug=${company.slug}&tableId=${table.qrId}`;
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const handleDownload = () => {
@@ -205,13 +252,15 @@ const QRLink = ({ table }: QRLinkProps) => {
 
   return (
     <>
-      <p className={styles.qrLabel}>Mesa #{table.id}</p>
+      <span className={styles.qrLabel}>
+        Mesa&nbsp;#{table.id}
+        <Button label="Descargar" variant="brand" icon={<BiDownload size={16} />} onClick={handleDownload} />
+      </span>
       <div ref={wrapperRef}>
         <a target="_blank" href={link}>
           <QRCode value={link} />
         </a>
       </div>
-      <Button label="Descargar" icon={<BiDownload />} onClick={handleDownload} />
     </>
   );
 };

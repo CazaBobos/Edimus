@@ -1,0 +1,48 @@
+@use "common/colors" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.amount {
+  color: $grey;
+  font-size: 12px;
+  min-width: 24px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.name {
+  flex: 1;
+  color: $light_text;
+}
+
+.subtotal {
+  color: $light_text;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: $light_text;
+}
+
+.empty {
+  font-size: 13px;
+  color: $grey;
+  margin: 0;
+  text-align: center;
+  padding: 12px 0;
+}

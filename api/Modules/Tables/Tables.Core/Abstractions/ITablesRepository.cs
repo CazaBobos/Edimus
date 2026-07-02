@@ -5,4 +5,5 @@ namespace Tables.Core.Abstractions;
 
 public interface ITablesRepository : IRepository<Table, int>
 {
+    Task<bool> GetCompanyReactiveStock(int tableId, CancellationToken cancellationToken);
 }

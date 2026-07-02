@@ -28,7 +28,18 @@ function MenuContent() {
     );
   }
 
-  if (!company) return null;
+  if (!company) {
+    return (
+      <div className={styles.empty}>
+        <h1>Ēdimus</h1>
+        {!slug ? (
+          <p>Escaneá el código QR de tu mesa para acceder al menú.</p>
+        ) : (
+          <p>No encontramos el restaurante que buscás.</p>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className={styles.page}>
@@ -44,11 +55,11 @@ function MenuContent() {
         )}
       </header>
       <main className={styles.main}>
-        <MenuCards companyId={company.id} />
+        <MenuCards companyId={company.id} publicPrices={company.publicPrices} hasTable={!!table} />
         <OrderDialog />
         <FiltersDialog companyId={company.id} />
       </main>
-      <MenuBar />
+      <MenuBar publicOrders={company.publicOrders} />
     </div>
   );
 }

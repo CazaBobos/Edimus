@@ -1,4 +1,4 @@
-import { ActionIcon, Button as MantineButton } from "@mantine/core";
+import { ActionIcon, Button as MantineButton, UnstyledButton } from "@mantine/core";
 import { ReactNode } from "react";
 
 import styles from "./styles.module.scss";
@@ -21,7 +21,7 @@ type ButtonProps = {
 export const Button = ({ label, icon, disabled, onClick, variant, active, danger, count, title }: ButtonProps) => {
   if (variant) {
     return (
-      <button
+      <UnstyledButton
         className={styles[variant]}
         disabled={disabled}
         onClick={onClick}
@@ -32,7 +32,7 @@ export const Button = ({ label, icon, disabled, onClick, variant, active, danger
         {variant === "nav" && icon ? <span className={styles.icon}>{icon}</span> : icon}
         {label}
         {count !== undefined && <span className={styles.count}>{count}</span>}
-      </button>
+      </UnstyledButton>
     );
   }
 
@@ -45,7 +45,15 @@ export const Button = ({ label, icon, disabled, onClick, variant, active, danger
   }
 
   return (
-    <MantineButton variant="filled" radius="xl" rightSection={icon} disabled={disabled} onClick={onClick} fullWidth>
+    <MantineButton
+      variant="filled"
+      radius="xl"
+      rightSection={icon}
+      disabled={disabled}
+      onClick={onClick}
+      color={danger ? "red" : undefined}
+      fullWidth
+    >
       {label}
     </MantineButton>
   );
